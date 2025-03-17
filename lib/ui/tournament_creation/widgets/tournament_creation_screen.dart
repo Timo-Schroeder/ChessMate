@@ -1,7 +1,7 @@
-import 'package:chessmatey/src/common/tournament_format.dart';
-import 'package:chessmatey/src/common/widgets/header_bar.dart';
-import 'package:chessmatey/src/features/tournament_selection/domain/models/tournament.dart';
-import 'package:chessmatey/src/features/tournament_selection/presentation/tournament_list_provider.dart';
+import 'package:chessmatey/domain/models/tournament/tournament.dart';
+import 'package:chessmatey/domain/models/tournament/tournament_format.dart';
+import 'package:chessmatey/ui/core/ui/header_bar.dart';
+import 'package:chessmatey/ui/tournament_creation/view_model/tournament_creation_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -102,21 +102,17 @@ class TournamentCreationScreen extends HookConsumerWidget {
                 ),
                 const SizedBox(width: 16),
                 ElevatedButton(
-                  onPressed: () {
-                    ref.read(tournamentListProvider.notifier).addTournament(
-                          Tournament(
-                            name: nameController.text,
-                            startDate: tournamentDateRange.value.start,
-                            endDate: tournamentDateRange.value.end,
-                            format: tournamentFormat.value,
-                          ),
-                        );
-                    const snackBar = SnackBar(
-                      content: Text('Tournament created'),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: () => ref
+                      .read(tournamentCreationViewModelProvider.notifier)
+                      .createTournament(
+                        Tournament(
+                          id: -1,
+                          name: nameController.text,
+                          startDate: tournamentDateRange.value.start,
+                          endDate: tournamentDateRange.value.end,
+                          format: tournamentFormat.value,
+                        ),
+                      ),
                   child: const Text('Create'),
                 ),
               ],

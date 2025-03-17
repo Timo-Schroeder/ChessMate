@@ -1,4 +1,4 @@
-import 'package:chessmatey/src/features/tournament_selection/presentation/tournament_list_provider.dart';
+import 'package:chessmatey/ui/tournament_selection/view_model/tournament_selection_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yaru/yaru.dart';
@@ -8,7 +8,7 @@ class TournamentSelectionList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tournamentListAsync = ref.watch(tournamentListProvider);
+    final tournamentListAsync = ref.watch(tournamentSelectionViewModelProvider);
 
     return YaruSection(
       headline: const Text('Tournaments'),
@@ -25,8 +25,8 @@ class TournamentSelectionList extends ConsumerWidget {
                     icon: const Icon(Icons.delete),
                     onPressed: () {
                       ref
-                          .read(tournamentListProvider.notifier)
-                          .deleteTournament(tournament.id!);
+                          .read(tournamentSelectionViewModelProvider.notifier)
+                          .deleteTournament(tournament.id);
                     },
                   ),
                 ),

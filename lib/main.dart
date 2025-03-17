@@ -1,5 +1,5 @@
-import 'package:chessmatey/src/features/tournament_selection/presentation/tournament_selection_screen.dart';
-import 'package:chessmatey/src/common/util/service_locator.dart';
+import 'package:chessmatey/ui/tournament_selection/widgets/tournament_selection_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yaru/yaru.dart';
@@ -7,7 +7,9 @@ import 'package:yaru/yaru.dart';
 Future<void> main() async {
   await YaruWindowTitleBar.ensureInitialized();
 
-  await setup();
+  if (kIsWeb) {
+    throw UnsupportedError('Web is not supported');
+  }
 
   runApp(const ProviderScope(
     child: MyApp(),

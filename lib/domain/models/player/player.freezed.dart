@@ -23,10 +23,11 @@ mixin _$Player {
   String get club => throw _privateConstructorUsedError;
   int? get nationalRating => throw _privateConstructorUsedError;
   int? get elo => throw _privateConstructorUsedError;
-  @enumerated
   FideTitle? get title => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Player
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PlayerCopyWith<Player> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -43,7 +44,7 @@ abstract class $PlayerCopyWith<$Res> {
       String club,
       int? nationalRating,
       int? elo,
-      @enumerated FideTitle? title});
+      FideTitle? title});
 }
 
 /// @nodoc
@@ -56,6 +57,8 @@ class _$PlayerCopyWithImpl<$Res, $Val extends Player>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Player
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -120,7 +123,7 @@ abstract class _$$PlayerImplCopyWith<$Res> implements $PlayerCopyWith<$Res> {
       String club,
       int? nationalRating,
       int? elo,
-      @enumerated FideTitle? title});
+      FideTitle? title});
 }
 
 /// @nodoc
@@ -131,6 +134,8 @@ class __$$PlayerImplCopyWithImpl<$Res>
       _$PlayerImpl _value, $Res Function(_$PlayerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Player
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -191,7 +196,7 @@ class _$PlayerImpl implements _Player {
       required this.club,
       this.nationalRating,
       this.elo,
-      @enumerated this.title});
+      this.title});
 
   @override
   final int? id;
@@ -208,7 +213,6 @@ class _$PlayerImpl implements _Player {
   @override
   final int? elo;
   @override
-  @enumerated
   final FideTitle? title;
 
   @override
@@ -239,7 +243,9 @@ class _$PlayerImpl implements _Player {
   int get hashCode => Object.hash(runtimeType, id, firstName, lastName,
       dateOfBirth, club, nationalRating, elo, title);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Player
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PlayerImplCopyWith<_$PlayerImpl> get copyWith =>
@@ -255,7 +261,7 @@ abstract class _Player implements Player {
       required final String club,
       final int? nationalRating,
       final int? elo,
-      @enumerated final FideTitle? title}) = _$PlayerImpl;
+      final FideTitle? title}) = _$PlayerImpl;
 
   @override
   int? get id;
@@ -272,10 +278,12 @@ abstract class _Player implements Player {
   @override
   int? get elo;
   @override
-  @enumerated
   FideTitle? get title;
+
+  /// Create a copy of Player
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PlayerImplCopyWith<_$PlayerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

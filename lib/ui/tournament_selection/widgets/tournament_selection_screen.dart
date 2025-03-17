@@ -1,6 +1,6 @@
-import 'package:chessmatey/src/common/widgets/header_bar.dart';
-import 'package:chessmatey/src/features/tournament_selection/presentation/tournament_creation_screen.dart';
-import 'package:chessmatey/src/features/tournament_selection/presentation/tournament_selection_list.dart';
+import 'package:chessmatey/ui/core/ui/header_bar.dart';
+import 'package:chessmatey/ui/tournament_creation/widgets/tournament_creation_screen.dart';
+import 'package:chessmatey/ui/tournament_selection/widgets/tournament_selection_list.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

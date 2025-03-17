@@ -16,13 +16,24 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Tournament {
-  int? get id => throw _privateConstructorUsedError;
+  /// The unique identifier of the tournament.
+  int get id => throw _privateConstructorUsedError;
+
+  /// The name of the tournament.
   String get name => throw _privateConstructorUsedError;
+
+  /// The start date of the tournament.
   DateTime get startDate => throw _privateConstructorUsedError;
+
+  /// The end date of the tournament.
   DateTime get endDate => throw _privateConstructorUsedError;
+
+  /// The format of the tournament, like Swiss or Round Robin (not yet implemented).
   TournamentFormat get format => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Tournament
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TournamentCopyWith<Tournament> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -34,7 +45,7 @@ abstract class $TournamentCopyWith<$Res> {
       _$TournamentCopyWithImpl<$Res, Tournament>;
   @useResult
   $Res call(
-      {int? id,
+      {int id,
       String name,
       DateTime startDate,
       DateTime endDate,
@@ -51,20 +62,22 @@ class _$TournamentCopyWithImpl<$Res, $Val extends Tournament>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Tournament
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? name = null,
     Object? startDate = null,
     Object? endDate = null,
     Object? format = null,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -94,7 +107,7 @@ abstract class _$$TournamentImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? id,
+      {int id,
       String name,
       DateTime startDate,
       DateTime endDate,
@@ -109,20 +122,22 @@ class __$$TournamentImplCopyWithImpl<$Res>
       _$TournamentImpl _value, $Res Function(_$TournamentImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Tournament
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? name = null,
     Object? startDate = null,
     Object? endDate = null,
     Object? format = null,
   }) {
     return _then(_$TournamentImpl(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -147,20 +162,29 @@ class __$$TournamentImplCopyWithImpl<$Res>
 
 class _$TournamentImpl implements _Tournament {
   const _$TournamentImpl(
-      {this.id,
+      {required this.id,
       required this.name,
       required this.startDate,
       required this.endDate,
       required this.format});
 
+  /// The unique identifier of the tournament.
   @override
-  final int? id;
+  final int id;
+
+  /// The name of the tournament.
   @override
   final String name;
+
+  /// The start date of the tournament.
   @override
   final DateTime startDate;
+
+  /// The end date of the tournament.
   @override
   final DateTime endDate;
+
+  /// The format of the tournament, like Swiss or Round Robin (not yet implemented).
   @override
   final TournamentFormat format;
 
@@ -186,7 +210,9 @@ class _$TournamentImpl implements _Tournament {
   int get hashCode =>
       Object.hash(runtimeType, id, name, startDate, endDate, format);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Tournament
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TournamentImplCopyWith<_$TournamentImpl> get copyWith =>
@@ -195,24 +221,36 @@ class _$TournamentImpl implements _Tournament {
 
 abstract class _Tournament implements Tournament {
   const factory _Tournament(
-      {final int? id,
+      {required final int id,
       required final String name,
       required final DateTime startDate,
       required final DateTime endDate,
       required final TournamentFormat format}) = _$TournamentImpl;
 
+  /// The unique identifier of the tournament.
   @override
-  int? get id;
+  int get id;
+
+  /// The name of the tournament.
   @override
   String get name;
+
+  /// The start date of the tournament.
   @override
   DateTime get startDate;
+
+  /// The end date of the tournament.
   @override
   DateTime get endDate;
+
+  /// The format of the tournament, like Swiss or Round Robin (not yet implemented).
   @override
   TournamentFormat get format;
+
+  /// Create a copy of Tournament
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TournamentImplCopyWith<_$TournamentImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
