@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:watch_it/watch_it.dart';
 import 'package:yaru/yaru.dart';
 
@@ -17,15 +18,13 @@ class TournamentCreationScreen extends StatelessWidget with WatchItMixin {
 
   @override
   Widget build(BuildContext context) {
-    final tournamentDateRange = watchPropertyValue(
-        (TournamentCreationViewModel m) => m.tournamentDateRange);
     final tournamentFormat = watchPropertyValue(
         (TournamentCreationViewModel m) => m.tournamentFormat);
 
     return Scaffold(
       appBar: HeaderBar(
         leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.go('/tournament-selection'),
           icon: const Icon(Icons.arrow_back),
         ),
       ),
@@ -128,7 +127,7 @@ class TournamentCreationScreen extends StatelessWidget with WatchItMixin {
                       endDate: _endDateController.value!,
                       format: tournamentFormat,
                     ));
-                    Navigator.of(context).pop();
+                    context.go('/tournament-selection');
                   },
                   child: const Text('Create'),
                 ),

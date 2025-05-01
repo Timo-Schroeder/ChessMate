@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
 
 import 'domain/use_cases/tournament/tourament_use_case.dart';
-import 'ui/tournament_selection/widgets/tournament_selection_screen.dart';
 import 'utils/locator.dart';
+import 'utils/router.dart';
 
 Future<void> main() async {
   await YaruWindowTitleBar.ensureInitialized();
@@ -25,12 +25,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return YaruTheme(builder: (context, yaru, _) {
-      return MaterialApp(
+      return MaterialApp.router(
         debugShowCheckedModeBanner: false,
         theme: yaru.theme,
         darkTheme: yaru.darkTheme,
         themeMode: ThemeMode.light,
-        home: const TournamentSelectionScreen(),
+        routerConfig: router,
       );
     });
   }

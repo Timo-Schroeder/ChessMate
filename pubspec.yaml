@@ -25,6 +25,7 @@ dependencies:
   watch_it: ^1.6.5
   get_it: ^8.0.3
   safe_change_notifier: ^0.4.0
+  go_router: ^15.1.1
 
 dev_dependencies:
   flutter_test:

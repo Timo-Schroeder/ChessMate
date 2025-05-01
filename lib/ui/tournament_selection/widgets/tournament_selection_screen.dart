@@ -1,5 +1,6 @@
+import 'package:go_router/go_router.dart';
+
 import '../../core/ui/header_bar.dart';
-import '../../tournament_creation/widgets/tournament_creation_screen.dart';
 import 'tournament_selection_list.dart';
 import 'package:flutter/material.dart';
 
@@ -18,11 +19,7 @@ class TournamentSelectionScreen extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => TournamentCreationScreen(),
-                  ),
-                );
+                context.go('/tournament-creation');
               },
               child: const Text('New Tournament'),
             ),
