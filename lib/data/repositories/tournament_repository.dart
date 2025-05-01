@@ -1,11 +1,9 @@
-import 'dart:io';
-
-import 'package:chessmatey/data/services/database_service.dart';
-import 'package:chessmatey/domain/models/tournament/tournament.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart' show Provider;
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
+import '../../domain/models/tournament/tournament.dart';
+import '../../utils/locator.dart';
+import '../services/database_service.dart';
 
 abstract class TournamentRepository {
   Future<Either<String, IList<Tournament>>> getTournaments();
@@ -18,10 +16,7 @@ abstract class TournamentRepository {
 }
 
 class TournamentRepositoryImpl implements TournamentRepository {
-  TournamentRepositoryImpl({required DatabaseService database})
-      : _database = database;
-
-  final DatabaseService _database;
+  final _database = locator<DatabaseService>();
 
   @override
   Future<Either<String, IList<Tournament>>> getTournaments() async {
@@ -56,16 +51,3 @@ class TournamentRepositoryImpl implements TournamentRepository {
     return _database.deleteTournament(id);
   }
 }
-
-final tournamentRepositoryProvider = Provider<TournamentRepository>((ref) {
-  late DatabaseService database;
-
-  if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
-    sqfliteFfiInit();
-    database = DatabaseService(databaseFactory: databaseFactoryFfi);
-  } else {
-    database = DatabaseService(databaseFactory: databaseFactory);
-  }
-
-  return TournamentRepositoryImpl(database: database);
-});

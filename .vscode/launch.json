@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "chessmatey",
+            "name": "chessmate",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "chessmatey (profile mode)",
+            "name": "chessmate (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "chessmatey (release mode)",
+            "name": "chessmate (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

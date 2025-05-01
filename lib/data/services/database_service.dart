@@ -1,10 +1,10 @@
-import 'package:path/path.dart' show join;
-import 'package:chessmatey/domain/models/tournament/tournament.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart'
     show FicListExtension, IList;
 import 'package:fpdart/fpdart.dart';
+import 'package:path/path.dart' show join;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
+import '../../domain/models/tournament/tournament.dart';
 import '../../domain/models/tournament/tournament_format.dart'
     show TournamentFormat;
 
@@ -26,7 +26,7 @@ class DatabaseService {
 
   Future<void> open() async {
     _database = await databaseFactory.openDatabase(
-      join(await databaseFactory.getDatabasesPath(), 'chessmatey.db'),
+      join(await databaseFactory.getDatabasesPath(), 'chessmate.db'),
       options: OpenDatabaseOptions(
         onCreate: (db, version) {
           return db.execute('CREATE TABLE $_kTableTournament('
@@ -39,21 +39,6 @@ class DatabaseService {
         version: 1,
       ),
     );
-  }
-
-  Future<Either<String, Tournament>> insertTournament(
-      Tournament tournament) async {
-    try {
-      final id = await _database!.insert(_kTableTournament, {
-        _kColumnTournamentName: tournament.name,
-        _kColumnTournamentStartDate: tournament.startDate.toString(),
-        _kColumnTournamentEndDate: tournament.endDate.toString(),
-        _kColumnTournamentFormat: tournament.format.toString()
-      });
-      return right(tournament.copyWith(id: id));
-    } catch (e) {
-      return left(e.toString());
-    }
   }
 
   Future<Either<String, IList<Tournament>>> getAllTournaments() async {
@@ -78,7 +63,7 @@ class DatabaseService {
                 endDate: DateTime.parse(
                     element[_kColumnTournamentEndDate] as String),
                 format: TournamentFormat.values.firstWhere((format) =>
-                    format.toString() ==
+                    format ==
                     element[_kColumnTournamentFormat] as TournamentFormat)),
           )
           .toList();
@@ -113,7 +98,7 @@ class DatabaseService {
               DateTime.parse(element[_kColumnTournamentStartDate] as String),
           endDate: DateTime.parse(element[_kColumnTournamentEndDate] as String),
           format: TournamentFormat.values.firstWhere((format) =>
-              format.toString() ==
+              format ==
               element[_kColumnTournamentFormat] as TournamentFormat)));
     } catch (e) {
       return left(e.toString());

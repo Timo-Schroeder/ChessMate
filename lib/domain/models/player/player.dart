@@ -1,5 +1,6 @@
-import 'package:chessmatey/domain/models/player/fide_title.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import 'fide_title.dart';
 
 part 'player.freezed.dart';
 

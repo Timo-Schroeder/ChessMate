@@ -1,41 +1,38 @@
-name: chessmatey
+name: chessmate
 description: A chess tournament management program.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.4 <4.0.0'
+  sdk: ">=3.1.4 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  yaru: ^5.3.1
+  yaru: ^7.0.0
   handy_window: ^0.4.0
-  freezed_annotation: ^2.4.1
-  fast_immutable_collections: ^10.1.1
+  freezed_annotation: ^3.0.0
+  fast_immutable_collections: ^11.0.4
   path_provider: ^2.1.1
-  hooks_riverpod: ^2.4.6
-  flutter_hooks: ^0.20.3
-  riverpod_annotation: ^2.3.1
-  flutter_riverpod: ^2.4.10
   sqflite_common_ffi: ^2.3.4
   drift: ^2.21.0
   drift_flutter: ^0.2.1
   fpdart: ^1.1.1
   path: ^1.9.1
+  watch_it: ^1.6.5
+  get_it: ^8.0.3
+  safe_change_notifier: ^0.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
   build_runner: ^2.4.6
-  freezed: ^2.4.5
-  riverpod_generator: ^2.3.6
-  custom_lint: ^0.6.0
-  analyzer: ^6.7.0
+  freezed: ^3.0.6
+  analyzer: ^7.4.4
   drift_dev: ^2.21.2
 
 flutter:

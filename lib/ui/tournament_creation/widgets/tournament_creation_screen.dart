@@ -1,21 +1,26 @@
-import 'package:chessmatey/domain/models/tournament/tournament.dart';
-import 'package:chessmatey/domain/models/tournament/tournament_format.dart';
-import 'package:chessmatey/ui/core/ui/header_bar.dart';
-import 'package:chessmatey/ui/tournament_creation/view_model/tournament_creation_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:watch_it/watch_it.dart';
 import 'package:yaru/yaru.dart';
 
-class TournamentCreationScreen extends HookConsumerWidget {
-  const TournamentCreationScreen({super.key});
+import '../../../domain/models/tournament/tournament.dart';
+import '../../../domain/models/tournament/tournament_format.dart';
+import '../../../utils/locator.dart';
+import '../../core/ui/header_bar.dart';
+import '../view_model/tournament_creation_view_model.dart';
+
+class TournamentCreationScreen extends StatelessWidget with WatchItMixin {
+  TournamentCreationScreen({super.key});
+  final _tournamentCreationViewModel = locator<TournamentCreationViewModel>();
+  final _nameController = TextEditingController();
+  final _startDateController = YaruDateTimeEntryController.now();
+  final _endDateController = YaruDateTimeEntryController.now();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final nameController = useTextEditingController();
-    final tournamentDateRange = useState<DateTimeRange>(
-        DateTimeRange(start: DateTime.now(), end: DateTime.now()));
-    final tournamentFormat = useState<TournamentFormat>(TournamentFormat.swiss);
+  Widget build(BuildContext context) {
+    final tournamentDateRange = watchPropertyValue(
+        (TournamentCreationViewModel m) => m.tournamentDateRange);
+    final tournamentFormat = watchPropertyValue(
+        (TournamentCreationViewModel m) => m.tournamentFormat);
 
     return Scaffold(
       appBar: HeaderBar(
@@ -30,7 +35,7 @@ class TournamentCreationScreen extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
-              controller: nameController,
+              controller: _nameController,
               decoration: const InputDecoration(
                 labelText: 'Name',
               ),
@@ -40,34 +45,19 @@ class TournamentCreationScreen extends HookConsumerWidget {
               'Daterange:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            OutlinedButton(
-              onPressed: () {
-                final range = showDateRangePicker(
-                  context: context,
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime.now().add(const Duration(days: 365)),
-                  initialDateRange: tournamentDateRange.value,
-                  builder: (context, child) {
-                    return Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          maxWidth: 400.0,
-                          maxHeight: 600.0,
-                        ),
-                        child: child,
-                      ),
-                    );
-                  },
-                );
-                range.then(
-                  (value) {
-                    if (value != null) {
-                      tournamentDateRange.value = value;
-                    }
-                  },
-                );
-              },
-              child: const Text('Set dates'),
+            const SizedBox(height: 16),
+            YaruDateTimeEntry(
+              controller: _startDateController,
+              includeTime: false,
+              firstDateTime: DateTime(1900),
+              lastDateTime: DateTime(2100),
+            ),
+            const SizedBox(height: 16),
+            YaruDateTimeEntry(
+              controller: _endDateController,
+              includeTime: false,
+              firstDateTime: DateTime(1900),
+              lastDateTime: DateTime(2100),
             ),
             const SizedBox(height: 16),
             const Text(
@@ -75,8 +65,8 @@ class TournamentCreationScreen extends HookConsumerWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             YaruPopupMenuButton<TournamentFormat>(
-              initialValue: tournamentFormat.value,
-              child: Text(tournamentFormat.value.name),
+              initialValue: tournamentFormat,
+              child: Text(tournamentFormat.name),
               itemBuilder: (context) {
                 return [
                   for (final value in TournamentFormat.values)
@@ -88,7 +78,8 @@ class TournamentCreationScreen extends HookConsumerWidget {
                     ),
                 ];
               },
-              onSelected: (value) => tournamentFormat.value = value,
+              onSelected: (value) =>
+                  _tournamentCreationViewModel.tournamentFormat = value,
             ),
             const SizedBox(height: 32),
             Row(
@@ -102,17 +93,43 @@ class TournamentCreationScreen extends HookConsumerWidget {
                 ),
                 const SizedBox(width: 16),
                 ElevatedButton(
-                  onPressed: () => ref
-                      .read(tournamentCreationViewModelProvider.notifier)
-                      .createTournament(
-                        Tournament(
-                          id: -1,
-                          name: nameController.text,
-                          startDate: tournamentDateRange.value.start,
-                          endDate: tournamentDateRange.value.end,
-                          format: tournamentFormat.value,
-                        ),
-                      ),
+                  onPressed: () {
+                    if (_nameController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Name is required')),
+                      );
+                      return;
+                    }
+                    if (_startDateController.value == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Start date is required')),
+                      );
+                      return;
+                    }
+                    if (_endDateController.value == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('End date is required')),
+                      );
+                      return;
+                    }
+                    if (_startDateController.value!
+                        .isAfter(_endDateController.value!)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content:
+                                Text('Start date must be before end date')),
+                      );
+                      return;
+                    }
+                    _tournamentCreationViewModel.createTournament(Tournament(
+                      id: -1,
+                      name: _nameController.text,
+                      startDate: _startDateController.value!,
+                      endDate: _endDateController.value!,
+                      format: tournamentFormat,
+                    ));
+                    Navigator.of(context).pop();
+                  },
                   child: const Text('Create'),
                 ),
               ],

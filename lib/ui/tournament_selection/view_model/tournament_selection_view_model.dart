@@ -1,28 +1,30 @@
-import 'package:chessmatey/data/repositories/tournament_repository.dart';
-import 'package:chessmatey/domain/models/tournament/tournament.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:safe_change_notifier/safe_change_notifier.dart';
 
-part 'tournament_selection_view_model.g.dart';
+import '../../../domain/models/tournament/tournament.dart';
+import '../../../domain/use_cases/tournament/tourament_use_case.dart';
+import '../../../utils/locator.dart' show locator;
 
-@riverpod
-class TournamentSelectionViewModel extends _$TournamentSelectionViewModel {
-  @override
-  Future<IList<Tournament>> build() async {
-    getAllTournaments();
+class TournamentSelectionViewModel extends SafeChangeNotifier {
+  final _tournamentUseCase = locator<TournamentUseCase>();
+
+  IList<Tournament> get tournaments => _tournamentUseCase.tournaments;
+
+  TournamentSelectionViewModel() {
+    _tournamentUseCase.addListener(_onTournamentUseCaseChanged);
   }
 
-  Future<void> getAllTournaments() async {
-    state = const AsyncLoading();
-    final tournamentRepository = ref.read(tournamentRepositoryProvider);
-    final tournaments = await tournamentRepository.getTournaments();
-    tournaments.match(
-      (l) => state = AsyncError(l, StackTrace.current),
-      (r) => state = AsyncValue<IList<Tournament>>.data(r),
-    );
+  @override
+  void dispose() {
+    _tournamentUseCase.removeListener(_onTournamentUseCaseChanged);
+    super.dispose();
+  }
+
+  void _onTournamentUseCaseChanged() {
+    notifyListeners();
   }
 
   void deleteTournament(int id) {
-    return;
+    _tournamentUseCase.deleteTournament(id);
   }
 }

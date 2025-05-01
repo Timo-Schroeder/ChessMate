@@ -1,27 +1,26 @@
-import 'package:chessmatey/ui/core/ui/header_bar.dart';
-import 'package:chessmatey/ui/tournament_creation/widgets/tournament_creation_screen.dart';
-import 'package:chessmatey/ui/tournament_selection/widgets/tournament_selection_list.dart';
+import '../../core/ui/header_bar.dart';
+import '../../tournament_creation/widgets/tournament_creation_screen.dart';
+import 'tournament_selection_list.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class TournamentSelectionScreen extends ConsumerWidget {
+class TournamentSelectionScreen extends StatelessWidget {
   const TournamentSelectionScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: const HeaderBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const TournamentSelectionList(),
+            TournamentSelectionList(),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => const TournamentCreationScreen(),
+                    builder: (context) => TournamentCreationScreen(),
                   ),
                 );
               },

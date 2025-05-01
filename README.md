@@ -1,2 +1,2 @@
-# ChessMatey
-ChessMatey - An open-source tournament manager for the Ubuntu desktop.
+# chessmate
+chessmate - An open-source tournament manager for the Ubuntu desktop.
