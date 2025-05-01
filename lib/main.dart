@@ -1,9 +1,21 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
-import 'package:yaru_widgets/yaru_widgets.dart';
+
+import 'domain/use_cases/tournament/tourament_use_case.dart';
+import 'ui/tournament_selection/widgets/tournament_selection_screen.dart';
+import 'utils/locator.dart';
 
 Future<void> main() async {
   await YaruWindowTitleBar.ensureInitialized();
+
+  if (kIsWeb) {
+    throw UnsupportedError('Web is not supported');
+  }
+
+  setupLocator();
+  await locator<TournamentUseCase>().init();
+
   runApp(const MyApp());
 }
 
@@ -17,25 +29,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: yaru.theme,
         darkTheme: yaru.darkTheme,
-        home: const _Home(),
+        themeMode: ThemeMode.light,
+        home: const TournamentSelectionScreen(),
       );
     });
-  }
-}
-
-class _Home extends StatelessWidget {
-  const _Home();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const YaruWindowTitleBar(),
-      body: Center(
-        child: Text(
-          'Hello there',
-          style: TextStyle(color: Theme.of(context).primaryColor),
-        ),
-      ),
-    );
   }
 }

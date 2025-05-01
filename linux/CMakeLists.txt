@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "chessmatey")
-set(APPLICATION_ID "com.test.chessmatey")
+set(BINARY_NAME "chessmate")
+set(APPLICATION_ID "com.test.chessmate")
 
 cmake_policy(SET CMP0063 NEW)
 
