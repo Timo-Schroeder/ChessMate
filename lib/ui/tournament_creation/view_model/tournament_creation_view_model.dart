@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart';
 import 'package:safe_change_notifier/safe_change_notifier.dart';
 
 import '../../../domain/models/tournament/tournament.dart' show Tournament;
