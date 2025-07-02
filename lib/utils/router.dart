@@ -9,7 +9,7 @@ final router = GoRouter(
     GoRoute(
       name: 'tournament-selection',
       path: '/tournament-selection',
-      builder: (context, state) => TournamentSelectionScreen(),
+      builder: (context, state) => const TournamentSelectionScreen(),
     ),
     GoRoute(
       name: 'tournament-creation',

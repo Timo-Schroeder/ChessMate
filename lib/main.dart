@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: yaru.theme,
         darkTheme: yaru.darkTheme,
-        themeMode: ThemeMode.light,
+        themeMode: ThemeMode.dark,
         routerConfig: router,
       );
     });

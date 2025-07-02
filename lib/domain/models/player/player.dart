@@ -7,7 +7,7 @@ part 'player.freezed.dart';
 typedef PlayerId = int;
 
 @freezed
-class Player with _$Player {
+abstract class Player with _$Player {
   const factory Player({
     PlayerId? id,
     required String firstName,

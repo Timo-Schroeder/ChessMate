@@ -91,15 +91,20 @@ class DatabaseService {
         return left('No tournament found with id $id');
       }
       final element = entry.first;
-      return right(Tournament(
+      return right(
+        Tournament(
           id: element[_kColumnTournamentId] as int,
           name: element[_kColumnTournamentName] as String,
           startDate:
               DateTime.parse(element[_kColumnTournamentStartDate] as String),
           endDate: DateTime.parse(element[_kColumnTournamentEndDate] as String),
-          format: TournamentFormat.values.firstWhere((format) =>
-              format ==
-              element[_kColumnTournamentFormat] as TournamentFormat)));
+          format: TournamentFormat.values.firstWhere(
+              (format) =>
+                  format.toString() ==
+                  'TournamentFormat.${element[_kColumnTournamentFormat]}',
+              orElse: () => TournamentFormat.swiss),
+        ),
+      );
     } catch (e) {
       return left(e.toString());
     }

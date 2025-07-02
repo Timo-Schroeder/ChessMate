@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,222 +10,32 @@ part of 'player.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Player {
-  int? get id => throw _privateConstructorUsedError;
-  String get firstName => throw _privateConstructorUsedError;
-  String get lastName => throw _privateConstructorUsedError;
-  DateTime get dateOfBirth => throw _privateConstructorUsedError;
-  String get club => throw _privateConstructorUsedError;
-  int? get nationalRating => throw _privateConstructorUsedError;
-  int? get elo => throw _privateConstructorUsedError;
-  FideTitle? get title => throw _privateConstructorUsedError;
+  PlayerId? get id;
+  String get firstName;
+  String get lastName;
+  DateTime get dateOfBirth;
+  String get club;
+  int? get nationalRating;
+  int? get elo;
+  FideTitle? get title;
 
   /// Create a copy of Player
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PlayerCopyWith<Player> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PlayerCopyWith<$Res> {
-  factory $PlayerCopyWith(Player value, $Res Function(Player) then) =
-      _$PlayerCopyWithImpl<$Res, Player>;
-  @useResult
-  $Res call(
-      {int? id,
-      String firstName,
-      String lastName,
-      DateTime dateOfBirth,
-      String club,
-      int? nationalRating,
-      int? elo,
-      FideTitle? title});
-}
-
-/// @nodoc
-class _$PlayerCopyWithImpl<$Res, $Val extends Player>
-    implements $PlayerCopyWith<$Res> {
-  _$PlayerCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Player
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? firstName = null,
-    Object? lastName = null,
-    Object? dateOfBirth = null,
-    Object? club = null,
-    Object? nationalRating = freezed,
-    Object? elo = freezed,
-    Object? title = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
-      dateOfBirth: null == dateOfBirth
-          ? _value.dateOfBirth
-          : dateOfBirth // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      club: null == club
-          ? _value.club
-          : club // ignore: cast_nullable_to_non_nullable
-              as String,
-      nationalRating: freezed == nationalRating
-          ? _value.nationalRating
-          : nationalRating // ignore: cast_nullable_to_non_nullable
-              as int?,
-      elo: freezed == elo
-          ? _value.elo
-          : elo // ignore: cast_nullable_to_non_nullable
-              as int?,
-      title: freezed == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as FideTitle?,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$PlayerImplCopyWith<$Res> implements $PlayerCopyWith<$Res> {
-  factory _$$PlayerImplCopyWith(
-          _$PlayerImpl value, $Res Function(_$PlayerImpl) then) =
-      __$$PlayerImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {int? id,
-      String firstName,
-      String lastName,
-      DateTime dateOfBirth,
-      String club,
-      int? nationalRating,
-      int? elo,
-      FideTitle? title});
-}
-
-/// @nodoc
-class __$$PlayerImplCopyWithImpl<$Res>
-    extends _$PlayerCopyWithImpl<$Res, _$PlayerImpl>
-    implements _$$PlayerImplCopyWith<$Res> {
-  __$$PlayerImplCopyWithImpl(
-      _$PlayerImpl _value, $Res Function(_$PlayerImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Player
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? firstName = null,
-    Object? lastName = null,
-    Object? dateOfBirth = null,
-    Object? club = null,
-    Object? nationalRating = freezed,
-    Object? elo = freezed,
-    Object? title = freezed,
-  }) {
-    return _then(_$PlayerImpl(
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
-      dateOfBirth: null == dateOfBirth
-          ? _value.dateOfBirth
-          : dateOfBirth // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      club: null == club
-          ? _value.club
-          : club // ignore: cast_nullable_to_non_nullable
-              as String,
-      nationalRating: freezed == nationalRating
-          ? _value.nationalRating
-          : nationalRating // ignore: cast_nullable_to_non_nullable
-              as int?,
-      elo: freezed == elo
-          ? _value.elo
-          : elo // ignore: cast_nullable_to_non_nullable
-              as int?,
-      title: freezed == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as FideTitle?,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$PlayerImpl implements _Player {
-  const _$PlayerImpl(
-      {this.id,
-      required this.firstName,
-      required this.lastName,
-      required this.dateOfBirth,
-      required this.club,
-      this.nationalRating,
-      this.elo,
-      this.title});
-
-  @override
-  final int? id;
-  @override
-  final String firstName;
-  @override
-  final String lastName;
-  @override
-  final DateTime dateOfBirth;
-  @override
-  final String club;
-  @override
-  final int? nationalRating;
-  @override
-  final int? elo;
-  @override
-  final FideTitle? title;
-
-  @override
-  String toString() {
-    return 'Player(id: $id, firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, club: $club, nationalRating: $nationalRating, elo: $elo, title: $title)';
-  }
+  $PlayerCopyWith<Player> get copyWith =>
+      _$PlayerCopyWithImpl<Player>(this as Player, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PlayerImpl &&
+            other is Player &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
@@ -243,47 +54,226 @@ class _$PlayerImpl implements _Player {
   int get hashCode => Object.hash(runtimeType, id, firstName, lastName,
       dateOfBirth, club, nationalRating, elo, title);
 
+  @override
+  String toString() {
+    return 'Player(id: $id, firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, club: $club, nationalRating: $nationalRating, elo: $elo, title: $title)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $PlayerCopyWith<$Res> {
+  factory $PlayerCopyWith(Player value, $Res Function(Player) _then) =
+      _$PlayerCopyWithImpl;
+  @useResult
+  $Res call(
+      {PlayerId? id,
+      String firstName,
+      String lastName,
+      DateTime dateOfBirth,
+      String club,
+      int? nationalRating,
+      int? elo,
+      FideTitle? title});
+}
+
+/// @nodoc
+class _$PlayerCopyWithImpl<$Res> implements $PlayerCopyWith<$Res> {
+  _$PlayerCopyWithImpl(this._self, this._then);
+
+  final Player _self;
+  final $Res Function(Player) _then;
+
   /// Create a copy of Player
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? dateOfBirth = null,
+    Object? club = null,
+    Object? nationalRating = freezed,
+    Object? elo = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_self.copyWith(
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as PlayerId?,
+      firstName: null == firstName
+          ? _self.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _self.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      dateOfBirth: null == dateOfBirth
+          ? _self.dateOfBirth
+          : dateOfBirth // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      club: null == club
+          ? _self.club
+          : club // ignore: cast_nullable_to_non_nullable
+              as String,
+      nationalRating: freezed == nationalRating
+          ? _self.nationalRating
+          : nationalRating // ignore: cast_nullable_to_non_nullable
+              as int?,
+      elo: freezed == elo
+          ? _self.elo
+          : elo // ignore: cast_nullable_to_non_nullable
+              as int?,
+      title: freezed == title
+          ? _self.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as FideTitle?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _Player implements Player {
+  const _Player(
+      {this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.dateOfBirth,
+      required this.club,
+      this.nationalRating,
+      this.elo,
+      this.title});
+
+  @override
+  final PlayerId? id;
+  @override
+  final String firstName;
+  @override
+  final String lastName;
+  @override
+  final DateTime dateOfBirth;
+  @override
+  final String club;
+  @override
+  final int? nationalRating;
+  @override
+  final int? elo;
+  @override
+  final FideTitle? title;
+
+  /// Create a copy of Player
+  /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PlayerCopyWith<_Player> get copyWith =>
+      __$PlayerCopyWithImpl<_Player>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Player &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.dateOfBirth, dateOfBirth) ||
+                other.dateOfBirth == dateOfBirth) &&
+            (identical(other.club, club) || other.club == club) &&
+            (identical(other.nationalRating, nationalRating) ||
+                other.nationalRating == nationalRating) &&
+            (identical(other.elo, elo) || other.elo == elo) &&
+            (identical(other.title, title) || other.title == title));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, firstName, lastName,
+      dateOfBirth, club, nationalRating, elo, title);
+
+  @override
+  String toString() {
+    return 'Player(id: $id, firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, club: $club, nationalRating: $nationalRating, elo: $elo, title: $title)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$PlayerCopyWith<$Res> implements $PlayerCopyWith<$Res> {
+  factory _$PlayerCopyWith(_Player value, $Res Function(_Player) _then) =
+      __$PlayerCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {PlayerId? id,
+      String firstName,
+      String lastName,
+      DateTime dateOfBirth,
+      String club,
+      int? nationalRating,
+      int? elo,
+      FideTitle? title});
+}
+
+/// @nodoc
+class __$PlayerCopyWithImpl<$Res> implements _$PlayerCopyWith<$Res> {
+  __$PlayerCopyWithImpl(this._self, this._then);
+
+  final _Player _self;
+  final $Res Function(_Player) _then;
+
+  /// Create a copy of Player
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  _$$PlayerImplCopyWith<_$PlayerImpl> get copyWith =>
-      __$$PlayerImplCopyWithImpl<_$PlayerImpl>(this, _$identity);
+  $Res call({
+    Object? id = freezed,
+    Object? firstName = null,
+    Object? lastName = null,
+    Object? dateOfBirth = null,
+    Object? club = null,
+    Object? nationalRating = freezed,
+    Object? elo = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_Player(
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as PlayerId?,
+      firstName: null == firstName
+          ? _self.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastName: null == lastName
+          ? _self.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String,
+      dateOfBirth: null == dateOfBirth
+          ? _self.dateOfBirth
+          : dateOfBirth // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      club: null == club
+          ? _self.club
+          : club // ignore: cast_nullable_to_non_nullable
+              as String,
+      nationalRating: freezed == nationalRating
+          ? _self.nationalRating
+          : nationalRating // ignore: cast_nullable_to_non_nullable
+              as int?,
+      elo: freezed == elo
+          ? _self.elo
+          : elo // ignore: cast_nullable_to_non_nullable
+              as int?,
+      title: freezed == title
+          ? _self.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as FideTitle?,
+    ));
+  }
 }
 
-abstract class _Player implements Player {
-  const factory _Player(
-      {final int? id,
-      required final String firstName,
-      required final String lastName,
-      required final DateTime dateOfBirth,
-      required final String club,
-      final int? nationalRating,
-      final int? elo,
-      final FideTitle? title}) = _$PlayerImpl;
-
-  @override
-  int? get id;
-  @override
-  String get firstName;
-  @override
-  String get lastName;
-  @override
-  DateTime get dateOfBirth;
-  @override
-  String get club;
-  @override
-  int? get nationalRating;
-  @override
-  int? get elo;
-  @override
-  FideTitle? get title;
-
-  /// Create a copy of Player
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PlayerImplCopyWith<_$PlayerImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on

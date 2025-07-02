@@ -5,10 +5,10 @@ import 'tournament_format.dart';
 part 'tournament.freezed.dart';
 
 @freezed
-class Tournament with _$Tournament {
+abstract class Tournament with _$Tournament {
   const factory Tournament({
     /// The unique identifier of the tournament.
-    required int id,
+    int? id,
 
     /// The name of the tournament.
     required String name,

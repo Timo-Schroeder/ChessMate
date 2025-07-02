@@ -27,7 +27,7 @@ class TournamentSelectionList extends StatelessWidget with WatchItMixin {
                   icon: const Icon(Icons.delete),
                   onPressed: () {
                     locator<TournamentSelectionViewModel>()
-                        .deleteTournament(tournament.id);
+                        .deleteTournament(tournament.id!);
                   },
                 ),
               ),

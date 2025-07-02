@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:watch_it/watch_it.dart';
 import 'package:yaru/yaru.dart';
 
-import '../../../domain/models/tournament/tournament.dart';
 import '../../../domain/models/tournament/tournament_format.dart';
 import '../../../utils/locator.dart';
 import '../../core/ui/header_bar.dart';
@@ -12,15 +11,11 @@ import '../view_model/tournament_creation_view_model.dart';
 class TournamentCreationScreen extends StatelessWidget with WatchItMixin {
   TournamentCreationScreen({super.key});
   final _tournamentCreationViewModel = locator<TournamentCreationViewModel>();
-  final _nameController = TextEditingController();
-  final _startDateController = YaruDateTimeEntryController.now();
-  final _endDateController = YaruDateTimeEntryController.now();
 
   @override
   Widget build(BuildContext context) {
     final tournamentFormat = watchPropertyValue(
         (TournamentCreationViewModel m) => m.tournamentFormat);
-
     return Scaffold(
       appBar: HeaderBar(
         leading: IconButton(
@@ -34,10 +29,12 @@ class TournamentCreationScreen extends StatelessWidget with WatchItMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
-              controller: _nameController,
               decoration: const InputDecoration(
                 labelText: 'Name',
               ),
+              onChanged: (text) {
+                _tournamentCreationViewModel.tournamentName = text;
+              },
             ),
             const SizedBox(height: 16),
             const Text(
@@ -46,17 +43,27 @@ class TournamentCreationScreen extends StatelessWidget with WatchItMixin {
             ),
             const SizedBox(height: 16),
             YaruDateTimeEntry(
-              controller: _startDateController,
               includeTime: false,
               firstDateTime: DateTime(1900),
               lastDateTime: DateTime(2100),
+              initialDateTime: DateTime.now(),
+              onChanged: (date) {
+                if (date != null) {
+                  _tournamentCreationViewModel.tournamentStartDate = date;
+                }
+              },
             ),
             const SizedBox(height: 16),
             YaruDateTimeEntry(
-              controller: _endDateController,
               includeTime: false,
               firstDateTime: DateTime(1900),
               lastDateTime: DateTime(2100),
+              initialDateTime: DateTime.now(),
+              onChanged: (date) {
+                if (date != null) {
+                  _tournamentCreationViewModel.tournamentEndDate = date;
+                }
+              },
             ),
             const SizedBox(height: 16),
             const Text(
@@ -93,40 +100,7 @@ class TournamentCreationScreen extends StatelessWidget with WatchItMixin {
                 const SizedBox(width: 16),
                 ElevatedButton(
                   onPressed: () {
-                    if (_nameController.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Name is required')),
-                      );
-                      return;
-                    }
-                    if (_startDateController.value == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Start date is required')),
-                      );
-                      return;
-                    }
-                    if (_endDateController.value == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('End date is required')),
-                      );
-                      return;
-                    }
-                    if (_startDateController.value!
-                        .isAfter(_endDateController.value!)) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content:
-                                Text('Start date must be before end date')),
-                      );
-                      return;
-                    }
-                    _tournamentCreationViewModel.createTournament(Tournament(
-                      id: -1,
-                      name: _nameController.text,
-                      startDate: _startDateController.value!,
-                      endDate: _endDateController.value!,
-                      format: tournamentFormat,
-                    ));
+                    _tournamentCreationViewModel.createTournament();
                     context.go('/tournament-selection');
                   },
                   child: const Text('Create'),
