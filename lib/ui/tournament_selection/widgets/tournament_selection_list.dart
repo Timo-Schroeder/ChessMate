@@ -10,28 +10,29 @@ class TournamentSelectionList extends StatelessWidget with WatchItMixin {
 
   @override
   Widget build(BuildContext context) {
-    final tournamentList =
-        watchPropertyValue((TournamentSelectionViewModel m) => m.tournaments);
+    final tournamentList = watchPropertyValue(
+        (TournamentSelectionViewModel m) => m.tournaments.reversed);
 
     return YaruSection(
-        headline: const Text('Tournaments'),
-        width: 400,
-        height: 400,
-        padding: const EdgeInsets.all(kYaruPagePadding),
-        child: ListView(
-          children: [
-            for (final tournament in tournamentList)
-              YaruTile(
-                title: Text(tournament.name),
-                trailing: YaruIconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    locator<TournamentSelectionViewModel>()
-                        .deleteTournament(tournament.id!);
-                  },
-                ),
+      headline: const Text('Tournaments'),
+      width: 400,
+      height: 400,
+      padding: const EdgeInsets.all(kYaruPagePadding),
+      child: ListView(
+        children: [
+          for (final tournament in tournamentList)
+            YaruTile(
+              title: Text(tournament.name),
+              trailing: YaruIconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  locator<TournamentSelectionViewModel>()
+                      .deleteTournament(tournament.id!);
+                },
               ),
-          ],
-        ));
+            ),
+        ],
+      ),
+    );
   }
 }
