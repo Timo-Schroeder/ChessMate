@@ -10,48 +10,80 @@ class TournamentCreationViewModel extends SafeChangeNotifier {
 
   String _name = '';
   TournamentFormat _format = TournamentFormat.swiss;
-  DateTime _startDate = DateTime.now();
-  DateTime _endDate = DateTime.now();
-  bool _isLoading = false;
-  String? _error;
-
-  bool get isLoading => _isLoading;
-  String? get error => _error;
+  DateTime? _startDate;
+  DateTime? _endDate;
+  String _nameError = '';
+  String _startDateError = '';
+  String _endDateError = '';
 
   TournamentFormat get tournamentFormat => _format;
-  set tournamentFormat(TournamentFormat tournamentFormat) =>
-      _format = tournamentFormat;
+  set tournamentFormat(TournamentFormat tournamentFormat) {
+    _format = tournamentFormat;
+    notifyListeners();
+  }
 
-  DateTime get tournamentStartDate => _startDate;
-  set tournamentStartDate(DateTime startDate) => _startDate = startDate;
+  DateTime? get tournamentStartDate => _startDate;
+  set tournamentStartDate(DateTime? startDate) {
+    _startDate = startDate;
+    if (startDate != null) {
+      _startDateError = '';
+    }
+    notifyListeners();
+  }
 
-  DateTime get tournamentEndDate => _endDate;
-  set tournamentEndDate(DateTime endDate) => _endDate = endDate;
+  DateTime? get tournamentEndDate => _endDate;
+  set tournamentEndDate(DateTime? endDate) {
+    _endDate = endDate;
+    if (endDate != null) {
+      _endDateError = '';
+    }
+    notifyListeners();
+  }
 
   String get tournamentName => _name;
-  set tournamentName(String name) => _name = name;
+  set tournamentName(String name) {
+    _name = name;
+    if (_name.isNotEmpty) {
+      _nameError = '';
+    }
+    notifyListeners();
+  }
 
-  Future<bool> createTournament() async {
-    _isLoading = true;
-    _error = null;
+  String get nameError => _nameError;
+
+  String get startDateError => _startDateError;
+
+  String get endDateError => _endDateError;
+
+  bool createTournament() {
+    _nameError = '';
+    _startDateError = '';
+    _endDateError = '';
+
     notifyListeners();
 
     if (_name.isEmpty) {
-      _error = 'Name cannot be empty';
-      notifyListeners();
-      return false;
+      _nameError = 'Name cannot be empty';
     }
 
-    // Subtract one day, as DateTime.now() also includes hours and minutes and
-    //is therefore after the date itself.
-    if (_startDate.isBefore(DateTime.now().subtract(const Duration(days: 1)))) {
-      _error = 'Start date cannot be before current date';
-      notifyListeners();
-      return false;
+    if (_startDate == null) {
+      _startDateError = 'Start date cannot be empty';
+    } else if (_startDate!
+        .isBefore(DateTime.now().subtract(const Duration(days: 1)))) {
+      // Subtract one day, as DateTime.now() also includes hours and minutes and
+      //is therefore after the date itself.
+      _startDateError = 'Start date cannot be before current date';
     }
 
-    if (_endDate.isBefore(_startDate)) {
-      _error = 'End date cannot be before start date';
+    if (_endDate == null) {
+      _endDateError = 'End date cannot be empty';
+    } else if (_endDate!.isBefore(_startDate!)) {
+      _endDateError = 'End date cannot be before start date';
+    }
+
+    if (_nameError.isNotEmpty ||
+        _startDateError.isNotEmpty ||
+        _endDateError.isNotEmpty) {
       notifyListeners();
       return false;
     }
@@ -59,10 +91,25 @@ class TournamentCreationViewModel extends SafeChangeNotifier {
     final tournament = Tournament(
       name: _name,
       format: _format,
-      startDate: _startDate,
-      endDate: _endDate,
+      startDate: _startDate!,
+      endDate: _endDate!,
     );
-    await _tournamentUseCase.createTournament(tournament);
+    _tournamentUseCase.createTournament(tournament);
+
+    tournamentName = '';
+    tournamentStartDate = null;
+    tournamentEndDate = null;
+
     return true;
+  }
+
+  void cancelTournamentCreation() {
+    _nameError = '';
+    _startDateError = '';
+    _endDateError = '';
+    _name = '';
+    _startDate = null;
+    _endDate = null;
+    notifyListeners();
   }
 }
