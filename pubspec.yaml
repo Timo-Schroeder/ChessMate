@@ -25,7 +25,10 @@ dependencies:
   watch_it: ^1.6.5
   get_it: ^8.0.3
   safe_change_notifier: ^0.4.0
-  go_router: ^15.1.1
+  go_router: ^16.0.0
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
 dev_dependencies:
   flutter_test:
@@ -38,3 +41,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true

@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../core/ui/header_bar.dart';
 import 'tournament_selection_list.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,8 @@ class TournamentSelectionScreen extends StatelessWidget {
               onPressed: () {
                 context.go('/tournament-creation');
               },
-              child: const Text('New Tournament'),
+              child:
+                  Text(AppLocalizations.of(context)!.newTournamentButtonText),
             ),
           ],
         ),

@@ -1,0 +1,52 @@
+{
+    "@@locale": "en",
+    "newTournamentButtonText": "New Tournament",
+    "@newTournamentButtonText": {
+        "description": "Button on tournament selection page linking to the tournament creation page"
+    },
+    "tournamentsHeading": "Tournaments",
+    "@tournamentsHeading": {
+        "description": "Heading above tournaments list on selection screen"
+    },
+    "tournamentCreationTitle": "New Tournament: {name}",
+    "@tournamentCreationTitle": {
+        "description": "Title of tournament creation window including name of new tournament",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "tournamentCreationNameSection": "Name:",
+    "@tournamentCreationNameSection": {
+        "description": "Text above name text field on tournament creation screen"
+    },
+    "tournamentCreationNameTextFieldLabel": "Name",
+    "@tournamentCreationNameTextFieldLabel": {
+        "description": "Label for tournament creation form name text field"
+    },
+    "tournamentCreationDateRangeSection": "Daterange:",
+    "@tournamentCreationDateRangeSection": {
+        "description": "Text above daterange section on tournament creation screen"
+    },
+    "tournamentCreationDateRangeStartDateLabel": "Enter Start Date",
+    "@tournamentCreationDateRangeStartDateLabel": {
+        "description": "Label for tournament creation start date input field"
+    },
+    "tournamentCreationDateRangeEndDateLabel": "Enter End Date",
+    "@tournamentCreationDateRangeEndDateLabel": {
+        "description": "Label for tournament creation end date input field"
+    },
+    "tournamentCreationFormatSection": "Format:",
+    "@tournamentCreationFormatSection": {
+        "description": "Text above tournament creation format dropdown menu"
+    },
+    "tournamentCreationCancelButton": "Cancel",
+    "@tournamentCreationCancelButton": {
+        "description": "Cancel button on tournament creation screen"
+    },
+    "tournamentCreationCreateButton": "Create",
+    "@tournamentCreationCreateButton": {
+        "description": "Create button on tournament creation screen"
+    }
+}

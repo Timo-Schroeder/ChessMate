@@ -4,6 +4,7 @@ import 'package:watch_it/watch_it.dart';
 import 'package:yaru/yaru.dart';
 
 import '../../../domain/models/tournament/tournament_format.dart';
+import '../../../l10n/app_localizations.dart';
 import '../view_model/tournament_creation_view_model.dart';
 
 class TournamentCreationForm extends StatelessWidget with WatchItMixin {
@@ -21,13 +22,15 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Name:',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        Text(
+          AppLocalizations.of(context)!.tournamentCreationNameSection,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 16),
         TextFormField(
-          decoration: const InputDecoration(labelText: 'Name'),
+          decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)!
+                  .tournamentCreationNameTextFieldLabel),
           onChanged: (value) =>
               di<TournamentCreationViewModel>().tournamentName = value,
         ),
@@ -36,9 +39,9 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
           style: const TextStyle(color: Colors.red),
         ),
         const SizedBox(height: 16),
-        const Text(
-          'Daterange:',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        Text(
+          AppLocalizations.of(context)!.tournamentCreationDateRangeSection,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 16),
         YaruDateTimeEntry(
@@ -74,9 +77,9 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
           style: const TextStyle(color: Colors.red),
         ),
         const SizedBox(height: 16),
-        const Text(
-          'Format:',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        Text(
+          AppLocalizations.of(context)!.tournamentCreationFormatSection,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 16),
         YaruPopupMenuButton<TournamentFormat>(
@@ -105,7 +108,8 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
                 di<TournamentCreationViewModel>().cancelTournamentCreation();
                 context.go('/tournament-selection');
               },
-              child: const Text('Cancel'),
+              child: Text(
+                  AppLocalizations.of(context)!.tournamentCreationCancelButton),
             ),
             const SizedBox(width: 16),
             ElevatedButton(
@@ -117,7 +121,8 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
                   context.go('/tournament-selection');
                 }
               },
-              child: const Text('Create'),
+              child: Text(
+                  AppLocalizations.of(context)!.tournamentCreationCreateButton),
             ),
           ],
         )
