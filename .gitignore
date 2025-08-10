@@ -25,7 +25,10 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
-.qodo
+.
 
 #IDEs
 .vscode
+
+# FVM Version Cache
+.fvm/
