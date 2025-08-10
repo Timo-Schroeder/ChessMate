@@ -15,7 +15,8 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
     final nameError =
         watchPropertyValue((TournamentCreationViewModel vm) => vm.nameError);
     final startDateError = watchPropertyValue(
-        (TournamentCreationViewModel vm) => vm.startDateError);
+      (TournamentCreationViewModel vm) => vm.startDateError,
+    );
     final endDateError =
         watchPropertyValue((TournamentCreationViewModel vm) => vm.endDateError);
 
@@ -29,8 +30,9 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
         const SizedBox(height: 16),
         TextFormField(
           decoration: InputDecoration(
-              labelText: AppLocalizations.of(context)!
-                  .tournamentCreationNameTextFieldLabel),
+            labelText: AppLocalizations.of(context)!
+                .tournamentCreationNameTextFieldLabel,
+          ),
           onChanged: (value) =>
               di<TournamentCreationViewModel>().tournamentName = value,
         ),
@@ -109,7 +111,8 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
                 context.go('/tournament-selection');
               },
               child: Text(
-                  AppLocalizations.of(context)!.tournamentCreationCancelButton),
+                AppLocalizations.of(context)!.tournamentCreationCancelButton,
+              ),
             ),
             const SizedBox(width: 16),
             ElevatedButton(
@@ -122,10 +125,11 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
                 }
               },
               child: Text(
-                  AppLocalizations.of(context)!.tournamentCreationCreateButton),
+                AppLocalizations.of(context)!.tournamentCreationCreateButton,
+              ),
             ),
           ],
-        )
+        ),
       ],
     );
   }

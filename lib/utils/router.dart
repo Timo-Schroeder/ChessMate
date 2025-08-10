@@ -15,6 +15,6 @@ final router = GoRouter(
       name: 'tournament-creation',
       path: '/tournament-creation',
       builder: (context, state) => TournamentCreationScreen(),
-    )
+    ),
   ],
 );

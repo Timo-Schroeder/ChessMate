@@ -11,7 +11,8 @@ class TournamentCreationScreen extends StatelessWidget with WatchItMixin {
   @override
   Widget build(BuildContext context) {
     final tournamentName = watchPropertyValue(
-        (TournamentCreationViewModel vm) => vm.tournamentName);
+      (TournamentCreationViewModel vm) => vm.tournamentName,
+    );
 
     return Scaffold(
       appBar: HeaderBar(title: Text('New Tournament: $tournamentName')),

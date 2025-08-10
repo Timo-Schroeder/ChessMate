@@ -50,21 +50,26 @@ class DatabaseService {
           _kColumnTournamentName,
           _kColumnTournamentStartDate,
           _kColumnTournamentEndDate,
-          _kColumnTournamentFormat
+          _kColumnTournamentFormat,
         ],
       );
       final list = entries
           .map(
             (element) => Tournament(
-                id: element[_kColumnTournamentId] as int,
-                name: element[_kColumnTournamentName] as String,
-                startDate: DateTime.parse(
-                    element[_kColumnTournamentStartDate] as String),
-                endDate: DateTime.parse(
-                    element[_kColumnTournamentEndDate] as String),
-                format: TournamentFormat.values.firstWhere((format) =>
+              id: element[_kColumnTournamentId] as int,
+              name: element[_kColumnTournamentName] as String,
+              startDate: DateTime.parse(
+                element[_kColumnTournamentStartDate] as String,
+              ),
+              endDate: DateTime.parse(
+                element[_kColumnTournamentEndDate] as String,
+              ),
+              format: TournamentFormat.values.firstWhere(
+                (format) =>
                     format ==
-                    element[_kColumnTournamentFormat] as TournamentFormat)),
+                    element[_kColumnTournamentFormat] as TournamentFormat,
+              ),
+            ),
           )
           .toList();
       return right(list.lock);
@@ -82,7 +87,7 @@ class DatabaseService {
           _kColumnTournamentName,
           _kColumnTournamentStartDate,
           _kColumnTournamentEndDate,
-          _kColumnTournamentFormat
+          _kColumnTournamentFormat,
         ],
         where: '$_kColumnTournamentId = ?',
         whereArgs: [id],
@@ -99,10 +104,11 @@ class DatabaseService {
               DateTime.parse(element[_kColumnTournamentStartDate] as String),
           endDate: DateTime.parse(element[_kColumnTournamentEndDate] as String),
           format: TournamentFormat.values.firstWhere(
-              (format) =>
-                  format.toString() ==
-                  'TournamentFormat.${element[_kColumnTournamentFormat]}',
-              orElse: () => TournamentFormat.swiss),
+            (format) =>
+                format.toString() ==
+                'TournamentFormat.${element[_kColumnTournamentFormat]}',
+            orElse: () => TournamentFormat.swiss,
+          ),
         ),
       );
     } catch (e) {
@@ -111,7 +117,8 @@ class DatabaseService {
   }
 
   Future<Either<String, Tournament>> createTournament(
-      Tournament tournament) async {
+    Tournament tournament,
+  ) async {
     try {
       final id = await _database!.insert(
         _kTableTournament,
@@ -119,7 +126,7 @@ class DatabaseService {
           _kColumnTournamentName: tournament.name,
           _kColumnTournamentStartDate: tournament.startDate.toString(),
           _kColumnTournamentEndDate: tournament.endDate.toString(),
-          _kColumnTournamentFormat: tournament.format.toString()
+          _kColumnTournamentFormat: tournament.format.toString(),
         },
       );
       return right(tournament.copyWith(id: id));
@@ -130,8 +137,11 @@ class DatabaseService {
 
   Future<Either<String, void>> deleteTournament(int id) async {
     try {
-      final rowsDeleted = await _database!.delete(_kTableTournament,
-          where: '$_kColumnTournamentId = ?', whereArgs: [id]);
+      final rowsDeleted = await _database!.delete(
+        _kTableTournament,
+        where: '$_kColumnTournamentId = ?',
+        whereArgs: [id],
+      );
       if (rowsDeleted == 0) {
         return left('No tournament found with id $id');
       }

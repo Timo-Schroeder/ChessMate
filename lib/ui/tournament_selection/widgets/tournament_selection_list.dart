@@ -11,7 +11,8 @@ class TournamentSelectionList extends StatelessWidget with WatchItMixin {
   @override
   Widget build(BuildContext context) {
     final tournamentList = watchPropertyValue(
-        (TournamentSelectionViewModel m) => m.tournaments.reversed);
+      (TournamentSelectionViewModel m) => m.tournaments.reversed,
+    );
 
     return YaruSection(
       headline: const Text('Tournaments'),

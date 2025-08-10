@@ -36,7 +36,8 @@ class TournamentRepositoryImpl implements TournamentRepository {
 
   @override
   Future<Either<String, Tournament>> createTournament(
-      Tournament tournament) async {
+    Tournament tournament,
+  ) async {
     if (!_database.isOpen()) {
       await _database.open();
     }
