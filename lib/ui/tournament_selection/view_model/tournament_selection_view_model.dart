@@ -2,7 +2,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:safe_change_notifier/safe_change_notifier.dart';
 
 import '../../../domain/models/tournament/tournament.dart';
-import '../../../domain/use_cases/tournament/tourament_use_case.dart';
+import '../../../domain/use_cases/tournament/tournament_use_case.dart';
 import '../../../utils/locator.dart' show locator;
 
 class TournamentSelectionViewModel extends SafeChangeNotifier {
@@ -20,11 +20,11 @@ class TournamentSelectionViewModel extends SafeChangeNotifier {
     super.dispose();
   }
 
-  void _onTournamentUseCaseChanged() {
-    notifyListeners();
-  }
-
   void deleteTournament(int id) {
     _tournamentUseCase.deleteTournament(id);
+  }
+
+  void _onTournamentUseCaseChanged() {
+    notifyListeners();
   }
 }

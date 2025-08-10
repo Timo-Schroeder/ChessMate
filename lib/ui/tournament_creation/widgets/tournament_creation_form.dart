@@ -52,11 +52,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
           lastDateTime: DateTime(2100),
           acceptEmpty: false,
           initialDateTime: DateTime.now(),
-          onChanged: (date) {
-            if (date != null) {
-              di<TournamentCreationViewModel>().tournamentStartDate = date;
-            }
-          },
+          onChanged: onStartDateChange,
         ),
         Text(
           startDateError,
@@ -68,11 +64,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
           firstDateTime: DateTime(1900),
           lastDateTime: DateTime(2100),
           initialDateTime: DateTime.now(),
-          onChanged: (date) {
-            if (date != null) {
-              di<TournamentCreationViewModel>().tournamentEndDate = date;
-            }
-          },
+          onChanged: onEndDateChange,
         ),
         Text(
           endDateError,
@@ -86,26 +78,18 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
         const SizedBox(height: 16),
         YaruPopupMenuButton<TournamentFormat>(
           initialValue: TournamentFormat.swiss,
-          child: Text(TournamentFormat.swiss.name),
-          itemBuilder: (context) {
-            return [
-              for (final value in TournamentFormat.values)
-                PopupMenuItem(
-                  value: value,
-                  child: Text(
-                    value.name,
-                  ),
-                ),
-            ];
-          },
+          itemBuilder: formatChoiceBuilder,
           onSelected: (value) =>
               di<TournamentCreationViewModel>().tournamentFormat = value,
+          child: Text(TournamentFormat.swiss.name),
         ),
         const SizedBox(height: 32),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             OutlinedButton(
+              // Cannot be extracted due to local variable: context
+              // ignore: prefer-extracting-callbacks
               onPressed: () {
                 di<TournamentCreationViewModel>().cancelTournamentCreation();
                 context.go('/tournament-selection');
@@ -116,6 +100,8 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
             ),
             const SizedBox(width: 16),
             ElevatedButton(
+              // Cannot be extracted due to local variable: context
+              // ignore: prefer-extracting-callbacks
               onPressed: () {
                 final success =
                     di<TournamentCreationViewModel>().createTournament();
@@ -132,5 +118,31 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
         ),
       ],
     );
+  }
+
+  List<PopupMenuEntry<TournamentFormat>> formatChoiceBuilder(
+    BuildContext context,
+  ) {
+    return [
+      for (final value in TournamentFormat.values)
+        PopupMenuItem(
+          value: value,
+          child: Text(
+            value.name,
+          ),
+        ),
+    ];
+  }
+
+  void onEndDateChange(DateTime? date) {
+    if (date != null) {
+      di<TournamentCreationViewModel>().tournamentEndDate = date;
+    }
+  }
+
+  void onStartDateChange(DateTime? date) {
+    if (date != null) {
+      di<TournamentCreationViewModel>().tournamentStartDate = date;
+    }
   }
 }

@@ -26,9 +26,14 @@ class TournamentSelectionList extends StatelessWidget with WatchItMixin {
               title: Text(tournament.name),
               trailing: YaruIconButton(
                 icon: const Icon(Icons.delete),
+                // Cannot be extracted due to local variable: tournament
+                // ignore: prefer-extracting-callbacks
                 onPressed: () {
-                  locator<TournamentSelectionViewModel>()
-                      .deleteTournament(tournament.id!);
+                  final id = tournament.id;
+                  if (id != null) {
+                    locator<TournamentSelectionViewModel>()
+                        .deleteTournament(id);
+                  }
                 },
               ),
             ),

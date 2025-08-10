@@ -2,7 +2,7 @@ import 'package:safe_change_notifier/safe_change_notifier.dart';
 
 import '../../../domain/models/tournament/tournament.dart' show Tournament;
 import '../../../domain/models/tournament/tournament_format.dart';
-import '../../../domain/use_cases/tournament/tourament_use_case.dart';
+import '../../../domain/use_cases/tournament/tournament_use_case.dart';
 import '../../../utils/locator.dart';
 
 class TournamentCreationViewModel extends SafeChangeNotifier {
@@ -17,30 +17,19 @@ class TournamentCreationViewModel extends SafeChangeNotifier {
   String _endDateError = '';
 
   TournamentFormat get tournamentFormat => _format;
-  set tournamentFormat(TournamentFormat tournamentFormat) {
-    _format = tournamentFormat;
-    notifyListeners();
-  }
 
   DateTime? get tournamentStartDate => _startDate;
-  set tournamentStartDate(DateTime? startDate) {
-    _startDate = startDate;
-    if (startDate != null) {
-      _startDateError = '';
-    }
-    notifyListeners();
-  }
 
   DateTime? get tournamentEndDate => _endDate;
-  set tournamentEndDate(DateTime? endDate) {
-    _endDate = endDate;
-    if (endDate != null) {
-      _endDateError = '';
-    }
-    notifyListeners();
-  }
 
   String get tournamentName => _name;
+
+  String get nameError => _nameError;
+
+  String get startDateError => _startDateError;
+
+  String get endDateError => _endDateError;
+
   set tournamentName(String name) {
     _name = name;
     if (_name.isNotEmpty) {
@@ -49,11 +38,26 @@ class TournamentCreationViewModel extends SafeChangeNotifier {
     notifyListeners();
   }
 
-  String get nameError => _nameError;
+  set tournamentStartDate(DateTime? startDate) {
+    _startDate = startDate;
+    if (startDate != null) {
+      _startDateError = '';
+    }
+    notifyListeners();
+  }
 
-  String get startDateError => _startDateError;
+  set tournamentEndDate(DateTime? endDate) {
+    _endDate = endDate;
+    if (endDate != null) {
+      _endDateError = '';
+    }
+    notifyListeners();
+  }
 
-  String get endDateError => _endDateError;
+  set tournamentFormat(TournamentFormat tournamentFormat) {
+    _format = tournamentFormat;
+    notifyListeners();
+  }
 
   bool createTournament() {
     _nameError = '';
@@ -85,6 +89,7 @@ class TournamentCreationViewModel extends SafeChangeNotifier {
         _startDateError.isNotEmpty ||
         _endDateError.isNotEmpty) {
       notifyListeners();
+
       return false;
     }
 

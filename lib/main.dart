@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
 
-import 'domain/use_cases/tournament/tourament_use_case.dart';
+import 'domain/use_cases/tournament/tournament_use_case.dart';
 import 'l10n/app_localizations.dart';
 import 'utils/locator.dart';
 import 'utils/router.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: yaru.theme,
           darkTheme: yaru.darkTheme,
-          themeMode: ThemeMode.dark,
+          themeMode: ThemeMode.system,
           routerConfig: router,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,

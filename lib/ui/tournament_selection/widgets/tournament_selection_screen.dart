@@ -19,11 +19,15 @@ class TournamentSelectionScreen extends StatelessWidget {
             TournamentSelectionList(),
             const SizedBox(height: 16),
             ElevatedButton(
+              // Cannot be extracted due to local variable: context
+              // ignore: prefer-extracting-callbacks
               onPressed: () {
                 context.go('/tournament-creation');
               },
-              child:
-                  Text(AppLocalizations.of(context)!.newTournamentButtonText),
+              child: Text(
+                AppLocalizations.of(context)?.newTournamentButtonText ??
+                    'Hello',
+              ),
             ),
           ],
         ),

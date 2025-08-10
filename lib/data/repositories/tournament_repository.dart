@@ -23,6 +23,7 @@ class TournamentRepositoryImpl implements TournamentRepository {
     if (!_database.isOpen()) {
       await _database.open();
     }
+
     return _database.getAllTournaments();
   }
 
@@ -31,6 +32,7 @@ class TournamentRepositoryImpl implements TournamentRepository {
     if (!_database.isOpen()) {
       await _database.open();
     }
+
     return _database.getTournamentById(id);
   }
 
@@ -41,6 +43,7 @@ class TournamentRepositoryImpl implements TournamentRepository {
     if (!_database.isOpen()) {
       await _database.open();
     }
+
     return _database.createTournament(tournament);
   }
 
@@ -49,6 +52,7 @@ class TournamentRepositoryImpl implements TournamentRepository {
     if (!_database.isOpen()) {
       await _database.open();
     }
+
     return _database.deleteTournament(id);
   }
 }
