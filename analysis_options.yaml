@@ -7,7 +7,7 @@ linter:
     prefer_single_quotes: true
     prefer_const_constructors: true
     prefer_const_declarations: true
-    prefer_relative_imports: true
+    always_use_package_imports: true
     require_trailing_commas: true
     use_super_parameters: true
     close_sinks: true

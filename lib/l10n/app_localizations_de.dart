@@ -12,11 +12,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get newTournamentButtonText => 'Neues Turnier';
 
   @override
-  String get tournamentsHeading => 'Tournaments';
+  String get tournamentsHeading => 'Turniere';
 
   @override
   String tournamentCreationTitle(String name) {
-    return 'New Tournament: $name';
+    return 'Neues Turnier: $name';
   }
 
   @override

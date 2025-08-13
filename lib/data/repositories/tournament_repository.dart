@@ -1,9 +1,9 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fpdart/fpdart.dart';
 
-import '../../domain/models/tournament/tournament.dart';
-import '../../utils/locator.dart';
-import '../services/database_service.dart';
+import 'package:chessmate/domain/models/tournament/tournament.dart';
+import 'package:chessmate/utils/locator.dart';
+import 'package:chessmate/data/services/database_service.dart';
 
 abstract class TournamentRepository {
   Future<Either<String, IList<Tournament>>> getTournaments();

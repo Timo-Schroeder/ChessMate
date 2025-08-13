@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:safe_change_notifier/safe_change_notifier.dart';
 
-import '../../../data/repositories/tournament_repository.dart';
-import '../../../utils/locator.dart';
-import '../../models/tournament/tournament.dart';
+import 'package:chessmate/data/repositories/tournament_repository.dart';
+import 'package:chessmate/utils/locator.dart';
+import 'package:chessmate/domain/models/tournament/tournament.dart';
 
 class TournamentUseCase extends SafeChangeNotifier {
   final _tournamentRepository = locator<TournamentRepository>();

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:watch_it/watch_it.dart';
 import 'package:yaru/yaru.dart';
 
-import '../../../utils/locator.dart';
-import '../view_model/tournament_selection_view_model.dart';
+import 'package:chessmate/utils/locator.dart';
+import 'package:chessmate/ui/tournament_selection/view_model/tournament_selection_view_model.dart';
 
 class TournamentSelectionList extends StatelessWidget with WatchItMixin {
   TournamentSelectionList({super.key});
+  static const double _kTournamentSectionWidth = 400.0;
+  static const double _kTournamentSectionHeight = 400.0;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +18,8 @@ class TournamentSelectionList extends StatelessWidget with WatchItMixin {
 
     return YaruSection(
       headline: const Text('Tournaments'),
-      width: 400,
-      height: 400,
+      width: _kTournamentSectionWidth,
+      height: _kTournamentSectionHeight,
       padding: const EdgeInsets.all(kYaruPagePadding),
       child: ListView(
         children: [

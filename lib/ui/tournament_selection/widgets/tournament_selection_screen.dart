@@ -1,8 +1,7 @@
+import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../l10n/app_localizations.dart';
-import '../../core/ui/header_bar.dart';
-import 'tournament_selection_list.dart';
+import 'package:chessmate/ui/core/ui/header_bar.dart';
+import 'package:chessmate/ui/tournament_selection/widgets/tournament_selection_list.dart';
 import 'package:flutter/material.dart';
 
 class TournamentSelectionScreen extends StatelessWidget {
@@ -25,8 +24,7 @@ class TournamentSelectionScreen extends StatelessWidget {
                 context.go('/tournament-creation');
               },
               child: Text(
-                AppLocalizations.of(context)?.newTournamentButtonText ??
-                    'Hello',
+                context.l10n.newTournamentButtonText,
               ),
             ),
           ],

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:watch_it/watch_it.dart';
 
-import '../../core/ui/header_bar.dart';
-import '../view_model/tournament_creation_view_model.dart';
-import 'tournament_creation_form.dart';
+import 'package:chessmate/ui/core/ui/header_bar.dart';
+import 'package:chessmate/ui/tournament_creation/view_model/tournament_creation_view_model.dart';
+import 'package:chessmate/ui/tournament_creation/widgets/tournament_creation_form.dart';
 
 class TournamentCreationScreen extends StatelessWidget with WatchItMixin {
   TournamentCreationScreen({super.key});

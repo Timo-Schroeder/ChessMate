@@ -1,9 +1,10 @@
 import 'package:safe_change_notifier/safe_change_notifier.dart';
 
-import '../../../domain/models/tournament/tournament.dart' show Tournament;
-import '../../../domain/models/tournament/tournament_format.dart';
-import '../../../domain/use_cases/tournament/tournament_use_case.dart';
-import '../../../utils/locator.dart';
+import 'package:chessmate/domain/models/tournament/tournament.dart'
+    show Tournament;
+import 'package:chessmate/domain/models/tournament/tournament_format.dart';
+import 'package:chessmate/domain/use_cases/tournament/tournament_use_case.dart';
+import 'package:chessmate/utils/locator.dart';
 
 class TournamentCreationViewModel extends SafeChangeNotifier {
   final _tournamentUseCase = locator<TournamentUseCase>();

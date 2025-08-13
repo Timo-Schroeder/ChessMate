@@ -4,13 +4,11 @@ import 'package:fpdart/fpdart.dart';
 import 'package:path/path.dart' show join;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-import '../../domain/models/tournament/tournament.dart';
-import '../../domain/models/tournament/tournament_format.dart'
+import 'package:chessmate/domain/models/tournament/tournament.dart';
+import 'package:chessmate/domain/models/tournament/tournament_format.dart'
     show TournamentFormat;
 
 class DatabaseService {
-  DatabaseService({required this.databaseFactory});
-
   final DatabaseFactory databaseFactory;
 
   static const _kTableTournament = 'tournament';
@@ -21,6 +19,8 @@ class DatabaseService {
   static const _kColumnTournamentFormat = 'format';
 
   Database? _database;
+
+  DatabaseService({required this.databaseFactory});
 
   bool isOpen() => _database != null;
 
@@ -72,6 +72,7 @@ class DatabaseService {
             ),
           )
           .toList();
+
       return right(list.lock);
     } catch (e) {
       return left(e.toString());
@@ -96,6 +97,7 @@ class DatabaseService {
         return left('No tournament found with id $id');
       }
       final element = entry.first;
+
       return right(
         Tournament(
           id: element[_kColumnTournamentId] as int,
@@ -129,6 +131,7 @@ class DatabaseService {
           _kColumnTournamentFormat: tournament.format.toString(),
         },
       );
+
       return right(tournament.copyWith(id: id));
     } catch (e) {
       return left(e.toString());
@@ -145,6 +148,7 @@ class DatabaseService {
       if (rowsDeleted == 0) {
         return left('No tournament found with id $id');
       }
+
       return right(null);
     } catch (e) {
       return left(e.toString());

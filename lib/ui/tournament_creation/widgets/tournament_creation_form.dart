@@ -1,11 +1,11 @@
+import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_it/watch_it.dart';
 import 'package:yaru/yaru.dart';
 
-import '../../../domain/models/tournament/tournament_format.dart';
-import '../../../l10n/app_localizations.dart';
-import '../view_model/tournament_creation_view_model.dart';
+import 'package:chessmate/domain/models/tournament/tournament_format.dart';
+import 'package:chessmate/ui/tournament_creation/view_model/tournament_creation_view_model.dart';
 
 class TournamentCreationForm extends StatelessWidget with WatchItMixin {
   const TournamentCreationForm({super.key});
@@ -24,14 +24,13 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppLocalizations.of(context)!.tournamentCreationNameSection,
+          context.l10n.tournamentCreationNameSection,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 16),
         TextFormField(
           decoration: InputDecoration(
-            labelText: AppLocalizations.of(context)!
-                .tournamentCreationNameTextFieldLabel,
+            labelText: context.l10n.tournamentCreationNameTextFieldLabel,
           ),
           onChanged: (value) =>
               di<TournamentCreationViewModel>().tournamentName = value,
@@ -42,7 +41,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
         ),
         const SizedBox(height: 16),
         Text(
-          AppLocalizations.of(context)!.tournamentCreationDateRangeSection,
+          context.l10n.tournamentCreationDateRangeSection,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 16),
@@ -72,7 +71,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
         ),
         const SizedBox(height: 16),
         Text(
-          AppLocalizations.of(context)!.tournamentCreationFormatSection,
+          context.l10n.tournamentCreationFormatSection,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 16),
@@ -95,7 +94,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
                 context.go('/tournament-selection');
               },
               child: Text(
-                AppLocalizations.of(context)!.tournamentCreationCancelButton,
+                context.l10n.tournamentCreationCancelButton,
               ),
             ),
             const SizedBox(width: 16),
@@ -111,7 +110,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
                 }
               },
               child: Text(
-                AppLocalizations.of(context)!.tournamentCreationCreateButton,
+                context.l10n.tournamentCreationCreateButton,
               ),
             ),
           ],

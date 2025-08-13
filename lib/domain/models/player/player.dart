@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'fide_title.dart';
+import 'package:chessmate/domain/models/player/fide_title.dart';
 
 part 'player.freezed.dart';
 
