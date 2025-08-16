@@ -7,8 +7,6 @@ import 'package:chessmate/ui/tournament_selection/view_model/tournament_selectio
 
 class TournamentSelectionList extends StatelessWidget with WatchItMixin {
   TournamentSelectionList({super.key});
-  static const double _kTournamentSectionWidth = 400.0;
-  static const double _kTournamentSectionHeight = 400.0;
 
   @override
   Widget build(BuildContext context) {
@@ -16,49 +14,45 @@ class TournamentSelectionList extends StatelessWidget with WatchItMixin {
       (TournamentSelectionViewModel m) => m.tournaments.reversed,
     );
 
-    return YaruSection(
-      headline: const Text('Tournaments'),
-      width: _kTournamentSectionWidth,
-      height: _kTournamentSectionHeight,
-      padding: const EdgeInsets.all(kYaruPagePadding),
-      child: ListView(
-        children: [
-          for (final tournament in tournamentList)
-            !tournament.isArchived
-                ? YaruTile(
-                    title: Text(tournament.name),
-                    trailing: Row(
-                      children: [
-                        YaruIconButton(
-                          icon: const Icon(Icons.archive),
-                          // Cannot be extracted due to local variable: tournament
-                          // ignore: prefer-extracting-callbacks
-                          onPressed: () {
-                            final id = tournament.id;
-                            if (id != null) {
-                              locator<TournamentSelectionViewModel>()
-                                  .flipArchiveStatus(id);
-                            }
-                          },
-                        ),
-                        YaruIconButton(
-                          icon: const Icon(Icons.delete),
-                          // Cannot be extracted due to local variable: tournament
-                          // ignore: prefer-extracting-callbacks
-                          onPressed: () {
-                            final id = tournament.id;
-                            if (id != null) {
-                              locator<TournamentSelectionViewModel>()
-                                  .deleteTournament(id);
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  )
-                : Container(),
-        ],
-      ),
+    return Column(
+      children: [
+        for (final tournament in tournamentList)
+          !tournament.isArchived
+              ? YaruTile(
+                  title: Text(tournament.name),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  trailing: Row(
+                    children: [
+                      YaruIconButton(
+                        icon: const Icon(Icons.archive),
+                        // Cannot be extracted due to local variable: tournament
+                        // ignore: prefer-extracting-callbacks
+                        onPressed: () {
+                          final id = tournament.id;
+                          if (id != null) {
+                            locator<TournamentSelectionViewModel>()
+                                .flipArchiveStatus(id);
+                          }
+                        },
+                      ),
+                      YaruIconButton(
+                        icon: const Icon(Icons.delete),
+                        // Cannot be extracted due to local variable: tournament
+                        // ignore: prefer-extracting-callbacks
+                        onPressed: () {
+                          final id = tournament.id;
+                          if (id != null) {
+                            locator<TournamentSelectionViewModel>()
+                                .deleteTournament(id);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                )
+              : Container(),
+      ],
     );
   }
 }
