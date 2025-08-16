@@ -76,7 +76,7 @@ class TournamentCreationViewModel extends SafeChangeNotifier {
     } else if (_startDate!
         .isBefore(DateTime.now().subtract(const Duration(days: 1)))) {
       // Subtract one day, as DateTime.now() also includes hours and minutes and
-      //is therefore after the date itself.
+      // is therefore after the date itself.
       _startDateError = 'Start date cannot be before current date';
     }
 

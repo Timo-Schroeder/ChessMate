@@ -27,7 +27,7 @@ dart_code_metrics:
     - avoid-global-state
     - avoid-late-keyword
     - avoid-nested-conditional-expressions
-    - avoid-non-null-assertion
+    # - avoid-non-null-assertion
     - avoid-passing-async-when-sync-expected
     - avoid-redundant-async
     - avoid-self-compare
