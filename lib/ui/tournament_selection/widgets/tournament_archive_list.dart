@@ -5,10 +5,10 @@ import 'package:yaru/yaru.dart';
 import 'package:chessmate/utils/locator.dart';
 import 'package:chessmate/ui/tournament_selection/view_model/tournament_selection_view_model.dart';
 
-class TournamentSelectionList extends StatelessWidget with WatchItMixin {
-  TournamentSelectionList({super.key});
-  static const double _kTournamentSectionWidth = 400.0;
-  static const double _kTournamentSectionHeight = 400.0;
+class TournamentArchiveList extends StatelessWidget with WatchItMixin {
+  TournamentArchiveList({super.key});
+  static const double _kTournamentArchiveWidth = 400.0;
+  static const double _kTournamentArchiveHeight = 400.0;
 
   @override
   Widget build(BuildContext context) {
@@ -17,20 +17,20 @@ class TournamentSelectionList extends StatelessWidget with WatchItMixin {
     );
 
     return YaruSection(
-      headline: const Text('Tournaments'),
-      width: _kTournamentSectionWidth,
-      height: _kTournamentSectionHeight,
+      headline: const Text('Archived Tournaments'),
+      width: _kTournamentArchiveWidth,
+      height: _kTournamentArchiveHeight,
       padding: const EdgeInsets.all(kYaruPagePadding),
       child: ListView(
         children: [
           for (final tournament in tournamentList)
-            !tournament.isArchived
+            tournament.isArchived
                 ? YaruTile(
                     title: Text(tournament.name),
                     trailing: Row(
                       children: [
                         YaruIconButton(
-                          icon: const Icon(Icons.archive),
+                          icon: const Icon(Icons.edit_document),
                           // Cannot be extracted due to local variable: tournament
                           // ignore: prefer-extracting-callbacks
                           onPressed: () {

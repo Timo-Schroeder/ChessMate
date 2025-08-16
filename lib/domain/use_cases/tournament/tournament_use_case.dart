@@ -46,7 +46,7 @@ class TournamentUseCase extends SafeChangeNotifier {
     );
   }
 
-  Future<void> changeArchiveStatusOfTournament(int id, bool archived) async {
+  Future<void> flipArchiveStatusOfTournament(int id) async {
     final getTournamentResult =
         await _tournamentRepository.getTournamentById(id);
     if (getTournamentResult.isLeft()) {
@@ -62,7 +62,8 @@ class TournamentUseCase extends SafeChangeNotifier {
       return;
     }
 
-    final updatedTournament = tournament.copyWith(isArchived: archived);
+    final updatedTournament =
+        tournament.copyWith(isArchived: !tournament.isArchived);
 
     final result =
         await _tournamentRepository.updateTournament(id, updatedTournament);

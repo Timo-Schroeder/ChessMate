@@ -24,6 +24,10 @@ class TournamentSelectionViewModel extends SafeChangeNotifier {
     _tournamentUseCase.deleteTournament(id);
   }
 
+  void flipArchiveStatus(int id) {
+    _tournamentUseCase.flipArchiveStatusOfTournament(id);
+  }
+
   void _onTournamentUseCaseChanged() {
     notifyListeners();
   }

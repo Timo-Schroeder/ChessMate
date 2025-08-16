@@ -69,10 +69,10 @@ class DatabaseService {
               ),
               format: TournamentFormat.values.firstWhere(
                 (format) =>
-                    format ==
-                    element[_kColumnTournamentFormat] as TournamentFormat,
+                    format.name == element[_kColumnTournamentFormat] as String,
               ),
-              isArchived: element[_kColumnTournamentIsArchived] as bool,
+              isArchived:
+                  (element[_kColumnTournamentIsArchived] as String) == 'true',
             ),
           )
           .toList();
@@ -93,6 +93,7 @@ class DatabaseService {
           _kColumnTournamentStartDate,
           _kColumnTournamentEndDate,
           _kColumnTournamentFormat,
+          _kColumnTournamentIsArchived,
         ],
         where: '$_kColumnTournamentId = ?',
         whereArgs: [id],
@@ -111,11 +112,11 @@ class DatabaseService {
           endDate: DateTime.parse(element[_kColumnTournamentEndDate] as String),
           format: TournamentFormat.values.firstWhere(
             (format) =>
-                format.toString() ==
-                'TournamentFormat.${element[_kColumnTournamentFormat]}',
+                format.name == element[_kColumnTournamentFormat] as String,
             orElse: () => TournamentFormat.swiss,
           ),
-          isArchived: element[_kColumnTournamentIsArchived] as bool,
+          isArchived:
+              (element[_kColumnTournamentIsArchived] as String) == 'true',
         ),
       );
     } catch (e) {
@@ -133,8 +134,8 @@ class DatabaseService {
           _kColumnTournamentName: tournament.name,
           _kColumnTournamentStartDate: tournament.startDate.toString(),
           _kColumnTournamentEndDate: tournament.endDate.toString(),
-          _kColumnTournamentFormat: tournament.format.toString(),
-          _kColumnTournamentIsArchived: tournament.isArchived,
+          _kColumnTournamentFormat: tournament.format.name,
+          _kColumnTournamentIsArchived: tournament.isArchived.toString(),
         },
       );
 
@@ -163,8 +164,8 @@ class DatabaseService {
         _kColumnTournamentName: tournament.name,
         _kColumnTournamentStartDate: tournament.startDate.toString(),
         _kColumnTournamentEndDate: tournament.endDate.toString(),
-        _kColumnTournamentFormat: tournament.format.toString(),
-        _kColumnTournamentIsArchived: tournament.isArchived,
+        _kColumnTournamentFormat: tournament.name.toString(),
+        _kColumnTournamentIsArchived: tournament.isArchived.toString(),
       },
       where: '$_kColumnTournamentId = ?',
       whereArgs: [id],
