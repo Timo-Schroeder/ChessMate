@@ -16,9 +16,9 @@ class TournamentUseCase extends SafeChangeNotifier {
   Future<void> init() async {
     final result = await _tournamentRepository.getTournaments();
     result.match(
-      (l) => left('Tournaments could not be loaded'),
-      (r) {
-        _tournaments = r.unlock;
+      (failure) => left('Tournaments could not be loaded'),
+      (success) {
+        _tournaments = success.unlock;
         notifyListeners();
       },
     );
@@ -41,6 +41,36 @@ class TournamentUseCase extends SafeChangeNotifier {
       (failure) => debugPrint('Failed to delete tournament: $failure'),
       (success) {
         _tournaments = _tournaments.where((t) => t.id != id).toList();
+        notifyListeners();
+      },
+    );
+  }
+
+  Future<void> changeArchiveStatusOfTournament(int id, bool archived) async {
+    final getTournamentResult =
+        await _tournamentRepository.getTournamentById(id);
+    if (getTournamentResult.isLeft()) {
+      debugPrint('Failed to get tournament with id $id');
+
+      return;
+    }
+
+    final tournament = getTournamentResult.toNullable();
+    if (tournament == null) {
+      debugPrint('Retrieved tournament is null');
+
+      return;
+    }
+
+    final updatedTournament = tournament.copyWith(isArchived: archived);
+
+    final result =
+        await _tournamentRepository.updateTournament(id, updatedTournament);
+    result.match(
+      (failure) => debugPrint('Failed to update tournament'),
+      (success) {
+        _tournaments.remove(tournament);
+        _tournaments.add(updatedTournament);
         notifyListeners();
       },
     );

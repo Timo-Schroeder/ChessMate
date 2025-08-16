@@ -13,6 +13,11 @@ abstract class TournamentRepository {
   Future<Either<String, Tournament>> createTournament(Tournament tournament);
 
   Future<Either<String, void>> deleteTournament(int id);
+
+  Future<Either<String, void>> updateTournament(
+    int id,
+    Tournament tournament,
+  );
 }
 
 class TournamentRepositoryImpl implements TournamentRepository {
@@ -54,5 +59,17 @@ class TournamentRepositoryImpl implements TournamentRepository {
     }
 
     return _database.deleteTournament(id);
+  }
+
+  @override
+  Future<Either<String, void>> updateTournament(
+    int id,
+    Tournament tournament,
+  ) async {
+    if (!_database.isOpen()) {
+      await _database.open();
+    }
+
+    return _database.updateTournament(id, tournament);
   }
 }
