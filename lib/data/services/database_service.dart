@@ -17,6 +17,7 @@ class DatabaseService {
   static const _kColumnTournamentStartDate = 'start_date';
   static const _kColumnTournamentEndDate = 'end_date';
   static const _kColumnTournamentFormat = 'format';
+  static const _kColumnTournamentIsArchived = 'is_archived';
 
   Database? _database;
 
@@ -34,7 +35,8 @@ class DatabaseService {
               '$_kColumnTournamentName TEXT NOT NULL, '
               '$_kColumnTournamentStartDate TEXT NOT NULL, '
               '$_kColumnTournamentEndDate TEXT NOT NULL, '
-              '$_kColumnTournamentFormat TEXT NOT NULL)');
+              '$_kColumnTournamentFormat TEXT NOT NULL, '
+              '$_kColumnTournamentIsArchived BOOL NOT NULL)');
         },
         version: 1,
       ),
@@ -51,6 +53,7 @@ class DatabaseService {
           _kColumnTournamentStartDate,
           _kColumnTournamentEndDate,
           _kColumnTournamentFormat,
+          _kColumnTournamentIsArchived,
         ],
       );
       final list = entries
@@ -66,9 +69,10 @@ class DatabaseService {
               ),
               format: TournamentFormat.values.firstWhere(
                 (format) =>
-                    format ==
-                    element[_kColumnTournamentFormat] as TournamentFormat,
+                    format.name == element[_kColumnTournamentFormat] as String,
               ),
+              isArchived:
+                  (element[_kColumnTournamentIsArchived] as String) == 'true',
             ),
           )
           .toList();
@@ -89,6 +93,7 @@ class DatabaseService {
           _kColumnTournamentStartDate,
           _kColumnTournamentEndDate,
           _kColumnTournamentFormat,
+          _kColumnTournamentIsArchived,
         ],
         where: '$_kColumnTournamentId = ?',
         whereArgs: [id],
@@ -107,10 +112,11 @@ class DatabaseService {
           endDate: DateTime.parse(element[_kColumnTournamentEndDate] as String),
           format: TournamentFormat.values.firstWhere(
             (format) =>
-                format.toString() ==
-                'TournamentFormat.${element[_kColumnTournamentFormat]}',
+                format.name == element[_kColumnTournamentFormat] as String,
             orElse: () => TournamentFormat.swiss,
           ),
+          isArchived:
+              (element[_kColumnTournamentIsArchived] as String) == 'true',
         ),
       );
     } catch (e) {
@@ -128,7 +134,8 @@ class DatabaseService {
           _kColumnTournamentName: tournament.name,
           _kColumnTournamentStartDate: tournament.startDate.toString(),
           _kColumnTournamentEndDate: tournament.endDate.toString(),
-          _kColumnTournamentFormat: tournament.format.toString(),
+          _kColumnTournamentFormat: tournament.format.name,
+          _kColumnTournamentIsArchived: tournament.isArchived.toString(),
         },
       );
 
@@ -136,6 +143,35 @@ class DatabaseService {
     } catch (e) {
       return left(e.toString());
     }
+  }
+
+  Future<Either<String, void>> updateTournament(
+    int id,
+    Tournament tournament,
+  ) async {
+    final tournamentResult = await getTournamentById(id);
+    if (tournamentResult.isLeft()) {
+      return tournamentResult;
+    }
+
+    if (_database == null) {
+      return left('Cannot open database');
+    }
+
+    _database!.update(
+      _kTableTournament,
+      {
+        _kColumnTournamentName: tournament.name,
+        _kColumnTournamentStartDate: tournament.startDate.toString(),
+        _kColumnTournamentEndDate: tournament.endDate.toString(),
+        _kColumnTournamentFormat: tournament.name.toString(),
+        _kColumnTournamentIsArchived: tournament.isArchived.toString(),
+      },
+      where: '$_kColumnTournamentId = ?',
+      whereArgs: [id],
+    );
+
+    return right(null);
   }
 
   Future<Either<String, void>> deleteTournament(int id) async {

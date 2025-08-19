@@ -21,5 +21,8 @@ abstract class Tournament with _$Tournament {
 
     /// The format of the tournament, like Swiss or Round Robin (not yet implemented).
     required TournamentFormat format,
+
+    /// Archive status of the tournament
+    required bool isArchived,
   }) = _Tournament;
 }
