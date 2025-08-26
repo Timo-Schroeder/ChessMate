@@ -1,0 +1,18 @@
+---
+name: Test
+
+on:
+  workflow_run:
+    workflows: ["Build"]
+    types: [completed]
+
+permissions: {}
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: kuhnroyal/flutter-fvm-config-action/setup@v3
+      - run: flutter test
