@@ -7,7 +7,7 @@ linter:
     prefer_single_quotes: true
     prefer_const_constructors: true
     prefer_const_declarations: true
-    always_use_package_imports: true
+    prefer_relative_imports: true
     require_trailing_commas: true
     use_super_parameters: true
     close_sinks: true
@@ -58,7 +58,7 @@ dart_code_metrics:
     - prefer-last
     - prefer-match-file-name
     - prefer-moving-to-variable
-    
+
     # Flutter
     - always-remove-listener
     - avoid-border-all

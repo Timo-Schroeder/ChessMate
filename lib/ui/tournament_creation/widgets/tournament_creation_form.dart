@@ -1,24 +1,24 @@
-import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_it/watch_it.dart';
 import 'package:yaru/yaru.dart';
 
-import 'package:chessmate/domain/models/tournament/tournament_format.dart';
-import 'package:chessmate/ui/tournament_creation/view_model/tournament_creation_view_model.dart';
+import '../../../domain/models/tournament/tournament_format.dart';
+import '../../../l10n/localizations_context.dart';
+import '../view_model/tournament_creation_view_model.dart';
 
 class TournamentCreationForm extends StatelessWidget with WatchItMixin {
   const TournamentCreationForm({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final nameError =
-        watchPropertyValue((TournamentCreationViewModel vm) => vm.nameError);
-    final startDateError = watchPropertyValue(
-      (TournamentCreationViewModel vm) => vm.startDateError,
+    final canExecute = watchValue(
+      (TournamentCreationViewModel vm) => vm.submitCommand.canExecute,
     );
-    final endDateError =
-        watchPropertyValue((TournamentCreationViewModel vm) => vm.endDateError);
+
+    final isExecuting = watchValue(
+      (TournamentCreationViewModel vm) => vm.submitCommand.isExecuting,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,11 +33,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
             labelText: context.l10n.tournamentCreationNameTextFieldLabel,
           ),
           onChanged: (value) =>
-              di<TournamentCreationViewModel>().tournamentName = value,
-        ),
-        Text(
-          nameError,
-          style: const TextStyle(color: Colors.red),
+              di<TournamentCreationViewModel>().name.value = value,
         ),
         const SizedBox(height: 16),
         Text(
@@ -53,10 +49,6 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
           initialDateTime: DateTime.now(),
           onChanged: onStartDateChange,
         ),
-        Text(
-          startDateError,
-          style: const TextStyle(color: Colors.red),
-        ),
         const SizedBox(height: 16),
         YaruDateTimeEntry(
           includeTime: false,
@@ -64,10 +56,6 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
           lastDateTime: DateTime(2100),
           initialDateTime: DateTime.now(),
           onChanged: onEndDateChange,
-        ),
-        Text(
-          endDateError,
-          style: const TextStyle(color: Colors.red),
         ),
         const SizedBox(height: 16),
         Text(
@@ -79,7 +67,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
           initialValue: TournamentFormat.swiss,
           itemBuilder: formatChoiceBuilder,
           onSelected: (value) =>
-              di<TournamentCreationViewModel>().tournamentFormat = value,
+              di<TournamentCreationViewModel>().format.value = value,
           child: Text(TournamentFormat.swiss.name),
         ),
         const SizedBox(height: 32),
@@ -87,31 +75,33 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             OutlinedButton(
-              // Cannot be extracted due to local variable: context
-              // ignore: prefer-extracting-callbacks
-              onPressed: () {
-                di<TournamentCreationViewModel>().cancelTournamentCreation();
-                context.go('/tournament-selection');
-              },
+              onPressed: isExecuting
+                  ? () {
+                      di<TournamentCreationViewModel>().dispose();
+                      context.go('/tournament-selection');
+                    }
+                  : null,
               child: Text(
                 context.l10n.tournamentCreationCancelButton,
               ),
             ),
             const SizedBox(width: 16),
             ElevatedButton(
-              // Cannot be extracted due to local variable: context
-              // ignore: prefer-extracting-callbacks
-              onPressed: () {
-                final success =
-                    di<TournamentCreationViewModel>().createTournament();
-
-                if (success) {
-                  context.go('/tournament-selection');
-                }
-              },
-              child: Text(
-                context.l10n.tournamentCreationCreateButton,
-              ),
+              onPressed: canExecute
+                  ? () {
+                      sl<TournamentCreationViewModel>().submitCommand();
+                      context.go('/tournament-selection');
+                    }
+                  : null,
+              child: isExecuting
+                  ? const SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : Text(
+                      context.l10n.tournamentCreationCreateButton,
+                    ),
             ),
           ],
         ),
@@ -135,13 +125,13 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
 
   void onEndDateChange(DateTime? date) {
     if (date != null) {
-      di<TournamentCreationViewModel>().tournamentEndDate = date;
+      di<TournamentCreationViewModel>().endDate.value = date;
     }
   }
 
   void onStartDateChange(DateTime? date) {
     if (date != null) {
-      di<TournamentCreationViewModel>().tournamentStartDate = date;
+      di<TournamentCreationViewModel>().startDate.value = date;
     }
   }
 }

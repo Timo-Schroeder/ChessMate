@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:chessmate/domain/models/tournament/tournament_format.dart';
+import 'tournament_format.dart';
 
 part 'tournament.freezed.dart';
 

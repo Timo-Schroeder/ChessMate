@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:watch_it/watch_it.dart';
 import 'package:yaru/yaru.dart';
 
-import 'package:chessmate/utils/locator.dart';
-import 'package:chessmate/ui/tournament_selection/view_model/tournament_selection_view_model.dart';
+import '../view_model/tournament_selection_view_model.dart';
 
 class TournamentArchiveList extends StatelessWidget with WatchItMixin {
   TournamentArchiveList({super.key});
@@ -31,7 +30,7 @@ class TournamentArchiveList extends StatelessWidget with WatchItMixin {
                         onPressed: () {
                           final id = tournament.id;
                           if (id != null) {
-                            locator<TournamentSelectionViewModel>()
+                            sl<TournamentSelectionViewModel>()
                                 .flipArchiveStatus(id);
                           }
                         },
@@ -43,7 +42,7 @@ class TournamentArchiveList extends StatelessWidget with WatchItMixin {
                         onPressed: () {
                           final id = tournament.id;
                           if (id != null) {
-                            locator<TournamentSelectionViewModel>()
+                            sl<TournamentSelectionViewModel>()
                                 .deleteTournament(id);
                           }
                         },

@@ -29,6 +29,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  command_it: ^8.0.0
 
 dev_dependencies:
   flutter_test:

@@ -4,8 +4,8 @@ import 'package:fpdart/fpdart.dart';
 import 'package:path/path.dart' show join;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-import 'package:chessmate/domain/models/tournament/tournament.dart';
-import 'package:chessmate/domain/models/tournament/tournament_format.dart'
+import '../../domain/models/tournament/tournament.dart';
+import '../../domain/models/tournament/tournament_format.dart'
     show TournamentFormat;
 
 class DatabaseService {

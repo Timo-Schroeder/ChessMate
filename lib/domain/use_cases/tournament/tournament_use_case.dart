@@ -3,12 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:safe_change_notifier/safe_change_notifier.dart';
 
-import 'package:chessmate/data/repositories/tournament_repository.dart';
-import 'package:chessmate/utils/locator.dart';
-import 'package:chessmate/domain/models/tournament/tournament.dart';
+import '../../../data/repositories/tournament_repository.dart';
+import '../../models/tournament/tournament.dart';
+import 'package:watch_it/watch_it.dart' show sl;
 
 class TournamentUseCase extends SafeChangeNotifier {
-  final _tournamentRepository = locator<TournamentRepository>();
+  final _tournamentRepository = sl<TournamentRepository>();
   List<Tournament> _tournaments = [];
 
   IList<Tournament> get tournaments => _tournaments.lock;

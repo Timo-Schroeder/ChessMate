@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:watch_it/watch_it.dart';
 import 'package:yaru/yaru.dart';
 
-import 'package:chessmate/domain/use_cases/tournament/tournament_use_case.dart';
-import 'package:chessmate/l10n/app_localizations.dart';
-import 'package:chessmate/utils/locator.dart';
-import 'package:chessmate/utils/router.dart';
+import 'domain/use_cases/tournament/tournament_use_case.dart';
+import 'l10n/app_localizations.dart';
+import 'config/dependencies.dart';
+import 'routing/router.dart';
 
 Future<void> main() async {
   await YaruWindowTitleBar.ensureInitialized();
@@ -15,7 +16,7 @@ Future<void> main() async {
   }
 
   setupLocator();
-  await locator<TournamentUseCase>().init();
+  await sl<TournamentUseCase>().init();
 
   runApp(const MyApp());
 }
