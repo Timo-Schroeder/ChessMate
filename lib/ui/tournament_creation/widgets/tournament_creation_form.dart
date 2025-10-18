@@ -33,7 +33,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
             labelText: context.l10n.tournamentCreationNameTextFieldLabel,
           ),
           onChanged: (value) =>
-              di<TournamentCreationViewModel>().name.value = value,
+              di<TournamentCreationViewModel>().updateName(value),
         ),
         const SizedBox(height: 16),
         Text(
@@ -67,7 +67,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
           initialValue: TournamentFormat.swiss,
           itemBuilder: formatChoiceBuilder,
           onSelected: (value) =>
-              di<TournamentCreationViewModel>().format.value = value,
+              di<TournamentCreationViewModel>().updateFormat(value),
           child: Text(TournamentFormat.swiss.name),
         ),
         const SizedBox(height: 32),
@@ -125,13 +125,13 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
 
   void onEndDateChange(DateTime? date) {
     if (date != null) {
-      di<TournamentCreationViewModel>().endDate.value = date;
+      di<TournamentCreationViewModel>().updateEndDate(date);
     }
   }
 
   void onStartDateChange(DateTime? date) {
     if (date != null) {
-      di<TournamentCreationViewModel>().startDate.value = date;
+      di<TournamentCreationViewModel>().updateStartDate(date);
     }
   }
 }

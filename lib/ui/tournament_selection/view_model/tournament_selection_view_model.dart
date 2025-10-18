@@ -8,11 +8,11 @@ import '../../../domain/use_cases/tournament/tournament_use_case.dart';
 class TournamentSelectionViewModel extends SafeChangeNotifier {
   final _tournamentUseCase = di<TournamentUseCase>();
 
+  IList<Tournament> get tournaments => _tournamentUseCase.tournaments;
+
   TournamentSelectionViewModel() {
     _tournamentUseCase.addListener(_onTournamentUseCaseChanged);
   }
-
-  IList<Tournament> get tournaments => _tournamentUseCase.tournaments;
 
   void deleteTournament(int id) {
     _tournamentUseCase.deleteTournament(id);

@@ -25,7 +25,7 @@ dart_code_metrics:
     - avoid-duplicate-named-imports
     - avoid-dynamic
     - avoid-global-state
-    - avoid-late-keyword
+    # - avoid-late-keyword
     - avoid-nested-conditional-expressions
     # - avoid-non-null-assertion
     - avoid-passing-async-when-sync-expected

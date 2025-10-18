@@ -4,14 +4,6 @@ import 'package:yaru/yaru.dart';
 // https://github.com/ubuntu-flutter-community/musicpod/blob/7f4cb79e500e7c1fe79907d48536be1bf199a53a/lib/src/common/common_widgets.dart#L108C1-L155C2
 
 class HeaderBar extends StatelessWidget implements PreferredSizeWidget {
-  final Widget? title;
-
-  final Widget? leading;
-  final List<Widget>? actions;
-  final YaruTitleBarStyle style;
-  final double? titleSpacing;
-  final Color? foregroundColor;
-  final Color? backgroundColor;
   const HeaderBar({
     super.key,
     this.title,
@@ -22,6 +14,15 @@ class HeaderBar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor = Colors.transparent,
     this.foregroundColor,
   });
+
+  final Widget? title;
+
+  final Widget? leading;
+  final List<Widget>? actions;
+  final YaruTitleBarStyle style;
+  final double? titleSpacing;
+  final Color? foregroundColor;
+  final Color? backgroundColor;
 
   @override
   Size get preferredSize => const Size(0, kToolbarHeight);
