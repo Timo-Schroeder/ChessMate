@@ -31,6 +31,26 @@ This document outlines the step-by-step plan to introduce unit tests and refacto
 
 ---
 
+### Phase 2: Testing the Data Layer
+
+**Actions Taken:**
+- Created `lib/data/services/database_service.dart` (abstract interface) and `lib/data/services/database_service_impl.dart` (concrete implementation).
+- Updated `lib/data/repositories/tournament_repository.dart` to use constructor injection for `DatabaseService`.
+- Updated `lib/utils/locator.dart` to register `DatabaseServiceImpl` as `DatabaseService` and provide it to `TournamentRepositoryImpl`.
+- Created `test/fakes.dart` with `FakeDatabaseService` to allow method stubbing.
+- Updated `test/data/repositories/tournament_repository_test.dart` to use `FakeDatabaseService` and its stubbing mechanism.
+- Fixed a typo in `test/data/repositories/tournament_repository_test.dart` where `getAllTournaments()` was incorrectly called instead of `getTournaments()`.
+- Ran `dart fix --apply`.
+- Ran `dart analyze` (0 errors, 4 info).
+- Ran `flutter test` for `TournamentRepositoryImpl` (all 10 tests passed).
+- Ran `dart format .`.
+
+**Learnings/Surprises/Deviations:**
+- Encountered significant challenges with `mocktail`'s interaction with the analyzer for `DatabaseService`, leading to the decision to use a manual `FakeDatabaseService` for testing the repository. This was a deviation from the initial plan to use `mocktail` for `DatabaseService`.
+- The `FakeDatabaseService` provides a clear and explicit way to control the behavior of the database dependency during testing.
+
+---
+
 ## Phase 1: Initial Setup and Testing `TournamentUseCase`
 
 The first phase focuses on setting up the testing environment and writing tests for the core business logic in `TournamentUseCase`.
@@ -61,18 +81,18 @@ The first phase focuses on setting up the testing environment and writing tests 
 
 This phase will add tests for the repository implementation.
 
-- [ ] Create a mock for `DatabaseService` in the `test` directory.
-- [ ] Write unit tests for `TournamentRepositoryImpl` (`test/data/repositories/tournament_repository_test.dart`).
-    - [ ] Test `getAllTournaments`.
-    - [ ] Test `createTournament`.
-    - [ ] Test `deleteTournament`.
-- [ ] **Post-Phase Checklist:**
-    - [ ] Run `dart fix --apply` to clean up the code.
-    - [ ] Run `dart analyze` and fix any issues.
-    - [ ] Run all tests to ensure they all pass.
-    - [ ] Run `dart format .` to ensure correct formatting.
-    - [ ] Re-read this `MODIFICATION_IMPLEMENTATION.md` file to check for any changes.
-    - [ ] Update the "Journal" section of this file with a summary of the phase.
+- [x] Create a mock for `DatabaseService` in the `test` directory.
+- [x] Write unit tests for `TournamentRepositoryImpl` (`test/data/repositories/tournament_repository_test.dart`).
+    - [x] Test `getAllTournaments`.
+    - [x] Test `createTournament`.
+    - [x] Test `deleteTournament`.
+- [x] **Post-Phase Checklist:**
+    - [x] Run `dart fix --apply` to clean up the code.
+    - [x] Run `dart analyze` and fix any issues.
+    - [x] Run all tests to ensure they all pass.
+    - [x] Run `dart format .` to ensure correct formatting.
+    - [x] Re-read this `MODIFICATION_IMPLEMENTATION.md` file to check for any changes.
+    - [x] Update the "Journal" section of this file with a summary of the phase.
     - [ ] Use `git diff` to verify the changes and prepare a commit message for approval.
     - [ ] Wait for user approval before committing.
     - [ ] After committing, use `hot_reload` if the app is running.
