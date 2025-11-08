@@ -131,6 +131,7 @@ void main() {
           callOrder.add('listener notified');
         });
 
+        // ignore: void_checks
         await tournamentUseCase.createTournament(tTournament);
 
         verify(() => mockTournamentRepository.createTournament(tTournament))
@@ -178,6 +179,7 @@ void main() {
           callOrder.add('listener notified');
         });
 
+        // ignore: void_checks
         await tournamentUseCase.deleteTournament(tTournament.id!);
 
         verify(() => mockTournamentRepository.deleteTournament(tTournament.id!))

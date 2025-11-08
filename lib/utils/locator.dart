@@ -23,7 +23,8 @@ Future<void> setupLocator() async {
 
   sl.registerLazySingleton<TournamentRepository>(
     () => TournamentRepositoryImpl(
-        sl<DatabaseService>()), // Provide DatabaseService
+      sl<DatabaseService>(),
+    ), // Provide DatabaseService
   );
 
   sl.registerSingleton<TournamentUseCase>(

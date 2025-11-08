@@ -10,8 +10,10 @@ class FakeDatabaseService implements DatabaseService {
   Future<Either<String, Tournament>> Function(int id)? getTournamentByIdStub;
   Future<Either<String, Tournament>> Function(Tournament tournament)?
       createTournamentStub;
+  // ignore: void_checks
   Future<Either<String, void>> Function(int id, Tournament tournament)?
       updateTournamentStub;
+  // ignore: void_checks
   Future<Either<String, void>> Function(int id)? deleteTournamentStub;
   Future<void> Function()? initStub;
 
@@ -35,8 +37,9 @@ class FakeDatabaseService implements DatabaseService {
 
   @override
   Future<Either<String, void>> updateTournament(int id, Tournament tournament) {
-    if (updateTournamentStub != null)
+    if (updateTournamentStub != null) {
       return updateTournamentStub!(id, tournament);
+    }
     throw UnimplementedError('updateTournament has not been stubbed');
   }
 
