@@ -202,7 +202,9 @@ void main() {
         verify(() => mockTournamentRepository.deleteTournament(tTournament.id!))
             .called(1);
         expect(
-            tournamentUseCase.tournaments, IList([tTournament, tTournament2]));
+          tournamentUseCase.tournaments,
+          IList([tTournament, tTournament2]),
+        );
         expect(callOrder, isEmpty);
       });
     });
@@ -235,9 +237,9 @@ void main() {
 
         await tournamentUseCase.flipArchiveStatusOfTournament(tTournament.id!);
 
-        verify(() =>
-                mockTournamentRepository.getTournamentById(tTournament.id!))
-            .called(1);
+        verify(
+          () => mockTournamentRepository.getTournamentById(tTournament.id!),
+        ).called(1);
         verify(
           () => mockTournamentRepository.updateTournament(
             tTournament.id!,
@@ -259,11 +261,15 @@ void main() {
 
         await tournamentUseCase.flipArchiveStatusOfTournament(tTournament.id!);
 
-        verify(() =>
-                mockTournamentRepository.getTournamentById(tTournament.id!))
-            .called(1);
-        verifyNever(() => mockTournamentRepository.updateTournament(
-            any(that: isA<int>()), any(that: isA<Tournament>())));
+        verify(
+          () => mockTournamentRepository.getTournamentById(tTournament.id!),
+        ).called(1);
+        verifyNever(
+          () => mockTournamentRepository.updateTournament(
+            any(that: isA<int>()),
+            any(that: isA<Tournament>()),
+          ),
+        );
         expect(tournamentUseCase.tournaments, IList([tTournament]));
         expect(callOrder, isEmpty);
       });
@@ -286,9 +292,9 @@ void main() {
 
         await tournamentUseCase.flipArchiveStatusOfTournament(tTournament.id!);
 
-        verify(() =>
-                mockTournamentRepository.getTournamentById(tTournament.id!))
-            .called(1);
+        verify(
+          () => mockTournamentRepository.getTournamentById(tTournament.id!),
+        ).called(1);
         verify(
           () => mockTournamentRepository.updateTournament(
             tTournament.id!,

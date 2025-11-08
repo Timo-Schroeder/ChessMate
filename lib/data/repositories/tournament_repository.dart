@@ -2,8 +2,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fpdart/fpdart.dart';
 
 import 'package:chessmate/domain/models/tournament/tournament.dart';
-import 'package:chessmate/data/services/database_service.dart';
-import 'package:watch_it/watch_it.dart';
+import 'package:chessmate/data/services/database_service.dart'; // New import for DatabaseService
 
 abstract class TournamentRepository {
   Future<Either<String, IList<Tournament>>> getTournaments();
@@ -21,7 +20,9 @@ abstract class TournamentRepository {
 }
 
 class TournamentRepositoryImpl implements TournamentRepository {
-  final _database = sl<DatabaseService>();
+  final DatabaseService _database; // Changed to constructor injection
+
+  TournamentRepositoryImpl(this._database); // New constructor
 
   @override
   Future<Either<String, IList<Tournament>>> getTournaments() {
