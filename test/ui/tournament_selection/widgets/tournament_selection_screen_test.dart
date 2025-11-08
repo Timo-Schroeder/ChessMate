@@ -51,8 +51,10 @@ void main() {
       await pumpTournamentSelectionScreen(tester);
 
       expect(find.byType(HeaderBar), findsOneWidget);
-      expect(find.text('New Tournament'),
-          findsOneWidget); // Assuming default English text
+      expect(
+        find.text('New Tournament'),
+        findsOneWidget,
+      ); // Assuming default English text
     });
 
     testWidgets(

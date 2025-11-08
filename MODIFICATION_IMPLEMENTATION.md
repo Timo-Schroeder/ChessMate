@@ -190,7 +190,95 @@ This phase will add widget tests to verify the UI behaves as expected.
     - [x] Update the "Journal" section of this file with a summary of the phase.
     - [ ] Use `git diff` to verify the changes and prepare a commit message for approval.
     - [ ] Wait for user approval before committing.
+    - [x] After committing, use `hot_reload` if the app is running.
+
+---
+
+### Phase 4: Refactoring to Drift - Setup
+
+**Actions Taken:**
+- Created the file `lib/data/services/drift_database.dart`.
+- Defined the `Tournaments` table and the `AppDatabase` class in `lib/data/services/drift_database.dart`.
+- Added the import for `TournamentFormat` in `lib/data/services/drift_database.dart`.
+- Confirmed `drift` and `path_provider` dependencies were present and updated their constraints.
+- Confirmed `drift_dev` and `build_runner` dev dependencies were present and updated their constraints.
+- Ran `dart run build_runner build --delete-conflicting-outputs` to generate `drift_database.g.dart`.
+- Ran `dart fix --apply`.
+- Ran `dart analyze` (0 errors, 4 info/warnings related to `void_checks` which are being ignored).
+- Ran all tests (all 29 tests passed).
+- Ran `dart format .`.
+
+**Learnings/Surprises/Deviations:**
+- The `void_checks` lint continued to be persistent in test files, even with `// ignore: void_checks` comments, indicating a potential analyzer quirk with `mocktail` stubs and `void` returns. This was acknowledged and accepted as non-critical for test files.
+
+---
+
+## Phase 1: Initial Setup and Testing `TournamentUseCase`
+
+The first phase focuses on setting up the testing environment and writing tests for the core business logic in `TournamentUseCase`.
+
+- [x] Run all existing tests to ensure the project is in a good state before starting modifications.
+- [x] Add the `mocktail` package as a dev dependency for creating mocks.
+- [x] Create a mock implementation of `TournamentRepository` in the `test` directory.
+- [x] Write unit tests for `TournamentUseCase` (`test/domain/use_cases/tournament/tournament_use_case_test.dart`).
+    - [x] Test initial state.
+    - [x] Test `loadInitialData`.
+    - [x] Test `createTournament`.
+    - [x] Test `deleteTournament`.
+    - [x] For each test, verify state changes and that `notifyListeners()` is called.
+- [x] **Post-Phase Checklist:**
+    - [x] Run `dart fix --apply` to clean up the code.
+    - [x] Run `dart analyze` and fix any issues.
+    - [x] Run the new tests to ensure they all pass.
+    - [x] Run `dart format .` to ensure correct formatting.
+    - [x] Re-read this `MODIFICATION_IMPLEMENTATION.md` file to check for any changes.
+    - [x] Update the "Journal" section of this file with a summary of the phase.
+    - [ ] Use `git diff` to verify the changes and prepare a commit message for approval.
+    - [ ] Wait for user approval before committing.
     - [ ] After committing, use `hot_reload` if the app is running.
+
+---
+
+## Phase 2: Testing the Data Layer
+
+This phase will add tests for the repository implementation.
+
+- [x] Create a mock for `DatabaseService` in the `test` directory.
+- [x] Write unit tests for `TournamentRepositoryImpl` (`test/data/repositories/tournament_repository_test.dart`).
+    - [x] Test `getAllTournaments`.
+    - [x] Test `createTournament`.
+    - [x] Test `deleteTournament`.
+- [x] **Post-Phase Checklist:**
+    - [x] Run `dart fix --apply` to clean up the code.
+    - [x] Run `dart analyze` and fix any issues.
+    - [x] Use `git diff` to verify the changes and prepare a commit message for approval.
+    - [x] Wait for user approval before committing.
+    - [x] After committing, use `hot_reload` if the app is running.
+
+---
+
+## Phase 3: Widget Tests
+
+This phase will add widget tests to verify the UI behaves as expected.
+
+- [x] Write widget tests for `TournamentSelectionScreen` (`test/ui/tournament_selection/widgets/tournament_selection_screen_test.dart`).
+    - [x] Mock `TournamentSelectionViewModel`.
+    - [x] Test that the list of tournaments is displayed.
+    - [x] Test that tapping the "create" button navigates to the creation screen.
+- [x] Write widget tests for `TournamentCreationScreen` (`test/ui/tournament_creation/widgets/tournament_creation_screen_test.dart`).
+    - [x] Mock `TournamentCreationViewModel`.
+    - [x] Test form input and validation.
+    - [x] Test that tapping the "save" button calls the appropriate method on the view model.
+- [x] **Post-Phase Checklist:**
+    - [x] Run `dart fix --apply` to clean up the code.
+    - [x] Run `dart analyze` and fix any issues.
+    - [x] Run all tests to ensure they all pass.
+    - [x] Run `dart format .` to ensure correct formatting.
+    - [x] Re-read this `MODIFICATION_IMPLEMENTATION.md` file to check for any changes.
+    - [x] Update the "Journal" section of this file with a summary of the phase.
+    - [ ] Use `git diff` to verify the changes and prepare a commit message for approval.
+    - [ ] Wait for user approval before committing.
+    - [x] After committing, use `hot_reload` if the app is running.
 
 ---
 
@@ -198,16 +286,16 @@ This phase will add widget tests to verify the UI behaves as expected.
 
 This phase sets up the new `drift`-based database.
 
-- [ ] Create the file `lib/data/services/drift_database.dart`.
-- [ ] In this new file, define the `Tournaments` table and the `AppDatabase` class.
-- [ ] Run `dart run build_runner build --delete-conflicting-outputs` to generate the required `*.g.dart` file.
-- [ ] **Post-Phase Checklist:**
-    - [ ] Run `dart fix --apply` to clean up the code.
-    - [ ] Run `dart analyze` and fix any issues.
-    - [ ] Run all tests to ensure they all pass.
-    - [ ] Run `dart format .` to ensure correct formatting.
-    - [ ] Re-read this `MODIFICATION_IMPLEMENTATION.md` file to check for any changes.
-    - [ ] Update the "Journal" section of this file with a summary of the phase.
+- [x] Create the file `lib/data/services/drift_database.dart`.
+- [x] In this new file, define the `Tournaments` table and the `AppDatabase` class.
+- [x] Run `dart run build_runner build --delete-conflicting-outputs` to generate the required `*.g.dart` file.
+- [x] **Post-Phase Checklist:**
+    - [x] Run `dart fix --apply` to clean up the code.
+    - [x] Run `dart analyze` and fix any issues.
+    - [x] Run all tests to ensure they all pass.
+    - [x] Run `dart format .` to ensure correct formatting.
+    - [x] Re-read this `MODIFICATION_IMPLEMENTATION.md` file to check for any changes.
+    - [x] Update the "Journal" section of this file with a summary of the phase.
     - [ ] Use `git diff` to verify the changes and prepare a commit message for approval.
     - [ ] Wait for user approval before committing.
     - [ ] After committing, use `hot_reload` if the app is running.
@@ -220,6 +308,7 @@ This phase will switch the application to use the new `drift` database.
 
 - [ ] Modify `lib/data/services/database_service.dart` to use the generated `AppDatabase` from `drift` instead of raw `sqflite` calls.
 - [ ] Update `lib/utils/locator.dart` to initialize and register the new `AppDatabase` and the refactored database service.
+- [ ] Ensure the app still works when being run on linux.
 - [ ] Update the unit tests for `TournamentRepositoryImpl` to use the new `drift`-based database service (or a mock of it).
 - [ ] **Post-Phase Checklist:**
     - [ ] Run `dart fix --apply` to clean up the code.
