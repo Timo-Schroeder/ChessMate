@@ -1,79 +1,39 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart'
     show FicListExtension, IList;
 import 'package:fpdart/fpdart.dart';
-import 'package:path/path.dart' show join;
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:drift/drift.dart' as d; // Import drift with a prefix
 
-import 'package:chessmate/domain/models/tournament/tournament.dart';
-import 'package:chessmate/domain/models/tournament/tournament_format.dart'
-    show TournamentFormat;
+import 'package:chessmate/domain/models/tournament/tournament.dart'; // Domain model Tournament
+// import 'package:chessmate/domain/models/tournament/tournament_format.dart' // Removed unused import
+//     show TournamentFormat;
 import 'package:chessmate/data/services/database_service.dart'; // Import the abstract class
+import 'package:chessmate/data/services/drift_database.dart'
+    as db; // Import the generated drift database with a prefix
 
 class DatabaseServiceImpl implements DatabaseService {
-  // Renamed and implements abstraction
-  final DatabaseFactory databaseFactory;
+  final db.AppDatabase _appDatabase;
 
-  static const _kTableTournament = 'tournament';
-  static const _kColumnTournamentId = '_id';
-  static const _kColumnTournamentName = 'name';
-  static const _kColumnTournamentStartDate = 'start_date';
-  static const _kColumnTournamentEndDate = 'end_date';
-  static const _kColumnTournamentFormat = 'format';
-  static const _kColumnTournamentIsArchived = 'is_archived';
-
-  late final Database _database;
-
-  DatabaseServiceImpl({required this.databaseFactory});
+  DatabaseServiceImpl(this._appDatabase);
 
   @override
   Future<void> init() async {
-    _database = await databaseFactory.openDatabase(
-      join(await databaseFactory.getDatabasesPath(), 'chessmate.db'),
-      options: OpenDatabaseOptions(
-        onCreate: (db, version) {
-          return db.execute('CREATE TABLE $_kTableTournament('
-              '$_kColumnTournamentId INTEGER PRIMARY KEY AUTOINCREMENT, '
-              '$_kColumnTournamentName TEXT NOT NULL, '
-              '$_kColumnTournamentStartDate TEXT NOT NULL, '
-              '$_kColumnTournamentEndDate TEXT NOT NULL, '
-              '$_kColumnTournamentFormat TEXT NOT NULL, '
-              '$_kColumnTournamentIsArchived INTEGER NOT NULL)');
-        },
-        version: 1,
-      ),
-    );
+    // Drift handles initialization internally, so this can be empty or used for any initial setup if needed.
   }
 
   @override
   Future<Either<String, IList<Tournament>>> getAllTournaments() async {
     try {
-      final entries = await _database.query(
-        _kTableTournament,
-        columns: [
-          _kColumnTournamentId,
-          _kColumnTournamentName,
-          _kColumnTournamentStartDate,
-          _kColumnTournamentEndDate,
-          _kColumnTournamentFormat,
-          _kColumnTournamentIsArchived,
-        ],
-      );
-      final list = entries
+      final allTournaments =
+          await _appDatabase.select(_appDatabase.tournaments).get();
+      final list = allTournaments
           .map(
-            (element) => Tournament(
-              id: element[_kColumnTournamentId] as int,
-              name: element[_kColumnTournamentName] as String,
-              startDate: DateTime.parse(
-                element[_kColumnTournamentStartDate] as String,
-              ),
-              endDate: DateTime.parse(
-                element[_kColumnTournamentEndDate] as String,
-              ),
-              format: TournamentFormat.values.firstWhere(
-                (format) =>
-                    format.name == element[_kColumnTournamentFormat] as String,
-              ),
-              isArchived: (element[_kColumnTournamentIsArchived] as int) == 1,
+            (tournamentData) => Tournament(
+              id: tournamentData.id,
+              name: tournamentData.name,
+              startDate: tournamentData.startDate,
+              endDate: tournamentData.endDate,
+              format: tournamentData.format,
+              isArchived: tournamentData.isArchived,
             ),
           )
           .toList();
@@ -87,37 +47,23 @@ class DatabaseServiceImpl implements DatabaseService {
   @override
   Future<Either<String, Tournament>> getTournamentById(int id) async {
     try {
-      final entry = await _database.query(
-        _kTableTournament,
-        columns: [
-          _kColumnTournamentId,
-          _kColumnTournamentName,
-          _kColumnTournamentStartDate,
-          _kColumnTournamentEndDate,
-          _kColumnTournamentFormat,
-          _kColumnTournamentIsArchived,
-        ],
-        where: '$_kColumnTournamentId = ?',
-        whereArgs: [id],
-      );
-      if (entry.isEmpty) {
+      final tournamentData =
+          await (_appDatabase.select(_appDatabase.tournaments)
+                ..where((tbl) => tbl.id.equals(id)))
+              .getSingleOrNull();
+
+      if (tournamentData == null) {
         return left('No tournament found with id $id');
       }
-      final element = entry.first;
 
       return right(
         Tournament(
-          id: element[_kColumnTournamentId] as int,
-          name: element[_kColumnTournamentName] as String,
-          startDate:
-              DateTime.parse(element[_kColumnTournamentStartDate] as String),
-          endDate: DateTime.parse(element[_kColumnTournamentEndDate] as String),
-          format: TournamentFormat.values.firstWhere(
-            (format) =>
-                format.name == element[_kColumnTournamentFormat] as String,
-            orElse: () => TournamentFormat.swiss,
-          ),
-          isArchived: (element[_kColumnTournamentIsArchived] as int) == 1,
+          id: tournamentData.id,
+          name: tournamentData.name,
+          startDate: tournamentData.startDate,
+          endDate: tournamentData.endDate,
+          format: tournamentData.format,
+          isArchived: tournamentData.isArchived,
         ),
       );
     } catch (e) {
@@ -130,16 +76,16 @@ class DatabaseServiceImpl implements DatabaseService {
     Tournament tournament,
   ) async {
     try {
-      final id = await _database.insert(
-        _kTableTournament,
-        {
-          _kColumnTournamentName: tournament.name,
-          _kColumnTournamentStartDate: tournament.startDate.toString(),
-          _kColumnTournamentEndDate: tournament.endDate.toString(),
-          _kColumnTournamentFormat: tournament.format.name,
-          _kColumnTournamentIsArchived: tournament.isArchived ? 1 : 0,
-        },
-      );
+      final id = await _appDatabase.into(_appDatabase.tournaments).insert(
+            db.TournamentsCompanion.insert(
+              name: tournament.name,
+              startDate: tournament.startDate,
+              endDate: tournament.endDate,
+              format: tournament.format,
+              isArchived:
+                  d.Value(tournament.isArchived), // Wrapped with d.Value
+            ),
+          );
 
       return right(tournament.copyWith(id: id));
     } catch (e) {
@@ -152,36 +98,37 @@ class DatabaseServiceImpl implements DatabaseService {
     int id,
     Tournament tournament,
   ) async {
-    final tournamentResult = await getTournamentById(id);
-    if (tournamentResult.isLeft()) {
-      return tournamentResult;
+    try {
+      final updatedRows = await (_appDatabase.update(_appDatabase.tournaments)
+            ..where((tbl) => tbl.id.equals(id)))
+          .write(
+        db.TournamentsCompanion(
+          name: d.Value(tournament.name),
+          startDate: d.Value(tournament.startDate),
+          endDate: d.Value(tournament.endDate),
+          format: d.Value(tournament.format),
+          isArchived: d.Value(tournament.isArchived),
+        ),
+      );
+
+      if (updatedRows == 0) {
+        return left('No tournament found with id $id');
+      }
+
+      return right(null);
+    } catch (e) {
+      return left(e.toString());
     }
-
-    _database.update(
-      _kTableTournament,
-      {
-        _kColumnTournamentName: tournament.name,
-        _kColumnTournamentStartDate: tournament.startDate.toString(),
-        _kColumnTournamentEndDate: tournament.endDate.toString(),
-        _kColumnTournamentFormat: tournament.format.name,
-        _kColumnTournamentIsArchived: tournament.isArchived ? 1 : 0,
-      },
-      where: '$_kColumnTournamentId = ?',
-      whereArgs: [id],
-    );
-
-    return right(null);
   }
 
   @override
   Future<Either<String, void>> deleteTournament(int id) async {
     try {
-      final rowsDeleted = await _database.delete(
-        _kTableTournament,
-        where: '$_kColumnTournamentId = ?',
-        whereArgs: [id],
-      );
-      if (rowsDeleted == 0) {
+      final deletedRows = await (_appDatabase.delete(_appDatabase.tournaments)
+            ..where((tbl) => tbl.id.equals(id)))
+          .go();
+
+      if (deletedRows == 0) {
         return left('No tournament found with id $id');
       }
 
