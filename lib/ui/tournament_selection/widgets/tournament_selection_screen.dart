@@ -1,8 +1,7 @@
 import 'package:chessmate/l10n/localizations_context.dart';
-import 'package:chessmate/ui/tournament_selection/widgets/tournament_archive_list.dart';
+import 'package:chessmate/ui/tournament_selection/widgets/tournament_list.dart';
 import 'package:go_router/go_router.dart';
 import 'package:chessmate/ui/core/ui/header_bar.dart';
-import 'package:chessmate/ui/tournament_selection/widgets/tournament_selection_list.dart';
 import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
 
@@ -11,53 +10,56 @@ class TournamentSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double kTournamentSectionWidth = 600.0;
-    const double kTournamentSectionHeight = 800.0;
-
     return Scaffold(
       appBar: const HeaderBar(),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            YaruExpansionPanel(
-              width: kTournamentSectionWidth,
-              height: kTournamentSectionHeight,
-              isInitiallyExpanded: [
-                true,
-                false,
-              ],
-              headers: [
-                Text(
-                  'Tournaments',
-                  // Do not extract this to variable
-                  // ignore: prefer-moving-to-variable
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                Text(
-                  'Archive',
-                  // Do not extract this to variable
-                  // ignore: prefer-moving-to-variable
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-              ],
-              children: [
-                TournamentSelectionList(),
-                TournamentArchiveList(),
-              ],
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              // Cannot be extracted due to local variable: context
-              // ignore: prefer-extracting-callbacks
-              onPressed: () {
-                context.go('/tournament-creation');
-              },
-              child: Text(
-                context.l10n.newTournamentButtonText,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final screenWidth = MediaQuery.of(context).size.width;
+            final panelWidth = screenWidth > 800 ? 600.0 : screenWidth * 0.9;
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 16.0,
+                horizontal: 8.0,
               ),
-            ),
-          ],
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      width: panelWidth,
+                      child: YaruExpansionPanel(
+                        isInitiallyExpanded: const [true, false],
+                        headers: [
+                          Text(
+                            'Tournaments',
+                            // Do not extract this to variable
+                            // ignore: prefer-moving-to-variable
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          Text(
+                            'Archive',
+                            // Do not extract this to variable
+                            // ignore: prefer-moving-to-variable
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ],
+                        children: const [
+                          TournamentList(showArchived: false),
+                          TournamentList(showArchived: true),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () => context.go('/tournament-creation'),
+                    child: Text(context.l10n.newTournamentButtonText),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
