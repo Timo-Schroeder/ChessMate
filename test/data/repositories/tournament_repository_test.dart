@@ -95,8 +95,10 @@ void main() {
 
         await tournamentRepository.deleteTournament(tTournament.id!);
 
-        expect(await tournamentRepository.deleteTournament(tTournament.id!),
-            const Right(unit));
+        expect(
+          await tournamentRepository.deleteTournament(tTournament.id!),
+          const Right(unit),
+        );
       });
 
       test('should return a failure when the call to database is unsuccessful',
@@ -147,11 +149,12 @@ void main() {
         );
 
         expect(
-            await tournamentRepository.updateTournament(
-              tTournament.id!,
-              tTournament,
-            ),
-            const Right(unit));
+          await tournamentRepository.updateTournament(
+            tTournament.id!,
+            tTournament,
+          ),
+          const Right(unit),
+        );
       });
 
       test('should return a failure when the call to database is unsuccessful',
