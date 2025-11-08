@@ -32,3 +32,8 @@ doc/api/
 
 # FVM Version Cache
 .fvm/
+
+# GeminiCLI
+GEMINI.md
+MODIFICATION_DESIGN.md
+MODIFICATION_IMPLEMENTATION.md
