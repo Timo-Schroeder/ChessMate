@@ -37,6 +37,7 @@ dev_dependencies:
   freezed: ^3.0.6
   analyzer: ^8.4.1
   drift_dev: ^2.21.2
+  mocktail: ^1.0.4
 
 flutter:
   uses-material-design: true
