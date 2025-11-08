@@ -3,12 +3,13 @@ import 'package:safe_change_notifier/safe_change_notifier.dart';
 
 import 'package:chessmate/domain/models/tournament/tournament.dart';
 import 'package:chessmate/domain/use_cases/tournament/tournament_use_case.dart';
-import 'package:chessmate/utils/locator.dart' show locator;
+import 'package:watch_it/watch_it.dart';
 
 class TournamentSelectionViewModel extends SafeChangeNotifier {
-  final _tournamentUseCase = locator<TournamentUseCase>();
+  final _tournamentUseCase = sl<TournamentUseCase>();
 
   IList<Tournament> get tournaments => _tournamentUseCase.tournaments;
+  bool get isLoading => _tournamentUseCase.isLoading;
 
   TournamentSelectionViewModel() {
     _tournamentUseCase.addListener(_onTournamentUseCaseChanged);
