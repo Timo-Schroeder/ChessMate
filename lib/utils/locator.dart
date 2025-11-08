@@ -1,43 +1,38 @@
 import 'dart:io';
 
-import 'package:get_it/get_it.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart'
-    show databaseFactory, databaseFactoryFfi, sqfliteFfiInit;
+    show databaseFactory, databaseFactoryFfi;
 
 import 'package:chessmate/data/repositories/tournament_repository.dart';
 import 'package:chessmate/data/services/database_service.dart';
 import 'package:chessmate/domain/use_cases/tournament/tournament_use_case.dart';
 import 'package:chessmate/ui/tournament_creation/view_model/tournament_creation_view_model.dart';
 import 'package:chessmate/ui/tournament_selection/view_model/tournament_selection_view_model.dart';
+import 'package:watch_it/watch_it.dart';
 
-final locator = GetIt.instance;
-
-void setupLocator() {
-  locator.registerLazySingleton<DatabaseService>(
-    () {
-      if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
-        sqfliteFfiInit();
-
-        return DatabaseService(databaseFactory: databaseFactoryFfi);
-      } else {
-        return DatabaseService(databaseFactory: databaseFactory);
-      }
-    },
+Future<void> setupLocator() async {
+  final dbService = DatabaseService(
+    databaseFactory: Platform.isLinux || Platform.isWindows || Platform.isMacOS
+        ? databaseFactoryFfi
+        : databaseFactory,
   );
+  await dbService.init();
+  sl.registerSingleton<DatabaseService>(dbService);
 
-  locator.registerLazySingleton<TournamentRepository>(
+  sl.registerLazySingleton<TournamentRepository>(
     () => TournamentRepositoryImpl(),
   );
 
-  locator.registerLazySingleton<TournamentUseCase>(
-    () => TournamentUseCase(),
+  sl.registerSingleton<TournamentUseCase>(
+    TournamentUseCase(),
   );
+  sl<TournamentUseCase>().loadInitialData();
 
-  locator.registerLazySingleton<TournamentCreationViewModel>(
+  sl.registerLazySingleton<TournamentCreationViewModel>(
     () => TournamentCreationViewModel(),
   );
 
-  locator.registerLazySingleton<TournamentSelectionViewModel>(
+  sl.registerLazySingleton<TournamentSelectionViewModel>(
     () => TournamentSelectionViewModel(),
   );
 }

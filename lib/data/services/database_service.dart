@@ -19,13 +19,11 @@ class DatabaseService {
   static const _kColumnTournamentFormat = 'format';
   static const _kColumnTournamentIsArchived = 'is_archived';
 
-  Database? _database;
+  late final Database _database;
 
   DatabaseService({required this.databaseFactory});
 
-  bool isOpen() => _database != null;
-
-  Future<void> open() async {
+  Future<void> init() async {
     _database = await databaseFactory.openDatabase(
       join(await databaseFactory.getDatabasesPath(), 'chessmate.db'),
       options: OpenDatabaseOptions(
@@ -36,7 +34,7 @@ class DatabaseService {
               '$_kColumnTournamentStartDate TEXT NOT NULL, '
               '$_kColumnTournamentEndDate TEXT NOT NULL, '
               '$_kColumnTournamentFormat TEXT NOT NULL, '
-              '$_kColumnTournamentIsArchived BOOL NOT NULL)');
+              '$_kColumnTournamentIsArchived INTEGER NOT NULL)');
         },
         version: 1,
       ),
@@ -45,7 +43,7 @@ class DatabaseService {
 
   Future<Either<String, IList<Tournament>>> getAllTournaments() async {
     try {
-      final entries = await _database!.query(
+      final entries = await _database.query(
         _kTableTournament,
         columns: [
           _kColumnTournamentId,
@@ -71,8 +69,7 @@ class DatabaseService {
                 (format) =>
                     format.name == element[_kColumnTournamentFormat] as String,
               ),
-              isArchived:
-                  (element[_kColumnTournamentIsArchived] as String) == 'true',
+              isArchived: (element[_kColumnTournamentIsArchived] as int) == 1,
             ),
           )
           .toList();
@@ -85,7 +82,7 @@ class DatabaseService {
 
   Future<Either<String, Tournament>> getTournamentById(int id) async {
     try {
-      final entry = await _database!.query(
+      final entry = await _database.query(
         _kTableTournament,
         columns: [
           _kColumnTournamentId,
@@ -115,8 +112,7 @@ class DatabaseService {
                 format.name == element[_kColumnTournamentFormat] as String,
             orElse: () => TournamentFormat.swiss,
           ),
-          isArchived:
-              (element[_kColumnTournamentIsArchived] as String) == 'true',
+          isArchived: (element[_kColumnTournamentIsArchived] as int) == 1,
         ),
       );
     } catch (e) {
@@ -128,14 +124,14 @@ class DatabaseService {
     Tournament tournament,
   ) async {
     try {
-      final id = await _database!.insert(
+      final id = await _database.insert(
         _kTableTournament,
         {
           _kColumnTournamentName: tournament.name,
           _kColumnTournamentStartDate: tournament.startDate.toString(),
           _kColumnTournamentEndDate: tournament.endDate.toString(),
           _kColumnTournamentFormat: tournament.format.name,
-          _kColumnTournamentIsArchived: tournament.isArchived.toString(),
+          _kColumnTournamentIsArchived: tournament.isArchived ? 1 : 0,
         },
       );
 
@@ -154,18 +150,14 @@ class DatabaseService {
       return tournamentResult;
     }
 
-    if (_database == null) {
-      return left('Cannot open database');
-    }
-
-    _database!.update(
+    _database.update(
       _kTableTournament,
       {
         _kColumnTournamentName: tournament.name,
         _kColumnTournamentStartDate: tournament.startDate.toString(),
         _kColumnTournamentEndDate: tournament.endDate.toString(),
-        _kColumnTournamentFormat: tournament.name.toString(),
-        _kColumnTournamentIsArchived: tournament.isArchived.toString(),
+        _kColumnTournamentFormat: tournament.format.name,
+        _kColumnTournamentIsArchived: tournament.isArchived ? 1 : 0,
       },
       where: '$_kColumnTournamentId = ?',
       whereArgs: [id],
@@ -176,7 +168,7 @@ class DatabaseService {
 
   Future<Either<String, void>> deleteTournament(int id) async {
     try {
-      final rowsDeleted = await _database!.delete(
+      final rowsDeleted = await _database.delete(
         _kTableTournament,
         where: '$_kColumnTournamentId = ?',
         whereArgs: [id],

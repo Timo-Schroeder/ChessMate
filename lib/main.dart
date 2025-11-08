@@ -1,11 +1,9 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:yaru/yaru.dart';
-
-import 'package:chessmate/domain/use_cases/tournament/tournament_use_case.dart';
 import 'package:chessmate/l10n/app_localizations.dart';
 import 'package:chessmate/utils/locator.dart';
 import 'package:chessmate/utils/router.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:yaru/yaru.dart';
 
 Future<void> main() async {
   await YaruWindowTitleBar.ensureInitialized();
@@ -14,8 +12,7 @@ Future<void> main() async {
     throw UnsupportedError('Web is not supported');
   }
 
-  setupLocator();
-  await locator<TournamentUseCase>().init();
+  await setupLocator();
 
   runApp(const MyApp());
 }
