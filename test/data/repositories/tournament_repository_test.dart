@@ -23,7 +23,8 @@ void main() {
         sl.unregister<DatabaseService>();
       }
       sl.registerSingleton<DatabaseService>(
-          fakeDatabaseService); // Register the fake
+        fakeDatabaseService,
+      ); // Register the fake
       tournamentRepository = TournamentRepositoryImpl(fakeDatabaseService);
     });
 
@@ -88,13 +89,14 @@ void main() {
     group('deleteTournament', () {
       test('should return void when the call to database is successful',
           () async {
+        // ignore: void_checks
         fakeDatabaseService.deleteTournamentStub =
             (id) async => const Right(unit); // Stubbing
 
-        final result =
-            await tournamentRepository.deleteTournament(tTournament.id!);
+        await tournamentRepository.deleteTournament(tTournament.id!);
 
-        expect(result, const Right(unit));
+        expect(await tournamentRepository.deleteTournament(tTournament.id!),
+            const Right(unit));
       });
 
       test('should return a failure when the call to database is unsuccessful',
@@ -139,19 +141,29 @@ void main() {
         fakeDatabaseService.updateTournamentStub =
             (id, tournament) async => const Right(unit); // Stubbing
 
-        final result = await tournamentRepository.updateTournament(
-            tTournament.id!, tTournament);
+        await tournamentRepository.updateTournament(
+          tTournament.id!,
+          tTournament,
+        );
 
-        expect(result, const Right(unit));
+        expect(
+            await tournamentRepository.updateTournament(
+              tTournament.id!,
+              tTournament,
+            ),
+            const Right(unit));
       });
 
       test('should return a failure when the call to database is unsuccessful',
           () async {
+        // ignore: void_checks
         fakeDatabaseService.updateTournamentStub = (id, tournament) async =>
             const Left('Database failure'); // Stubbing
 
         final result = await tournamentRepository.updateTournament(
-            tTournament.id!, tTournament);
+          tTournament.id!,
+          tTournament,
+        );
 
         expect(result, const Left('Database failure'));
       });
