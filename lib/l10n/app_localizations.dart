@@ -163,6 +163,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create'**
   String get tournamentCreationCreateButton;
+
+  /// Heading for tournaments list
+  ///
+  /// In en, this message translates to:
+  /// **'Tournaments'**
+  String get tournamentSelectionTournamentListHeading;
+
+  /// Heading for archive list
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get tournamentSelectionArchiveListHeading;
+
+  /// States that no tournaments are available
+  ///
+  /// In en, this message translates to:
+  /// **'No tournaments available'**
+  String get tournamentSelectionListNoTournamentsAvailable;
+
+  /// States that no tournaments are currently archived
+  ///
+  /// In en, this message translates to:
+  /// **'No archived tournaments'**
+  String get tournamentSelectionListNoArchivedTournaments;
+
+  /// Header bar text for the tournament creation screen
+  ///
+  /// In en, this message translates to:
+  /// **'New Tournament:'**
+  String get tournamentCreationHeaderBar;
 }
 
 class _AppLocalizationsDelegate
