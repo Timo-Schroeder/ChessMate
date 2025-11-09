@@ -40,5 +40,8 @@ jobs:
         with:
           sdk: ${{ inputs.dart_version }}
 
+      - name: Install Dependencies
+        run: dart pub get
+
       - name: Dart Analyze
         run: dart analyze --fatal-warnings
