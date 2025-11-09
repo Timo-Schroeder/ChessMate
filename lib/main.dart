@@ -12,7 +12,7 @@ Future<void> main() async {
     throw UnsupportedError('Web is not supported');
   }
 
-  await setupLocator();
+  setupLocator();
 
   runApp(const MyApp());
 }

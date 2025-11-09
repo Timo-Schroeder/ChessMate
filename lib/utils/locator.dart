@@ -7,29 +7,28 @@ import 'package:chessmate/ui/tournament_creation/view_model/tournament_creation_
 import 'package:chessmate/ui/tournament_selection/view_model/tournament_selection_view_model.dart';
 import 'package:watch_it/watch_it.dart';
 
-Future<void> setupLocator() async {
+void setupLocator() {
   sl.registerSingleton<AppDatabase>(AppDatabase());
 
   sl.registerSingleton<DatabaseService>(
     DatabaseServiceImpl(sl<AppDatabase>())..init(),
-  ); // Register the abstraction
+  );
 
-  sl.registerLazySingleton<TournamentRepository>(
-    () => TournamentRepositoryImpl(
+  sl.registerSingleton<TournamentRepository>(
+    TournamentRepositoryImpl(
       sl<DatabaseService>(),
-    ), // Provide DatabaseService
+    ),
   );
 
   sl.registerSingleton<TournamentUseCase>(
-    TournamentUseCase(),
-  );
-  sl<TournamentUseCase>().loadInitialData();
-
-  sl.registerLazySingleton<TournamentCreationViewModel>(
-    () => TournamentCreationViewModel(),
+    TournamentUseCase()..loadInitialData(),
   );
 
-  sl.registerLazySingleton<TournamentSelectionViewModel>(
-    () => TournamentSelectionViewModel(),
+  sl.registerSingleton<TournamentCreationViewModel>(
+    TournamentCreationViewModel(),
+  );
+
+  sl.registerSingleton<TournamentSelectionViewModel>(
+    TournamentSelectionViewModel(),
   );
 }
