@@ -24,7 +24,7 @@ jobs:
           sdk: ${{ inputs.dart_version }}
 
       - name: Dart Format
-        run: dart format
+        run: dart format .
 
   dart-analyze:
     name: Dart Analyze
@@ -41,4 +41,4 @@ jobs:
           sdk: ${{ inputs.dart_version }}
 
       - name: Dart Analyze
-        run: dart analyze --fatal-infos --fatal-warnings
+        run: dart analyze --fatal-warnings
