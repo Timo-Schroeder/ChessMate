@@ -1,35 +1,8 @@
----
 name: Pipeline
 
 on: [push, pull_request]
 
-permissions: {}
-
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: kuhnroyal/flutter-fvm-config-action/setup@v3
-      - run: sudo apt update
-      - run: sudo apt install -y clang cmake curl libgtk-3-dev ninja-build pkg-config unzip libunwind-dev libmpv-dev
-      - run: flutter pub get
-      - run: flutter build linux -v
-  
-  test:
-    name: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: kuhnroyal/flutter-fvm-config-action/setup@v3
-      - run: flutter test
-  
-  analyze:
-    name: Dart Analyze
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: kuhnroyal/flutter-fvm-config-action/setup@v3
-      - run: flutter pub get
-      - run: flutter analyze --fatal-infos
+  call-pre-checks:
+    name: Pre-Checks
+    uses: Timo/ChessMate/.gitea/workflows/pre-checks.yml@main

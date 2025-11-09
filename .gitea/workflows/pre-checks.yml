@@ -1,0 +1,44 @@
+name: Pre-Checks
+
+on:
+  workflow_call:
+    inputs:
+      dart_version:
+        required: false
+        type: string
+        default: "stable"
+
+jobs:
+  dart-format:
+    name: Dart Format
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ inputs.dart_version }}
+
+      - name: Dart Format
+        run: dart format
+
+  dart-analyze:
+    name: Dart Analyze
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ inputs.dart_version }}
+
+      - name: Dart Analyze
+        run: dart analyze --fatal-infos --fatal-warnings
