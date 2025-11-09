@@ -19,7 +19,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Flutter
-        uses: subosito/flutter-actions@v2
+        uses: subosito/flutter-action@v2
         with:
           sdk: ${{ inputs.flutter_version }}
 
@@ -39,7 +39,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Flutter
-        uses: subosito/flutter-actions@v2
+        uses: subosito/flutter-action@v2
         with:
           sdk: ${{ inputs.flutter_version }}
 
