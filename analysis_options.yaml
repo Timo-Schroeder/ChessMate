@@ -2,20 +2,20 @@ include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
-    avoid_print: true
-    cancel_subscriptions: true
-    prefer_single_quotes: true
-    prefer_const_constructors: true
-    prefer_const_declarations: true
-    always_use_package_imports: true
-    require_trailing_commas: true
-    use_super_parameters: true
-    close_sinks: true
-    unnecessary_parenthesis: true
-    unnecessary_late: true
-    unnecessary_await_in_return: true
-    unnecessary_breaks: true
-    prefer_final_locals: true
+    - avoid_print
+    - cancel_subscriptions
+    - prefer_single_quotes
+    - prefer_const_constructors
+    - prefer_const_declarations
+    - always_use_package_imports
+    - require_trailing_commas
+    - use_super_parameters
+    - close_sinks
+    - unnecessary_parenthesis
+    - unnecessary_late
+    - unnecessary_await_in_return
+    - unnecessary_breaks
+    - prefer_final_locals
 
 dart_code_metrics:
   rules:
@@ -58,7 +58,7 @@ dart_code_metrics:
     - prefer-last
     - prefer-match-file-name
     - prefer-moving-to-variable
-    
+
     # Flutter
     - always-remove-listener
     - avoid-border-all

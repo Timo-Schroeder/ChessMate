@@ -3,5 +3,17 @@
     "newTournamentButtonText": "Neues Turnier",
     "tournamentsHeading": "Turniere",
     "tournamentCreationTitle": "Neues Turnier: {name}",
-    "tournamentCreationNameSection": "Name:"
+    "tournamentCreationNameSection": "Name:",
+    "tournamentCreationNameTextFieldLabel": "Name",
+    "tournamentCreationDateRangeSection": "Zeit:",
+    "tournamentCreationDateRangeStartDateLabel": "Startdatum",
+    "tournamentCreationDateRangeEndDateLabel": "Enddatum",
+    "tournamentCreationFormatSection": "Format:",
+    "tournamentCreationCancelButton": "Abbrechen",
+    "tournamentCreationCreateButton": "Erstellen",
+    "tournamentSelectionTournamentListHeading": "Turniere",
+    "tournamentSelectionArchiveListHeading": "Archiv",
+    "tournamentSelectionListNoTournamentsAvailable": "Keine Turniere verfügbar",
+    "tournamentSelectionListNoArchivedTournaments": "Keine archivierten Turniere",
+    "tournamentCreationHeaderBar": "Neues Turnier:"
 }

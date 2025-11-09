@@ -48,5 +48,25 @@
     "tournamentCreationCreateButton": "Create",
     "@tournamentCreationCreateButton": {
         "description": "Create button on tournament creation screen"
+    },
+    "tournamentSelectionTournamentListHeading": "Tournaments",
+    "@tournamentSelectionTournamentListHeading": {
+        "description": "Heading for tournaments list"
+    },
+    "tournamentSelectionArchiveListHeading": "Archive",
+    "@tournamentSelectionArchiveListHeading": {
+        "description": "Heading for archive list"
+    },
+    "tournamentSelectionListNoTournamentsAvailable": "No tournaments available",
+    "@tournamentSelectionListNoTournamentsAvailable": {
+        "description": "States that no tournaments are available"
+    },
+    "tournamentSelectionListNoArchivedTournaments": "No archived tournaments",
+    "@tournamentSelectionListNoArchivedTournaments": {
+        "description": "States that no tournaments are currently archived"
+    },
+    "tournamentCreationHeaderBar": "New Tournament:",
+    "@tournamentCreationHeaderBar": {
+        "description": "Header bar text for the tournament creation screen"
     }
 }
