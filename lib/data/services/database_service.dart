@@ -5,9 +5,14 @@ import 'package:chessmate/domain/models/tournament/tournament.dart';
 
 abstract class DatabaseService {
   Future<void> init();
+
   Future<Either<String, IList<Tournament>>> getAllTournaments();
+
   Future<Either<String, Tournament>> getTournamentById(int id);
+
   Future<Either<String, Tournament>> createTournament(Tournament tournament);
+
   Future<Either<String, void>> updateTournament(int id, Tournament tournament);
+
   Future<Either<String, void>> deleteTournament(int id);
 }
