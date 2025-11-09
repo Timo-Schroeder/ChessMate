@@ -1,3 +1,4 @@
+import 'package:chessmate/ui/dashboard/widgets/dashboard_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:chessmate/ui/tournament_creation/widgets/tournament_creation_screen.dart';
@@ -15,6 +16,15 @@ final router = GoRouter(
       name: 'tournament-creation',
       path: '/tournament-creation',
       builder: (context, state) => TournamentCreationScreen(),
+    ),
+    GoRoute(
+      name: 'dashboard',
+      path: '/dashboard/:id',
+      builder: (context, state) {
+        final id = int.tryParse(state.pathParameters['id']!) ?? -1;
+
+        return DashboardScreen(id);
+      },
     ),
   ],
 );
