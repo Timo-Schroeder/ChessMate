@@ -1,3 +1,4 @@
+import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:flutter/material.dart';
 import 'package:watch_it/watch_it.dart';
 
@@ -15,7 +16,10 @@ class TournamentCreationScreen extends StatelessWidget with WatchItMixin {
     );
 
     return Scaffold(
-      appBar: HeaderBar(title: Text('New Tournament: $tournamentName')),
+      appBar: HeaderBar(
+        title:
+            Text('${context.l10n.tournamentCreationHeaderBar} $tournamentName'),
+      ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),
         child: TournamentCreationForm(),

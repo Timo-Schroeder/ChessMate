@@ -42,4 +42,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tournamentCreationCreateButton => 'Create';
+
+  @override
+  String get tournamentSelectionTournamentListHeading => 'Tournaments';
+
+  @override
+  String get tournamentSelectionArchiveListHeading => 'Archive';
+
+  @override
+  String get tournamentSelectionListNoTournamentsAvailable =>
+      'No tournaments available';
+
+  @override
+  String get tournamentSelectionListNoArchivedTournaments =>
+      'No archived tournaments';
+
+  @override
+  String get tournamentCreationHeaderBar => 'New Tournament:';
 }

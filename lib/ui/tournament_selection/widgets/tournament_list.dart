@@ -1,4 +1,4 @@
-// Create a new file: lib/ui/tournament_selection/widgets/tournament_list.dart
+import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:flutter/material.dart';
 import 'package:watch_it/watch_it.dart';
 import 'package:yaru/yaru.dart';
@@ -28,8 +28,8 @@ class TournamentList extends StatelessWidget with WatchItMixin {
         ? Center(
             child: Text(
               showArchived
-                  ? 'No archived tournaments'
-                  : 'No tournaments available',
+                  ? context.l10n.tournamentSelectionListNoArchivedTournaments
+                  : context.l10n.tournamentSelectionListNoTournamentsAvailable,
             ),
           )
         : SingleChildScrollView(
