@@ -1,4 +1,3 @@
-// Create a new file: lib/ui/tournament_selection/widgets/tournament_list.dart
 import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:flutter/material.dart';
 import 'package:watch_it/watch_it.dart';

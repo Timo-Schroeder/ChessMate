@@ -1,14 +1,11 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart'
     show FicListExtension, IList;
 import 'package:fpdart/fpdart.dart';
-import 'package:drift/drift.dart' as d; // Import drift with a prefix
+import 'package:drift/drift.dart' as d;
 
-import 'package:chessmate/domain/models/tournament/tournament.dart'; // Domain model Tournament
-// import 'package:chessmate/domain/models/tournament/tournament_format.dart' // Removed unused import
-//     show TournamentFormat;
-import 'package:chessmate/data/services/database_service.dart'; // Import the abstract class
-import 'package:chessmate/data/services/drift_database.dart'
-    as db; // Import the generated drift database with a prefix
+import 'package:chessmate/domain/models/tournament/tournament.dart';
+import 'package:chessmate/data/services/database_service.dart';
+import 'package:chessmate/data/services/drift_database.dart' as db;
 
 class DatabaseServiceImpl implements DatabaseService {
   final db.AppDatabase _appDatabase;
@@ -82,8 +79,7 @@ class DatabaseServiceImpl implements DatabaseService {
               startDate: tournament.startDate,
               endDate: tournament.endDate,
               format: tournament.format,
-              isArchived:
-                  d.Value(tournament.isArchived), // Wrapped with d.Value
+              isArchived: d.Value(tournament.isArchived),
             ),
           );
 
