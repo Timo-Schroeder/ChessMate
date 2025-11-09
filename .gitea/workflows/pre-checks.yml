@@ -3,7 +3,7 @@ name: Pre-Checks
 on:
   workflow_call:
     inputs:
-      dart_version:
+      flutter_version:
         required: false
         type: string
         default: "stable"
@@ -18,13 +18,16 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup Dart
-        uses: dart-lang/setup-dart@v1
+      - name: Setup Flutter
+        uses: subosito/flutter-actions@v2
         with:
-          sdk: ${{ inputs.dart_version }}
+          sdk: ${{ inputs.flutter_version }}
+
+      - name: Install Dependencies
+        run: flutter pub get
 
       - name: Dart Format
-        run: dart format .
+        run: dart format --set-exit-if-changed .
 
   dart-analyze:
     name: Dart Analyze
@@ -35,13 +38,13 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Setup Dart
-        uses: dart-lang/setup-dart@v1
+      - name: Setup Flutter
+        uses: subosito/flutter-actions@v2
         with:
-          sdk: ${{ inputs.dart_version }}
+          sdk: ${{ inputs.flutter_version }}
 
       - name: Install Dependencies
-        run: dart pub get
+        run: flutter pub get
 
       - name: Dart Analyze
         run: dart analyze --fatal-warnings
