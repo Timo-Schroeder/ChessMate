@@ -1,9 +1,9 @@
+import 'package:chessmate/ui/tournament_selection/view_model/tournament_selection_view_model.dart';
 import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:watch_it/watch_it.dart';
 import 'package:yaru/yaru.dart';
-
-import 'package:chessmate/ui/tournament_selection/view_model/tournament_selection_view_model.dart';
 
 class TournamentList extends StatelessWidget with WatchItMixin {
   const TournamentList({
@@ -46,6 +46,19 @@ class TournamentList extends StatelessWidget with WatchItMixin {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        YaruIconButton(
+                          icon: const Icon(
+                            Icons.play_arrow,
+                          ),
+                          // Cannot be extracted due to local variable: context
+                          // ignore: prefer-extracting-callbacks
+                          onPressed: () {
+                            final id = tournament.id;
+                            if (id != null) {
+                              context.go('/dashboard/$id');
+                            }
+                          },
+                        ),
                         YaruIconButton(
                           icon: Icon(
                             showArchived ? Icons.file_open : Icons.archive,
