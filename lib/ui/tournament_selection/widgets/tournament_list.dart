@@ -1,3 +1,4 @@
+import 'package:chessmate/routing/routes.dart';
 import 'package:chessmate/ui/tournament_selection/view_model/tournament_selection_view_model.dart';
 import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class TournamentList extends StatelessWidget with WatchItMixin {
                           onPressed: () {
                             final id = tournament.id;
                             if (id != null) {
-                              context.go('/dashboard/$id');
+                              context.go('${Routes.dashboard}/$id');
                             }
                           },
                         ),

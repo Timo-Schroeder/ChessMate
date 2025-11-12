@@ -1,6 +1,6 @@
 import 'package:chessmate/l10n/app_localizations.dart';
-import 'package:chessmate/utils/locator.dart';
-import 'package:chessmate/utils/router.dart';
+import 'package:chessmate/config/dependencies.dart';
+import 'package:chessmate/routing/router.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';

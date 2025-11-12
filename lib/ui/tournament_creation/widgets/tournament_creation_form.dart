@@ -1,4 +1,5 @@
 import 'package:chessmate/l10n/localizations_context.dart';
+import 'package:chessmate/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:watch_it/watch_it.dart';
@@ -106,7 +107,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
                     di<TournamentCreationViewModel>().createTournament();
 
                 if (success) {
-                  context.go('/tournament-selection');
+                  context.go(Routes.tournamentSelection);
                 }
               },
               child: Text(
