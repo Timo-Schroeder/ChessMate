@@ -6,15 +6,12 @@ import 'package:chessmate/routing/routes.dart';
 class NavigationPanel extends StatelessWidget {
   const NavigationPanel({super.key});
 
-  static const double kNavigationPanelWidth = 250;
-
   @override
   Widget build(BuildContext context) {
     final currentRoute = GoRouterState.of(context);
     final tournamentId =
         int.tryParse(currentRoute.pathParameters['id'] ?? '') ?? -1;
 
-    // Define navigation items
     final navigationItems = [
       _NavigationItem(
         icon: Icons.dashboard,
@@ -23,12 +20,12 @@ class NavigationPanel extends StatelessWidget {
       ),
       _NavigationItem(
         icon: Icons.people,
-        label: 'Player Management',
+        label: 'Players',
         route: '${Routes.playerManagement}/$tournamentId',
       ),
       _NavigationItem(
         icon: Icons.circle,
-        label: 'Round Management',
+        label: 'Rounds',
         route: '${Routes.roundManagement}/$tournamentId',
       ),
       _NavigationItem(
@@ -37,23 +34,16 @@ class NavigationPanel extends StatelessWidget {
         route: '${Routes.standings}/$tournamentId',
       ),
       _NavigationItem(
-        icon: Icons.settings,
+        icon: YaruIcons.settings,
         label: 'Settings',
         route: '${Routes.settings}/$tournamentId',
       ),
     ];
 
-    return YaruBorderContainer(
-      width: kNavigationPanelWidth,
+    return Container(
+      color: Theme.of(context).splashColor,
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'ChessMate',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ),
           Expanded(
             child: ListView.builder(
               itemCount: navigationItems.length,
@@ -61,17 +51,25 @@ class NavigationPanel extends StatelessWidget {
                 final item = navigationItems[index];
                 final isSelected = currentRoute.uri.toString() == item.route;
 
-                return YaruMasterTile(
-                  leading: Icon(item.icon),
-                  title: Text(item.label),
-                  selected: isSelected,
-                  // Cannot be extracted due to local variable: context
-                  // ignore: prefer-extracting-callbacks
-                  onTap: () {
-                    if (!isSelected) {
-                      context.go(item.route);
-                    }
-                  },
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 1.0),
+                  child: YaruMasterTile(
+                    leading: Icon(item.icon),
+                    title: Text(
+                      item.label,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    selected: isSelected,
+                    // Cannot be extracted due to local variable: context
+                    // ignore: prefer-extracting-callbacks
+                    onTap: () {
+                      if (!isSelected) {
+                        context.go(item.route);
+                      }
+                    },
+                  ),
                 );
               },
             ),

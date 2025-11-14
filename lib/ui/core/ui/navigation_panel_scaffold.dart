@@ -10,23 +10,50 @@ class NavigationPanelScaffold extends StatelessWidget {
 
   final Widget child;
 
+  static const double kNavigationPanelWidth = 280;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const YaruWindowTitleBar(
-        border: BorderSide(
-          style: BorderStyle.none,
-        ),
-      ),
-      body: Row(
-        children: [
-          const SizedBox(
-            width: 250,
-            child: NavigationPanel(),
+    return Row(
+      children: [
+        SizedBox(
+          width: kNavigationPanelWidth,
+          child: Scaffold(
+            appBar: YaruWindowTitleBar(
+              border: const BorderSide(
+                style: BorderStyle.none,
+              ),
+              title: const Text(
+                'ChessMate',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              isClosable: false,
+              isMaximizable: false,
+              isMinimizable: false,
+              backgroundColor: Theme.of(context).splashColor,
+              heroTag: 'navigation_title_bar',
+            ),
+            body: const NavigationPanel(),
           ),
-          Expanded(child: child),
-        ],
-      ),
+        ),
+        const VerticalDivider(
+          thickness: 5,
+        ),
+        Expanded(
+          child: Scaffold(
+            appBar: const YaruWindowTitleBar(
+              border: BorderSide(
+                style: BorderStyle.none,
+              ),
+              heroTag: 'main_title_bar',
+            ),
+            body: child,
+          ),
+        ),
+      ],
     );
   }
 }

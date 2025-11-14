@@ -53,8 +53,8 @@ void main() {
       );
 
       expect(find.text('Dashboard'), findsOneWidget);
-      expect(find.text('Player Management'), findsOneWidget);
-      expect(find.text('Round Management'), findsOneWidget);
+      expect(find.text('Players'), findsOneWidget);
+      expect(find.text('Rounds'), findsOneWidget);
       expect(find.text('Standings'), findsOneWidget);
       expect(find.text('Settings'), findsOneWidget);
     });
@@ -104,7 +104,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.text('Player Management'));
+      await tester.tap(find.text('Players'));
       await tester.pumpAndSettle();
 
       expect(find.text('Player Management Screen'), findsOneWidget);
@@ -160,7 +160,7 @@ void main() {
       );
 
       final playerManagementTile =
-          find.widgetWithText(YaruMasterTile, 'Player Management');
+          find.widgetWithText(YaruMasterTile, 'Players');
       final yaruMasterTileWidget =
           tester.widget<YaruMasterTile>(playerManagementTile);
       expect(yaruMasterTileWidget.selected, isTrue);
