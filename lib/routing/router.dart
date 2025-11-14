@@ -44,6 +44,7 @@ final router = GoRouter(
           parentNavigatorKey: _shellNavigatorKey,
           builder: (context, state) {
             final id = int.tryParse(state.pathParameters['id']!) ?? -1;
+
             return PlayerManagementScreen(tournamentId: id);
           },
         ),
@@ -52,6 +53,7 @@ final router = GoRouter(
           parentNavigatorKey: _shellNavigatorKey,
           builder: (context, state) {
             final id = int.tryParse(state.pathParameters['id']!) ?? -1;
+
             return RoundManagementScreen(tournamentId: id);
           },
         ),
@@ -60,6 +62,7 @@ final router = GoRouter(
           parentNavigatorKey: _shellNavigatorKey,
           builder: (context, state) {
             final id = int.tryParse(state.pathParameters['id']!) ?? -1;
+
             return StandingsScreen(tournamentId: id);
           },
         ),
@@ -68,6 +71,7 @@ final router = GoRouter(
           parentNavigatorKey: _shellNavigatorKey,
           builder: (context, state) {
             final id = int.tryParse(state.pathParameters['id']!) ?? -1;
+
             return SettingsScreen(tournamentId: id);
           },
         ),

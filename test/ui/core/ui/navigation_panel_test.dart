@@ -108,8 +108,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Player Management Screen'), findsOneWidget);
-      expect(router.routerDelegate.currentConfiguration.uri.toString(),
-          '${Routes.playerManagement}/1');
+      expect(
+        router.routerDelegate.currentConfiguration.uri.toString(),
+        '${Routes.playerManagement}/1',
+      );
     });
 
     testWidgets('highlights the currently selected tile', (tester) async {

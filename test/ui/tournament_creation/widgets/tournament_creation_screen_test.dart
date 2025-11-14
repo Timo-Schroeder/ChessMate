@@ -137,7 +137,5 @@ void main() {
       verify(() => mockViewModel.createTournament()).called(1);
       verifyNever(() => mockRouter.go(any()));
     });
-
-    // Add tests for YaruDateTimeEntry and YaruPopupMenuButton interactions
   });
 }

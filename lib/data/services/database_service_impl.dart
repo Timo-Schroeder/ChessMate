@@ -14,6 +14,7 @@ class DatabaseServiceImpl implements DatabaseService {
 
   @override
   Future<void> init() async {
+    // ignore: no-empty-block
     // Drift handles initialization internally, so this can be empty or used for any initial setup if needed.
   }
 

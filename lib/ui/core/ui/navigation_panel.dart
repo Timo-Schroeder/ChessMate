@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yaru/yaru.dart';
-import 'package:chessmate/routing/routes.dart'; // Import Routes
+import 'package:chessmate/routing/routes.dart';
 
 class NavigationPanel extends StatelessWidget {
   const NavigationPanel({super.key});
+
+  static const double kNavigationPanelWidth = 250;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class NavigationPanel extends StatelessWidget {
         route: '${Routes.playerManagement}/$tournamentId',
       ),
       _NavigationItem(
-        icon: Icons.circle, // Using Icons.circle as per user request
+        icon: Icons.circle,
         label: 'Round Management',
         route: '${Routes.roundManagement}/$tournamentId',
       ),
@@ -42,10 +44,9 @@ class NavigationPanel extends StatelessWidget {
     ];
 
     return YaruBorderContainer(
-      width: 250, // Match the width in NavigationPanelScaffold
+      width: kNavigationPanelWidth,
       child: Column(
         children: [
-          // Add a header or title if desired, e.g., "ChessMate"
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
@@ -64,6 +65,8 @@ class NavigationPanel extends StatelessWidget {
                   leading: Icon(item.icon),
                   title: Text(item.label),
                   selected: isSelected,
+                  // Cannot be extracted due to local variable: context
+                  // ignore: prefer-extracting-callbacks
                   onTap: () {
                     if (!isSelected) {
                       context.go(item.route);
@@ -80,13 +83,13 @@ class NavigationPanel extends StatelessWidget {
 }
 
 class _NavigationItem {
+  final String route;
+  final IconData icon;
+  final String label;
+
   const _NavigationItem({
     required this.icon,
     required this.label,
     required this.route,
   });
-
-  final String route;
-  final IconData icon;
-  final String label;
 }
