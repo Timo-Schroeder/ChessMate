@@ -29,6 +29,12 @@ mixin _$Tournament {
   /// The format of the tournament, like Swiss or Round Robin (not yet implemented).
   TournamentFormat get format;
 
+  /// States if the tournament has already started.
+  bool get hasStarted;
+
+  /// States if the tournament is finished.
+  bool get hasFinished;
+
   /// Archive status of the tournament
   bool get isArchived;
 
@@ -50,17 +56,21 @@ mixin _$Tournament {
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.format, format) || other.format == format) &&
+            (identical(other.hasStarted, hasStarted) ||
+                other.hasStarted == hasStarted) &&
+            (identical(other.hasFinished, hasFinished) ||
+                other.hasFinished == hasFinished) &&
             (identical(other.isArchived, isArchived) ||
                 other.isArchived == isArchived));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, name, startDate, endDate, format, isArchived);
+  int get hashCode => Object.hash(runtimeType, id, name, startDate, endDate,
+      format, hasStarted, hasFinished, isArchived);
 
   @override
   String toString() {
-    return 'Tournament(id: $id, name: $name, startDate: $startDate, endDate: $endDate, format: $format, isArchived: $isArchived)';
+    return 'Tournament(id: $id, name: $name, startDate: $startDate, endDate: $endDate, format: $format, hasStarted: $hasStarted, hasFinished: $hasFinished, isArchived: $isArchived)';
   }
 }
 
@@ -76,6 +86,8 @@ abstract mixin class $TournamentCopyWith<$Res> {
       DateTime startDate,
       DateTime endDate,
       TournamentFormat format,
+      bool hasStarted,
+      bool hasFinished,
       bool isArchived});
 }
 
@@ -96,6 +108,8 @@ class _$TournamentCopyWithImpl<$Res> implements $TournamentCopyWith<$Res> {
     Object? startDate = null,
     Object? endDate = null,
     Object? format = null,
+    Object? hasStarted = null,
+    Object? hasFinished = null,
     Object? isArchived = null,
   }) {
     return _then(_self.copyWith(
@@ -119,6 +133,14 @@ class _$TournamentCopyWithImpl<$Res> implements $TournamentCopyWith<$Res> {
           ? _self.format
           : format // ignore: cast_nullable_to_non_nullable
               as TournamentFormat,
+      hasStarted: null == hasStarted
+          ? _self.hasStarted
+          : hasStarted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasFinished: null == hasFinished
+          ? _self.hasFinished
+          : hasFinished // ignore: cast_nullable_to_non_nullable
+              as bool,
       isArchived: null == isArchived
           ? _self.isArchived
           : isArchived // ignore: cast_nullable_to_non_nullable
@@ -220,16 +242,30 @@ extension TournamentPatterns on Tournament {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(int? id, String name, DateTime startDate, DateTime endDate,
-            TournamentFormat format, bool isArchived)?
+    TResult Function(
+            int? id,
+            String name,
+            DateTime startDate,
+            DateTime endDate,
+            TournamentFormat format,
+            bool hasStarted,
+            bool hasFinished,
+            bool isArchived)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _Tournament() when $default != null:
-        return $default(_that.id, _that.name, _that.startDate, _that.endDate,
-            _that.format, _that.isArchived);
+        return $default(
+            _that.id,
+            _that.name,
+            _that.startDate,
+            _that.endDate,
+            _that.format,
+            _that.hasStarted,
+            _that.hasFinished,
+            _that.isArchived);
       case _:
         return orElse();
     }
@@ -250,15 +286,29 @@ extension TournamentPatterns on Tournament {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(int? id, String name, DateTime startDate, DateTime endDate,
-            TournamentFormat format, bool isArchived)
+    TResult Function(
+            int? id,
+            String name,
+            DateTime startDate,
+            DateTime endDate,
+            TournamentFormat format,
+            bool hasStarted,
+            bool hasFinished,
+            bool isArchived)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _Tournament():
-        return $default(_that.id, _that.name, _that.startDate, _that.endDate,
-            _that.format, _that.isArchived);
+        return $default(
+            _that.id,
+            _that.name,
+            _that.startDate,
+            _that.endDate,
+            _that.format,
+            _that.hasStarted,
+            _that.hasFinished,
+            _that.isArchived);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -278,15 +328,29 @@ extension TournamentPatterns on Tournament {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(int? id, String name, DateTime startDate,
-            DateTime endDate, TournamentFormat format, bool isArchived)?
+    TResult? Function(
+            int? id,
+            String name,
+            DateTime startDate,
+            DateTime endDate,
+            TournamentFormat format,
+            bool hasStarted,
+            bool hasFinished,
+            bool isArchived)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _Tournament() when $default != null:
-        return $default(_that.id, _that.name, _that.startDate, _that.endDate,
-            _that.format, _that.isArchived);
+        return $default(
+            _that.id,
+            _that.name,
+            _that.startDate,
+            _that.endDate,
+            _that.format,
+            _that.hasStarted,
+            _that.hasFinished,
+            _that.isArchived);
       case _:
         return null;
     }
@@ -302,6 +366,8 @@ class _Tournament implements Tournament {
       required this.startDate,
       required this.endDate,
       required this.format,
+      required this.hasStarted,
+      required this.hasFinished,
       required this.isArchived});
 
   /// The unique identifier of the tournament.
@@ -323,6 +389,14 @@ class _Tournament implements Tournament {
   /// The format of the tournament, like Swiss or Round Robin (not yet implemented).
   @override
   final TournamentFormat format;
+
+  /// States if the tournament has already started.
+  @override
+  final bool hasStarted;
+
+  /// States if the tournament is finished.
+  @override
+  final bool hasFinished;
 
   /// Archive status of the tournament
   @override
@@ -347,17 +421,21 @@ class _Tournament implements Tournament {
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.format, format) || other.format == format) &&
+            (identical(other.hasStarted, hasStarted) ||
+                other.hasStarted == hasStarted) &&
+            (identical(other.hasFinished, hasFinished) ||
+                other.hasFinished == hasFinished) &&
             (identical(other.isArchived, isArchived) ||
                 other.isArchived == isArchived));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, name, startDate, endDate, format, isArchived);
+  int get hashCode => Object.hash(runtimeType, id, name, startDate, endDate,
+      format, hasStarted, hasFinished, isArchived);
 
   @override
   String toString() {
-    return 'Tournament(id: $id, name: $name, startDate: $startDate, endDate: $endDate, format: $format, isArchived: $isArchived)';
+    return 'Tournament(id: $id, name: $name, startDate: $startDate, endDate: $endDate, format: $format, hasStarted: $hasStarted, hasFinished: $hasFinished, isArchived: $isArchived)';
   }
 }
 
@@ -375,6 +453,8 @@ abstract mixin class _$TournamentCopyWith<$Res>
       DateTime startDate,
       DateTime endDate,
       TournamentFormat format,
+      bool hasStarted,
+      bool hasFinished,
       bool isArchived});
 }
 
@@ -395,6 +475,8 @@ class __$TournamentCopyWithImpl<$Res> implements _$TournamentCopyWith<$Res> {
     Object? startDate = null,
     Object? endDate = null,
     Object? format = null,
+    Object? hasStarted = null,
+    Object? hasFinished = null,
     Object? isArchived = null,
   }) {
     return _then(_Tournament(
@@ -418,6 +500,14 @@ class __$TournamentCopyWithImpl<$Res> implements _$TournamentCopyWith<$Res> {
           ? _self.format
           : format // ignore: cast_nullable_to_non_nullable
               as TournamentFormat,
+      hasStarted: null == hasStarted
+          ? _self.hasStarted
+          : hasStarted // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasFinished: null == hasFinished
+          ? _self.hasFinished
+          : hasFinished // ignore: cast_nullable_to_non_nullable
+              as bool,
       isArchived: null == isArchived
           ? _self.isArchived
           : isArchived // ignore: cast_nullable_to_non_nullable

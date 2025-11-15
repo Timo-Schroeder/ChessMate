@@ -99,6 +99,8 @@ class TournamentCreationViewModel extends SafeChangeNotifier {
       format: _format,
       startDate: _startDate!,
       endDate: _endDate!,
+      hasStarted: false,
+      hasFinished: false,
       isArchived: false,
     );
     _tournamentUseCase.createTournament(tournament);

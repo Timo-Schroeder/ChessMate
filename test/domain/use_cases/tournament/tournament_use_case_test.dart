@@ -18,6 +18,8 @@ void main() {
         startDate: DateTime.now(),
         endDate: DateTime.now().add(const Duration(days: 1)),
         format: TournamentFormat.swiss,
+        hasStarted: false,
+        hasFinished: false,
         isArchived: false,
       ),
     );
@@ -48,6 +50,8 @@ void main() {
       startDate: DateTime.now(),
       endDate: DateTime.now().add(const Duration(days: 1)),
       format: TournamentFormat.swiss,
+      hasStarted: false,
+      hasFinished: false,
       isArchived: false,
     );
 
@@ -56,7 +60,9 @@ void main() {
       name: 'Test Tournament 2',
       startDate: DateTime.now(),
       endDate: DateTime.now().add(const Duration(days: 1)),
-      format: TournamentFormat.swiss, // Changed to swiss
+      format: TournamentFormat.swiss,
+      hasStarted: false,
+      hasFinished: false,
       isArchived: false,
     );
 

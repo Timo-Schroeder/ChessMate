@@ -98,12 +98,6 @@ abstract class AppLocalizations {
     Locale('en')
   ];
 
-  /// Title of the application shown in the title bar
-  ///
-  /// In en, this message translates to:
-  /// **'ChessMate'**
-  String get chessMateTitle;
-
   /// Button on tournament selection page linking to the tournament creation page
   ///
   /// In en, this message translates to:

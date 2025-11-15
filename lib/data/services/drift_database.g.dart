@@ -43,6 +43,26 @@ class $TournamentsTable extends Tournaments
       GeneratedColumn<String>('format', aliasedName, false,
               type: DriftSqlType.string, requiredDuringInsert: true)
           .withConverter<TournamentFormat>($TournamentsTable.$converterformat);
+  static const VerificationMeta _hasStartedMeta =
+      const VerificationMeta('hasStarted');
+  @override
+  late final GeneratedColumn<bool> hasStarted = GeneratedColumn<bool>(
+      'has_started', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("has_started" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _hasFinishedMeta =
+      const VerificationMeta('hasFinished');
+  @override
+  late final GeneratedColumn<bool> hasFinished = GeneratedColumn<bool>(
+      'has_finished', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("has_finished" IN (0, 1))'),
+      defaultValue: const Constant(false));
   static const VerificationMeta _isArchivedMeta =
       const VerificationMeta('isArchived');
   @override
@@ -54,8 +74,16 @@ class $TournamentsTable extends Tournaments
           GeneratedColumn.constraintIsAlways('CHECK ("is_archived" IN (0, 1))'),
       defaultValue: const Constant(false));
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, name, startDate, endDate, format, isArchived];
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        startDate,
+        endDate,
+        format,
+        hasStarted,
+        hasFinished,
+        isArchived
+      ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -87,6 +115,18 @@ class $TournamentsTable extends Tournaments
     } else if (isInserting) {
       context.missing(_endDateMeta);
     }
+    if (data.containsKey('has_started')) {
+      context.handle(
+          _hasStartedMeta,
+          hasStarted.isAcceptableOrUnknown(
+              data['has_started']!, _hasStartedMeta));
+    }
+    if (data.containsKey('has_finished')) {
+      context.handle(
+          _hasFinishedMeta,
+          hasFinished.isAcceptableOrUnknown(
+              data['has_finished']!, _hasFinishedMeta));
+    }
     if (data.containsKey('is_archived')) {
       context.handle(
           _isArchivedMeta,
@@ -113,6 +153,10 @@ class $TournamentsTable extends Tournaments
       format: $TournamentsTable.$converterformat.fromSql(attachedDatabase
           .typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}format'])!),
+      hasStarted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}has_started'])!,
+      hasFinished: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}has_finished'])!,
       isArchived: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_archived'])!,
     );
@@ -133,6 +177,8 @@ class Tournament extends DataClass implements Insertable<Tournament> {
   final DateTime startDate;
   final DateTime endDate;
   final TournamentFormat format;
+  final bool hasStarted;
+  final bool hasFinished;
   final bool isArchived;
   const Tournament(
       {required this.id,
@@ -140,6 +186,8 @@ class Tournament extends DataClass implements Insertable<Tournament> {
       required this.startDate,
       required this.endDate,
       required this.format,
+      required this.hasStarted,
+      required this.hasFinished,
       required this.isArchived});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -152,6 +200,8 @@ class Tournament extends DataClass implements Insertable<Tournament> {
       map['format'] =
           Variable<String>($TournamentsTable.$converterformat.toSql(format));
     }
+    map['has_started'] = Variable<bool>(hasStarted);
+    map['has_finished'] = Variable<bool>(hasFinished);
     map['is_archived'] = Variable<bool>(isArchived);
     return map;
   }
@@ -163,6 +213,8 @@ class Tournament extends DataClass implements Insertable<Tournament> {
       startDate: Value(startDate),
       endDate: Value(endDate),
       format: Value(format),
+      hasStarted: Value(hasStarted),
+      hasFinished: Value(hasFinished),
       isArchived: Value(isArchived),
     );
   }
@@ -177,6 +229,8 @@ class Tournament extends DataClass implements Insertable<Tournament> {
       endDate: serializer.fromJson<DateTime>(json['endDate']),
       format: $TournamentsTable.$converterformat
           .fromJson(serializer.fromJson<String>(json['format'])),
+      hasStarted: serializer.fromJson<bool>(json['hasStarted']),
+      hasFinished: serializer.fromJson<bool>(json['hasFinished']),
       isArchived: serializer.fromJson<bool>(json['isArchived']),
     );
   }
@@ -190,6 +244,8 @@ class Tournament extends DataClass implements Insertable<Tournament> {
       'endDate': serializer.toJson<DateTime>(endDate),
       'format': serializer
           .toJson<String>($TournamentsTable.$converterformat.toJson(format)),
+      'hasStarted': serializer.toJson<bool>(hasStarted),
+      'hasFinished': serializer.toJson<bool>(hasFinished),
       'isArchived': serializer.toJson<bool>(isArchived),
     };
   }
@@ -200,6 +256,8 @@ class Tournament extends DataClass implements Insertable<Tournament> {
           DateTime? startDate,
           DateTime? endDate,
           TournamentFormat? format,
+          bool? hasStarted,
+          bool? hasFinished,
           bool? isArchived}) =>
       Tournament(
         id: id ?? this.id,
@@ -207,6 +265,8 @@ class Tournament extends DataClass implements Insertable<Tournament> {
         startDate: startDate ?? this.startDate,
         endDate: endDate ?? this.endDate,
         format: format ?? this.format,
+        hasStarted: hasStarted ?? this.hasStarted,
+        hasFinished: hasFinished ?? this.hasFinished,
         isArchived: isArchived ?? this.isArchived,
       );
   Tournament copyWithCompanion(TournamentsCompanion data) {
@@ -216,6 +276,10 @@ class Tournament extends DataClass implements Insertable<Tournament> {
       startDate: data.startDate.present ? data.startDate.value : this.startDate,
       endDate: data.endDate.present ? data.endDate.value : this.endDate,
       format: data.format.present ? data.format.value : this.format,
+      hasStarted:
+          data.hasStarted.present ? data.hasStarted.value : this.hasStarted,
+      hasFinished:
+          data.hasFinished.present ? data.hasFinished.value : this.hasFinished,
       isArchived:
           data.isArchived.present ? data.isArchived.value : this.isArchived,
     );
@@ -229,14 +293,16 @@ class Tournament extends DataClass implements Insertable<Tournament> {
           ..write('startDate: $startDate, ')
           ..write('endDate: $endDate, ')
           ..write('format: $format, ')
+          ..write('hasStarted: $hasStarted, ')
+          ..write('hasFinished: $hasFinished, ')
           ..write('isArchived: $isArchived')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, name, startDate, endDate, format, isArchived);
+  int get hashCode => Object.hash(id, name, startDate, endDate, format,
+      hasStarted, hasFinished, isArchived);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -246,6 +312,8 @@ class Tournament extends DataClass implements Insertable<Tournament> {
           other.startDate == this.startDate &&
           other.endDate == this.endDate &&
           other.format == this.format &&
+          other.hasStarted == this.hasStarted &&
+          other.hasFinished == this.hasFinished &&
           other.isArchived == this.isArchived);
 }
 
@@ -255,6 +323,8 @@ class TournamentsCompanion extends UpdateCompanion<Tournament> {
   final Value<DateTime> startDate;
   final Value<DateTime> endDate;
   final Value<TournamentFormat> format;
+  final Value<bool> hasStarted;
+  final Value<bool> hasFinished;
   final Value<bool> isArchived;
   const TournamentsCompanion({
     this.id = const Value.absent(),
@@ -262,6 +332,8 @@ class TournamentsCompanion extends UpdateCompanion<Tournament> {
     this.startDate = const Value.absent(),
     this.endDate = const Value.absent(),
     this.format = const Value.absent(),
+    this.hasStarted = const Value.absent(),
+    this.hasFinished = const Value.absent(),
     this.isArchived = const Value.absent(),
   });
   TournamentsCompanion.insert({
@@ -270,6 +342,8 @@ class TournamentsCompanion extends UpdateCompanion<Tournament> {
     required DateTime startDate,
     required DateTime endDate,
     required TournamentFormat format,
+    this.hasStarted = const Value.absent(),
+    this.hasFinished = const Value.absent(),
     this.isArchived = const Value.absent(),
   })  : name = Value(name),
         startDate = Value(startDate),
@@ -281,6 +355,8 @@ class TournamentsCompanion extends UpdateCompanion<Tournament> {
     Expression<DateTime>? startDate,
     Expression<DateTime>? endDate,
     Expression<String>? format,
+    Expression<bool>? hasStarted,
+    Expression<bool>? hasFinished,
     Expression<bool>? isArchived,
   }) {
     return RawValuesInsertable({
@@ -289,6 +365,8 @@ class TournamentsCompanion extends UpdateCompanion<Tournament> {
       if (startDate != null) 'start_date': startDate,
       if (endDate != null) 'end_date': endDate,
       if (format != null) 'format': format,
+      if (hasStarted != null) 'has_started': hasStarted,
+      if (hasFinished != null) 'has_finished': hasFinished,
       if (isArchived != null) 'is_archived': isArchived,
     });
   }
@@ -299,6 +377,8 @@ class TournamentsCompanion extends UpdateCompanion<Tournament> {
       Value<DateTime>? startDate,
       Value<DateTime>? endDate,
       Value<TournamentFormat>? format,
+      Value<bool>? hasStarted,
+      Value<bool>? hasFinished,
       Value<bool>? isArchived}) {
     return TournamentsCompanion(
       id: id ?? this.id,
@@ -306,6 +386,8 @@ class TournamentsCompanion extends UpdateCompanion<Tournament> {
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
       format: format ?? this.format,
+      hasStarted: hasStarted ?? this.hasStarted,
+      hasFinished: hasFinished ?? this.hasFinished,
       isArchived: isArchived ?? this.isArchived,
     );
   }
@@ -329,6 +411,12 @@ class TournamentsCompanion extends UpdateCompanion<Tournament> {
       map['format'] = Variable<String>(
           $TournamentsTable.$converterformat.toSql(format.value));
     }
+    if (hasStarted.present) {
+      map['has_started'] = Variable<bool>(hasStarted.value);
+    }
+    if (hasFinished.present) {
+      map['has_finished'] = Variable<bool>(hasFinished.value);
+    }
     if (isArchived.present) {
       map['is_archived'] = Variable<bool>(isArchived.value);
     }
@@ -343,6 +431,8 @@ class TournamentsCompanion extends UpdateCompanion<Tournament> {
           ..write('startDate: $startDate, ')
           ..write('endDate: $endDate, ')
           ..write('format: $format, ')
+          ..write('hasStarted: $hasStarted, ')
+          ..write('hasFinished: $hasFinished, ')
           ..write('isArchived: $isArchived')
           ..write(')'))
         .toString();
@@ -367,6 +457,8 @@ typedef $$TournamentsTableCreateCompanionBuilder = TournamentsCompanion
   required DateTime startDate,
   required DateTime endDate,
   required TournamentFormat format,
+  Value<bool> hasStarted,
+  Value<bool> hasFinished,
   Value<bool> isArchived,
 });
 typedef $$TournamentsTableUpdateCompanionBuilder = TournamentsCompanion
@@ -376,6 +468,8 @@ typedef $$TournamentsTableUpdateCompanionBuilder = TournamentsCompanion
   Value<DateTime> startDate,
   Value<DateTime> endDate,
   Value<TournamentFormat> format,
+  Value<bool> hasStarted,
+  Value<bool> hasFinished,
   Value<bool> isArchived,
 });
 
@@ -405,6 +499,12 @@ class $$TournamentsTableFilterComposer
           column: $table.format,
           builder: (column) => ColumnWithTypeConverterFilters(column));
 
+  ColumnFilters<bool> get hasStarted => $composableBuilder(
+      column: $table.hasStarted, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get hasFinished => $composableBuilder(
+      column: $table.hasFinished, builder: (column) => ColumnFilters(column));
+
   ColumnFilters<bool> get isArchived => $composableBuilder(
       column: $table.isArchived, builder: (column) => ColumnFilters(column));
 }
@@ -433,6 +533,12 @@ class $$TournamentsTableOrderingComposer
   ColumnOrderings<String> get format => $composableBuilder(
       column: $table.format, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<bool> get hasStarted => $composableBuilder(
+      column: $table.hasStarted, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get hasFinished => $composableBuilder(
+      column: $table.hasFinished, builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<bool> get isArchived => $composableBuilder(
       column: $table.isArchived, builder: (column) => ColumnOrderings(column));
 }
@@ -460,6 +566,12 @@ class $$TournamentsTableAnnotationComposer
 
   GeneratedColumnWithTypeConverter<TournamentFormat, String> get format =>
       $composableBuilder(column: $table.format, builder: (column) => column);
+
+  GeneratedColumn<bool> get hasStarted => $composableBuilder(
+      column: $table.hasStarted, builder: (column) => column);
+
+  GeneratedColumn<bool> get hasFinished => $composableBuilder(
+      column: $table.hasFinished, builder: (column) => column);
 
   GeneratedColumn<bool> get isArchived => $composableBuilder(
       column: $table.isArchived, builder: (column) => column);
@@ -493,6 +605,8 @@ class $$TournamentsTableTableManager extends RootTableManager<
             Value<DateTime> startDate = const Value.absent(),
             Value<DateTime> endDate = const Value.absent(),
             Value<TournamentFormat> format = const Value.absent(),
+            Value<bool> hasStarted = const Value.absent(),
+            Value<bool> hasFinished = const Value.absent(),
             Value<bool> isArchived = const Value.absent(),
           }) =>
               TournamentsCompanion(
@@ -501,6 +615,8 @@ class $$TournamentsTableTableManager extends RootTableManager<
             startDate: startDate,
             endDate: endDate,
             format: format,
+            hasStarted: hasStarted,
+            hasFinished: hasFinished,
             isArchived: isArchived,
           ),
           createCompanionCallback: ({
@@ -509,6 +625,8 @@ class $$TournamentsTableTableManager extends RootTableManager<
             required DateTime startDate,
             required DateTime endDate,
             required TournamentFormat format,
+            Value<bool> hasStarted = const Value.absent(),
+            Value<bool> hasFinished = const Value.absent(),
             Value<bool> isArchived = const Value.absent(),
           }) =>
               TournamentsCompanion.insert(
@@ -517,6 +635,8 @@ class $$TournamentsTableTableManager extends RootTableManager<
             startDate: startDate,
             endDate: endDate,
             format: format,
+            hasStarted: hasStarted,
+            hasFinished: hasFinished,
             isArchived: isArchived,
           ),
           withReferenceMapper: (p0) => p0

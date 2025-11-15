@@ -1,6 +1,5 @@
 {
     "@@locale": "de",
-    "chessMateTitle": "ChessMate",
     "newTournamentButtonText": "Neues Turnier",
     "tournamentsHeading": "Turniere",
     "tournamentCreationTitle": "Neues Turnier: {name}",

@@ -31,6 +31,8 @@ class DatabaseServiceImpl implements DatabaseService {
               startDate: tournamentData.startDate,
               endDate: tournamentData.endDate,
               format: tournamentData.format,
+              hasStarted: false,
+              hasFinished: false,
               isArchived: tournamentData.isArchived,
             ),
           )
@@ -61,6 +63,8 @@ class DatabaseServiceImpl implements DatabaseService {
           startDate: tournamentData.startDate,
           endDate: tournamentData.endDate,
           format: tournamentData.format,
+          hasStarted: false,
+          hasFinished: false,
           isArchived: tournamentData.isArchived,
         ),
       );

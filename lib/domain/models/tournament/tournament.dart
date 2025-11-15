@@ -22,6 +22,12 @@ abstract class Tournament with _$Tournament {
     /// The format of the tournament, like Swiss or Round Robin (not yet implemented).
     required TournamentFormat format,
 
+    /// States if the tournament has already started.
+    required bool hasStarted,
+
+    /// States if the tournament is finished.
+    required bool hasFinished,
+
     /// Archive status of the tournament
     required bool isArchived,
   }) = _Tournament;

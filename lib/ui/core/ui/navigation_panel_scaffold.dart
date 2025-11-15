@@ -1,4 +1,3 @@
-import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:chessmate/ui/core/ui/navigation_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
@@ -24,9 +23,9 @@ class NavigationPanelScaffold extends StatelessWidget {
               border: const BorderSide(
                 style: BorderStyle.none,
               ),
-              title: Text(
-                context.l10n.chessMateTitle,
-                style: const TextStyle(
+              title: const Text(
+                'ChessMate',
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
