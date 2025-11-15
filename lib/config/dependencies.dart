@@ -15,7 +15,7 @@ void setupLocator() {
   );
 
   sl.registerSingleton<TournamentRepository>(
-    TournamentRepositoryImpl(
+    TournamentRepository(
       sl<DatabaseService>(),
     ),
   );

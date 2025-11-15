@@ -10,8 +10,8 @@ import 'package:chessmate/domain/models/tournament/tournament_format.dart';
 import '../../fakes.dart'; // New import for FakeDatabaseService
 
 void main() {
-  group('TournamentRepositoryImpl', () {
-    late TournamentRepositoryImpl tournamentRepository;
+  group('TournamentRepository', () {
+    late TournamentRepository tournamentRepository;
     late FakeDatabaseService
         fakeDatabaseService; // Changed to FakeDatabaseService
 
@@ -25,7 +25,7 @@ void main() {
       sl.registerSingleton<DatabaseService>(
         fakeDatabaseService,
       ); // Register the fake
-      tournamentRepository = TournamentRepositoryImpl(fakeDatabaseService);
+      tournamentRepository = TournamentRepository(fakeDatabaseService);
     });
 
     tearDown(() {
