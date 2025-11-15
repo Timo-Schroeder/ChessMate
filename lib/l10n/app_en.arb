@@ -1,5 +1,9 @@
 {
     "@@locale": "en",
+    "chessMateTitle": "ChessMate",
+    "@chessMateTitle": {
+        "description": "Title of the application shown in the title bar"
+    },
     "newTournamentButtonText": "New Tournament",
     "@newTournamentButtonText": {
         "description": "Button on tournament selection page linking to the tournament creation page"
