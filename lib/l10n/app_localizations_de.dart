@@ -9,6 +9,9 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
+  String get chessMateTitle => 'ChessMate';
+
+  @override
   String get newTournamentButtonText => 'Neues Turnier';
 
   @override
