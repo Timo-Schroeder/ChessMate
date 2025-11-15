@@ -1,4 +1,5 @@
 import 'package:chessmate/l10n/localizations_context.dart';
+import 'package:chessmate/routing/routes.dart';
 import 'package:chessmate/ui/tournament_selection/widgets/tournament_list.dart';
 import 'package:go_router/go_router.dart';
 import 'package:chessmate/ui/core/ui/header_bar.dart';
@@ -54,7 +55,7 @@ class TournamentSelectionScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () => context.go('/tournament-creation'),
+                    onPressed: () => context.go(Routes.tournamentCreation),
                     child: Text(context.l10n.newTournamentButtonText),
                   ),
                 ],

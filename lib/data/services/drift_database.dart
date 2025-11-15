@@ -25,16 +25,17 @@ class Tournaments extends Table {
 
 @DriftDatabase(tables: [Tournaments])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
-
   @override
   int get schemaVersion => 1;
+
+  AppDatabase() : super(_openConnection());
 }
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'db.sqlite'));
+
     return NativeDatabase.createInBackground(file);
   });
 }
