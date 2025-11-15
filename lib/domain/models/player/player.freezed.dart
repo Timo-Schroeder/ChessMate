@@ -14,14 +14,38 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$Player {
+  /// The unique identifier of the player.
   PlayerId? get id;
+
+  /// The first name of the player.
   String get firstName;
+
+  /// The last name of the player.
   String get lastName;
-  DateTime get dateOfBirth;
-  String get club;
+
+  /// The birthyear of the player.
+  int get yearOfBirth;
+
+  /// The gender of the player.
+  Gender get gender;
+
+  /// The national rating number of the player.
   int? get nationalRating;
+
+  /// The elo rating of the player.
   int? get elo;
+
+  /// The club of the player.
+  String? get club;
+
+  /// The FIDE title of the player.
   FideTitle? get title;
+
+  /// States if the player is still participating in the tournament.
+  bool get active;
+
+  /// The tournament this player is tied to.
+  int get tournamentId;
 
   /// Create a copy of Player
   /// with the given fields replaced by the non-null parameter values.
@@ -40,22 +64,37 @@ mixin _$Player {
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
-            (identical(other.dateOfBirth, dateOfBirth) ||
-                other.dateOfBirth == dateOfBirth) &&
-            (identical(other.club, club) || other.club == club) &&
+            (identical(other.yearOfBirth, yearOfBirth) ||
+                other.yearOfBirth == yearOfBirth) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.nationalRating, nationalRating) ||
                 other.nationalRating == nationalRating) &&
             (identical(other.elo, elo) || other.elo == elo) &&
-            (identical(other.title, title) || other.title == title));
+            (identical(other.club, club) || other.club == club) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.active, active) || other.active == active) &&
+            (identical(other.tournamentId, tournamentId) ||
+                other.tournamentId == tournamentId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, firstName, lastName,
-      dateOfBirth, club, nationalRating, elo, title);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      firstName,
+      lastName,
+      yearOfBirth,
+      gender,
+      nationalRating,
+      elo,
+      club,
+      title,
+      active,
+      tournamentId);
 
   @override
   String toString() {
-    return 'Player(id: $id, firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, club: $club, nationalRating: $nationalRating, elo: $elo, title: $title)';
+    return 'Player(id: $id, firstName: $firstName, lastName: $lastName, yearOfBirth: $yearOfBirth, gender: $gender, nationalRating: $nationalRating, elo: $elo, club: $club, title: $title, active: $active, tournamentId: $tournamentId)';
   }
 }
 
@@ -68,11 +107,14 @@ abstract mixin class $PlayerCopyWith<$Res> {
       {PlayerId? id,
       String firstName,
       String lastName,
-      DateTime dateOfBirth,
-      String club,
+      int yearOfBirth,
+      Gender gender,
       int? nationalRating,
       int? elo,
-      FideTitle? title});
+      String? club,
+      FideTitle? title,
+      bool active,
+      int tournamentId});
 }
 
 /// @nodoc
@@ -90,11 +132,14 @@ class _$PlayerCopyWithImpl<$Res> implements $PlayerCopyWith<$Res> {
     Object? id = freezed,
     Object? firstName = null,
     Object? lastName = null,
-    Object? dateOfBirth = null,
-    Object? club = null,
+    Object? yearOfBirth = null,
+    Object? gender = null,
     Object? nationalRating = freezed,
     Object? elo = freezed,
+    Object? club = freezed,
     Object? title = freezed,
+    Object? active = null,
+    Object? tournamentId = null,
   }) {
     return _then(_self.copyWith(
       id: freezed == id
@@ -109,14 +154,14 @@ class _$PlayerCopyWithImpl<$Res> implements $PlayerCopyWith<$Res> {
           ? _self.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      dateOfBirth: null == dateOfBirth
-          ? _self.dateOfBirth
-          : dateOfBirth // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      club: null == club
-          ? _self.club
-          : club // ignore: cast_nullable_to_non_nullable
-              as String,
+      yearOfBirth: null == yearOfBirth
+          ? _self.yearOfBirth
+          : yearOfBirth // ignore: cast_nullable_to_non_nullable
+              as int,
+      gender: null == gender
+          ? _self.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as Gender,
       nationalRating: freezed == nationalRating
           ? _self.nationalRating
           : nationalRating // ignore: cast_nullable_to_non_nullable
@@ -125,10 +170,22 @@ class _$PlayerCopyWithImpl<$Res> implements $PlayerCopyWith<$Res> {
           ? _self.elo
           : elo // ignore: cast_nullable_to_non_nullable
               as int?,
+      club: freezed == club
+          ? _self.club
+          : club // ignore: cast_nullable_to_non_nullable
+              as String?,
       title: freezed == title
           ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as FideTitle?,
+      active: null == active
+          ? _self.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as bool,
+      tournamentId: null == tournamentId
+          ? _self.tournamentId
+          : tournamentId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -230,11 +287,14 @@ extension PlayerPatterns on Player {
             PlayerId? id,
             String firstName,
             String lastName,
-            DateTime dateOfBirth,
-            String club,
+            int yearOfBirth,
+            Gender gender,
             int? nationalRating,
             int? elo,
-            FideTitle? title)?
+            String? club,
+            FideTitle? title,
+            bool active,
+            int tournamentId)?
         $default, {
     required TResult orElse(),
   }) {
@@ -245,11 +305,14 @@ extension PlayerPatterns on Player {
             _that.id,
             _that.firstName,
             _that.lastName,
-            _that.dateOfBirth,
-            _that.club,
+            _that.yearOfBirth,
+            _that.gender,
             _that.nationalRating,
             _that.elo,
-            _that.title);
+            _that.club,
+            _that.title,
+            _that.active,
+            _that.tournamentId);
       case _:
         return orElse();
     }
@@ -274,11 +337,14 @@ extension PlayerPatterns on Player {
             PlayerId? id,
             String firstName,
             String lastName,
-            DateTime dateOfBirth,
-            String club,
+            int yearOfBirth,
+            Gender gender,
             int? nationalRating,
             int? elo,
-            FideTitle? title)
+            String? club,
+            FideTitle? title,
+            bool active,
+            int tournamentId)
         $default,
   ) {
     final _that = this;
@@ -288,11 +354,14 @@ extension PlayerPatterns on Player {
             _that.id,
             _that.firstName,
             _that.lastName,
-            _that.dateOfBirth,
-            _that.club,
+            _that.yearOfBirth,
+            _that.gender,
             _that.nationalRating,
             _that.elo,
-            _that.title);
+            _that.club,
+            _that.title,
+            _that.active,
+            _that.tournamentId);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -316,11 +385,14 @@ extension PlayerPatterns on Player {
             PlayerId? id,
             String firstName,
             String lastName,
-            DateTime dateOfBirth,
-            String club,
+            int yearOfBirth,
+            Gender gender,
             int? nationalRating,
             int? elo,
-            FideTitle? title)?
+            String? club,
+            FideTitle? title,
+            bool active,
+            int tournamentId)?
         $default,
   ) {
     final _that = this;
@@ -330,11 +402,14 @@ extension PlayerPatterns on Player {
             _that.id,
             _that.firstName,
             _that.lastName,
-            _that.dateOfBirth,
-            _that.club,
+            _that.yearOfBirth,
+            _that.gender,
             _that.nationalRating,
             _that.elo,
-            _that.title);
+            _that.club,
+            _that.title,
+            _that.active,
+            _that.tournamentId);
       case _:
         return null;
     }
@@ -348,28 +423,58 @@ class _Player implements Player {
       {this.id,
       required this.firstName,
       required this.lastName,
-      required this.dateOfBirth,
-      required this.club,
+      required this.yearOfBirth,
+      required this.gender,
       this.nationalRating,
       this.elo,
-      this.title});
+      this.club,
+      this.title,
+      required this.active,
+      required this.tournamentId});
 
+  /// The unique identifier of the player.
   @override
   final PlayerId? id;
+
+  /// The first name of the player.
   @override
   final String firstName;
+
+  /// The last name of the player.
   @override
   final String lastName;
+
+  /// The birthyear of the player.
   @override
-  final DateTime dateOfBirth;
+  final int yearOfBirth;
+
+  /// The gender of the player.
   @override
-  final String club;
+  final Gender gender;
+
+  /// The national rating number of the player.
   @override
   final int? nationalRating;
+
+  /// The elo rating of the player.
   @override
   final int? elo;
+
+  /// The club of the player.
+  @override
+  final String? club;
+
+  /// The FIDE title of the player.
   @override
   final FideTitle? title;
+
+  /// States if the player is still participating in the tournament.
+  @override
+  final bool active;
+
+  /// The tournament this player is tied to.
+  @override
+  final int tournamentId;
 
   /// Create a copy of Player
   /// with the given fields replaced by the non-null parameter values.
@@ -389,22 +494,37 @@ class _Player implements Player {
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
                 other.lastName == lastName) &&
-            (identical(other.dateOfBirth, dateOfBirth) ||
-                other.dateOfBirth == dateOfBirth) &&
-            (identical(other.club, club) || other.club == club) &&
+            (identical(other.yearOfBirth, yearOfBirth) ||
+                other.yearOfBirth == yearOfBirth) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.nationalRating, nationalRating) ||
                 other.nationalRating == nationalRating) &&
             (identical(other.elo, elo) || other.elo == elo) &&
-            (identical(other.title, title) || other.title == title));
+            (identical(other.club, club) || other.club == club) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.active, active) || other.active == active) &&
+            (identical(other.tournamentId, tournamentId) ||
+                other.tournamentId == tournamentId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, firstName, lastName,
-      dateOfBirth, club, nationalRating, elo, title);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      firstName,
+      lastName,
+      yearOfBirth,
+      gender,
+      nationalRating,
+      elo,
+      club,
+      title,
+      active,
+      tournamentId);
 
   @override
   String toString() {
-    return 'Player(id: $id, firstName: $firstName, lastName: $lastName, dateOfBirth: $dateOfBirth, club: $club, nationalRating: $nationalRating, elo: $elo, title: $title)';
+    return 'Player(id: $id, firstName: $firstName, lastName: $lastName, yearOfBirth: $yearOfBirth, gender: $gender, nationalRating: $nationalRating, elo: $elo, club: $club, title: $title, active: $active, tournamentId: $tournamentId)';
   }
 }
 
@@ -418,11 +538,14 @@ abstract mixin class _$PlayerCopyWith<$Res> implements $PlayerCopyWith<$Res> {
       {PlayerId? id,
       String firstName,
       String lastName,
-      DateTime dateOfBirth,
-      String club,
+      int yearOfBirth,
+      Gender gender,
       int? nationalRating,
       int? elo,
-      FideTitle? title});
+      String? club,
+      FideTitle? title,
+      bool active,
+      int tournamentId});
 }
 
 /// @nodoc
@@ -440,11 +563,14 @@ class __$PlayerCopyWithImpl<$Res> implements _$PlayerCopyWith<$Res> {
     Object? id = freezed,
     Object? firstName = null,
     Object? lastName = null,
-    Object? dateOfBirth = null,
-    Object? club = null,
+    Object? yearOfBirth = null,
+    Object? gender = null,
     Object? nationalRating = freezed,
     Object? elo = freezed,
+    Object? club = freezed,
     Object? title = freezed,
+    Object? active = null,
+    Object? tournamentId = null,
   }) {
     return _then(_Player(
       id: freezed == id
@@ -459,14 +585,14 @@ class __$PlayerCopyWithImpl<$Res> implements _$PlayerCopyWith<$Res> {
           ? _self.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
               as String,
-      dateOfBirth: null == dateOfBirth
-          ? _self.dateOfBirth
-          : dateOfBirth // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      club: null == club
-          ? _self.club
-          : club // ignore: cast_nullable_to_non_nullable
-              as String,
+      yearOfBirth: null == yearOfBirth
+          ? _self.yearOfBirth
+          : yearOfBirth // ignore: cast_nullable_to_non_nullable
+              as int,
+      gender: null == gender
+          ? _self.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as Gender,
       nationalRating: freezed == nationalRating
           ? _self.nationalRating
           : nationalRating // ignore: cast_nullable_to_non_nullable
@@ -475,10 +601,22 @@ class __$PlayerCopyWithImpl<$Res> implements _$PlayerCopyWith<$Res> {
           ? _self.elo
           : elo // ignore: cast_nullable_to_non_nullable
               as int?,
+      club: freezed == club
+          ? _self.club
+          : club // ignore: cast_nullable_to_non_nullable
+              as String?,
       title: freezed == title
           ? _self.title
           : title // ignore: cast_nullable_to_non_nullable
               as FideTitle?,
+      active: null == active
+          ? _self.active
+          : active // ignore: cast_nullable_to_non_nullable
+              as bool,
+      tournamentId: null == tournamentId
+          ? _self.tournamentId
+          : tournamentId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
