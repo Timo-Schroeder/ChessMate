@@ -24,7 +24,11 @@ class PlayerManagementScreen extends StatelessWidget {
               border: BorderSide(style: BorderStyle.none),
               isClosable: true,
             ),
-            content: PlayerCreationForm(tournamentId),
+            content: SizedBox(
+              width: 400,
+              height: 500,
+              child: PlayerCreationForm(tournamentId),
+            ),
           ),
         ),
         child: const Icon(YaruIcons.plus),

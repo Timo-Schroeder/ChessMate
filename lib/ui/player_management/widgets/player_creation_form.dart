@@ -20,10 +20,7 @@ class PlayerCreationForm extends StatelessWidget with WatchItMixin {
       (PlayerManagementViewModel vm) => vm.playerCreationLastNameError,
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
+    return ListView(
       children: [
         const Text('Name', style: TextStyle(fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
