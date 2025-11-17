@@ -20,7 +20,7 @@ class Players extends Table {
 
   TextColumn get club => text().withLength(min: 1, max: 64).nullable()();
 
-  TextColumn get fideTitle => textEnum<FideTitle>().nullable()();
+  TextColumn get fideTitle => textEnum<FideTitle>()();
 
   BoolColumn get active => boolean().withDefault(const Constant(true))();
 

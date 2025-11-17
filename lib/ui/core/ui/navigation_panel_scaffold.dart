@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:yaru/yaru.dart';
 
 class NavigationPanelScaffold extends StatelessWidget {
-  const NavigationPanelScaffold(
-    this.child, {
-    super.key,
-  });
-
-  final Widget child;
+  const NavigationPanelScaffold(this.child, {super.key});
 
   static const double kNavigationPanelWidth = 280;
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +17,10 @@ class NavigationPanelScaffold extends StatelessWidget {
           width: kNavigationPanelWidth,
           child: Scaffold(
             appBar: YaruWindowTitleBar(
-              border: const BorderSide(
-                style: BorderStyle.none,
-              ),
+              border: const BorderSide(style: BorderStyle.none),
               title: const Text(
                 'ChessMate',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               isClosable: false,
               isMaximizable: false,
@@ -40,15 +32,11 @@ class NavigationPanelScaffold extends StatelessWidget {
             body: const NavigationPanel(),
           ),
         ),
-        const VerticalDivider(
-          thickness: 5,
-        ),
+        const VerticalDivider(thickness: 5),
         Expanded(
           child: Scaffold(
             appBar: const YaruWindowTitleBar(
-              border: BorderSide(
-                style: BorderStyle.none,
-              ),
+              border: BorderSide(style: BorderStyle.none),
               heroTag: 'main_title_bar',
             ),
             body: child,

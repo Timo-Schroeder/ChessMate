@@ -35,7 +35,7 @@ abstract class Player with _$Player {
     String? club,
 
     /// The FIDE title of the player.
-    FideTitle? title,
+    required FideTitle title,
 
     /// States if the player is still participating in the tournament.
     required bool active,
