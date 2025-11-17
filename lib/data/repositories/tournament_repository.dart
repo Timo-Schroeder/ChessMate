@@ -17,9 +17,7 @@ class TournamentRepository {
     return _database.getTournamentById(id);
   }
 
-  Future<Either<String, Tournament>> createTournament(
-    Tournament tournament,
-  ) {
+  Future<Either<String, Tournament>> createTournament(Tournament tournament) {
     return _database.createTournament(tournament);
   }
 
@@ -27,10 +25,7 @@ class TournamentRepository {
     return _database.deleteTournament(id);
   }
 
-  Future<Either<String, void>> updateTournament(
-    int id,
-    Tournament tournament,
-  ) {
+  Future<Either<String, void>> updateTournament(int id, Tournament tournament) {
     return _database.updateTournament(id, tournament);
   }
 }

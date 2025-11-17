@@ -9,18 +9,18 @@ class FakeDatabaseService implements DatabaseService {
   Future<Either<String, IList<Tournament>>> Function()? getAllTournamentsStub;
   Future<Either<String, Tournament>> Function(int id)? getTournamentByIdStub;
   Future<Either<String, Tournament>> Function(Tournament tournament)?
-      createTournamentStub;
+  createTournamentStub;
   Future<Either<String, void>> Function(int id, Tournament tournament)?
-      updateTournamentStub;
+  updateTournamentStub;
   Future<Either<String, void>> Function(int id)? deleteTournamentStub;
   Future<void> Function()? initStub;
   Future<Either<String, Player>> Function(Player player)? createPlayerStub;
   Future<Either<String, void>> Function(int id)? deletePlayerStub;
   Future<Either<String, Player>> Function(int id)? getPlayerByIdStub;
   Future<Either<String, IList<Player>>> Function(int tournamentId)?
-      getPlayersInTournamentStub;
+  getPlayersInTournamentStub;
   Future<Either<String, void>> Function(int id, Player player)?
-      updatePlayerStub;
+  updatePlayerStub;
 
   @override
   Future<Either<String, IList<Tournament>>> getAllTournaments() {

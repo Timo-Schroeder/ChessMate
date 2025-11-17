@@ -73,194 +73,219 @@ void main() {
 
     group('loadInitialData', () {
       test(
-          'should set isLoading to true then false and update tournaments on success',
-          () async {
-        when(() => mockTournamentRepository.getTournaments())
-            .thenAnswer((_) async => Right(IList([tTournament])));
+        'should set isLoading to true then false and update tournaments on success',
+        () async {
+          when(
+            () => mockTournamentRepository.getTournaments(),
+          ).thenAnswer((_) async => Right(IList([tTournament])));
 
-        final callOrder = <String>[];
-        tournamentUseCase.addListener(() {
-          if (tournamentUseCase.isLoading) {
-            callOrder.add('isLoading true');
-          } else {
-            callOrder.add('isLoading false');
-          }
-          if (tournamentUseCase.tournaments.isNotEmpty) {
-            callOrder.add('tournaments updated');
-          }
-        });
+          final callOrder = <String>[];
+          tournamentUseCase.addListener(() {
+            if (tournamentUseCase.isLoading) {
+              callOrder.add('isLoading true');
+            } else {
+              callOrder.add('isLoading false');
+            }
+            if (tournamentUseCase.tournaments.isNotEmpty) {
+              callOrder.add('tournaments updated');
+            }
+          });
 
-        await tournamentUseCase.loadInitialData();
+          await tournamentUseCase.loadInitialData();
 
-        verify(() => mockTournamentRepository.getTournaments()).called(1);
-        expect(tournamentUseCase.tournaments, IList([tTournament]));
-        expect(tournamentUseCase.isLoading, isFalse);
-        expect(callOrder, [
-          'isLoading true',
-          'isLoading false',
-          'tournaments updated',
-        ]); // Order might vary slightly based on internal notifyListeners calls
-      });
+          verify(() => mockTournamentRepository.getTournaments()).called(1);
+          expect(tournamentUseCase.tournaments, IList([tTournament]));
+          expect(tournamentUseCase.isLoading, isFalse);
+          expect(
+            callOrder,
+            ['isLoading true', 'isLoading false', 'tournaments updated'],
+          ); // Order might vary slightly based on internal notifyListeners calls
+        },
+      );
 
       test(
-          'should set isLoading to true then false and not update tournaments on failure',
-          () async {
-        when(() => mockTournamentRepository.getTournaments())
-            .thenAnswer((_) async => const Left('Failed to load'));
+        'should set isLoading to true then false and not update tournaments on failure',
+        () async {
+          when(
+            () => mockTournamentRepository.getTournaments(),
+          ).thenAnswer((_) async => const Left('Failed to load'));
 
-        final callOrder = <String>[];
-        tournamentUseCase.addListener(() {
-          if (tournamentUseCase.isLoading) {
-            callOrder.add('isLoading true');
-          } else {
-            callOrder.add('isLoading false');
-          }
-        });
+          final callOrder = <String>[];
+          tournamentUseCase.addListener(() {
+            if (tournamentUseCase.isLoading) {
+              callOrder.add('isLoading true');
+            } else {
+              callOrder.add('isLoading false');
+            }
+          });
 
-        await tournamentUseCase.loadInitialData();
+          await tournamentUseCase.loadInitialData();
 
-        verify(() => mockTournamentRepository.getTournaments()).called(1);
-        expect(tournamentUseCase.tournaments, isEmpty);
-        expect(tournamentUseCase.isLoading, isFalse);
-        expect(callOrder, ['isLoading true', 'isLoading false']);
-      });
+          verify(() => mockTournamentRepository.getTournaments()).called(1);
+          expect(tournamentUseCase.tournaments, isEmpty);
+          expect(tournamentUseCase.isLoading, isFalse);
+          expect(callOrder, ['isLoading true', 'isLoading false']);
+        },
+      );
     });
 
     group('createTournament', () {
-      test('should add tournament to list and notify listeners on success',
-          () async {
-        when(() => mockTournamentRepository.createTournament(tTournament))
-            .thenAnswer((_) async => Right(tTournament));
+      test(
+        'should add tournament to list and notify listeners on success',
+        () async {
+          when(
+            () => mockTournamentRepository.createTournament(tTournament),
+          ).thenAnswer((_) async => Right(tTournament));
 
-        final callOrder = <String>[];
-        tournamentUseCase.addListener(() {
-          callOrder.add('listener notified');
-        });
+          final callOrder = <String>[];
+          tournamentUseCase.addListener(() {
+            callOrder.add('listener notified');
+          });
 
-        // ignore: void_checks
-        await tournamentUseCase.createTournament(tTournament);
+          // ignore: void_checks
+          await tournamentUseCase.createTournament(tTournament);
 
-        verify(() => mockTournamentRepository.createTournament(tTournament))
-            .called(1);
-        expect(tournamentUseCase.tournaments, IList([tTournament]));
-        expect(callOrder, ['listener notified']);
-      });
+          verify(
+            () => mockTournamentRepository.createTournament(tTournament),
+          ).called(1);
+          expect(tournamentUseCase.tournaments, IList([tTournament]));
+          expect(callOrder, ['listener notified']);
+        },
+      );
 
       test(
-          'should not add tournament to list and not notify listeners on failure',
-          () async {
-        when(() => mockTournamentRepository.createTournament(tTournament))
-            .thenAnswer((_) async => const Left('Failed to create'));
+        'should not add tournament to list and not notify listeners on failure',
+        () async {
+          when(
+            () => mockTournamentRepository.createTournament(tTournament),
+          ).thenAnswer((_) async => const Left('Failed to create'));
 
-        final callOrder = <String>[];
-        tournamentUseCase.addListener(() {
-          callOrder.add('listener notified');
-        });
+          final callOrder = <String>[];
+          tournamentUseCase.addListener(() {
+            callOrder.add('listener notified');
+          });
 
-        await tournamentUseCase.createTournament(tTournament);
+          await tournamentUseCase.createTournament(tTournament);
 
-        verify(() => mockTournamentRepository.createTournament(tTournament))
-            .called(1);
-        expect(tournamentUseCase.tournaments, isEmpty);
-        expect(callOrder, isEmpty);
-      });
+          verify(
+            () => mockTournamentRepository.createTournament(tTournament),
+          ).called(1);
+          expect(tournamentUseCase.tournaments, isEmpty);
+          expect(callOrder, isEmpty);
+        },
+      );
     });
 
     group('deleteTournament', () {
       setUp(() {
         // Initialize with some data for deletion tests
-        when(() => mockTournamentRepository.getTournaments())
-            .thenAnswer((_) async => Right(IList([tTournament, tTournament2])));
+        when(
+          () => mockTournamentRepository.getTournaments(),
+        ).thenAnswer((_) async => Right(IList([tTournament, tTournament2])));
         tournamentUseCase.loadInitialData();
         clearInteractions(mockTournamentRepository); // Clear initial load
       });
 
-      test('should remove tournament from list and notify listeners on success',
-          () async {
-        when(() => mockTournamentRepository.deleteTournament(tTournament.id!))
-            .thenAnswer((_) async => const Right(unit));
+      test(
+        'should remove tournament from list and notify listeners on success',
+        () async {
+          when(
+            () => mockTournamentRepository.deleteTournament(tTournament.id!),
+          ).thenAnswer((_) async => const Right(unit));
 
-        final callOrder = <String>[];
-        tournamentUseCase.addListener(() {
-          callOrder.add('listener notified');
-        });
+          final callOrder = <String>[];
+          tournamentUseCase.addListener(() {
+            callOrder.add('listener notified');
+          });
 
-        // ignore: void_checks
-        await tournamentUseCase.deleteTournament(tTournament.id!);
+          // ignore: void_checks
+          await tournamentUseCase.deleteTournament(tTournament.id!);
 
-        verify(() => mockTournamentRepository.deleteTournament(tTournament.id!))
-            .called(1);
-        expect(tournamentUseCase.tournaments, IList([tTournament2]));
-        expect(callOrder, ['listener notified']);
-      });
+          verify(
+            () => mockTournamentRepository.deleteTournament(tTournament.id!),
+          ).called(1);
+          expect(tournamentUseCase.tournaments, IList([tTournament2]));
+          expect(callOrder, ['listener notified']);
+        },
+      );
 
       test(
-          'should not remove tournament from list and not notify listeners on failure',
-          () async {
-        when(() => mockTournamentRepository.deleteTournament(tTournament.id!))
-            .thenAnswer((_) async => const Left('Failed to delete'));
+        'should not remove tournament from list and not notify listeners on failure',
+        () async {
+          when(
+            () => mockTournamentRepository.deleteTournament(tTournament.id!),
+          ).thenAnswer((_) async => const Left('Failed to delete'));
 
-        final callOrder = <String>[];
-        tournamentUseCase.addListener(() {
-          callOrder.add('listener notified');
-        });
+          final callOrder = <String>[];
+          tournamentUseCase.addListener(() {
+            callOrder.add('listener notified');
+          });
 
-        await tournamentUseCase.deleteTournament(tTournament.id!);
+          await tournamentUseCase.deleteTournament(tTournament.id!);
 
-        verify(() => mockTournamentRepository.deleteTournament(tTournament.id!))
-            .called(1);
-        expect(
-          tournamentUseCase.tournaments,
-          IList([tTournament, tTournament2]),
-        );
-        expect(callOrder, isEmpty);
-      });
+          verify(
+            () => mockTournamentRepository.deleteTournament(tTournament.id!),
+          ).called(1);
+          expect(
+            tournamentUseCase.tournaments,
+            IList([tTournament, tTournament2]),
+          );
+          expect(callOrder, isEmpty);
+        },
+      );
     });
 
     group('flipArchiveStatusOfTournament', () {
       setUp(() {
         // Initialize with some data for archive tests
-        when(() => mockTournamentRepository.getTournaments())
-            .thenAnswer((_) async => Right(IList([tTournament])));
+        when(
+          () => mockTournamentRepository.getTournaments(),
+        ).thenAnswer((_) async => Right(IList([tTournament])));
         tournamentUseCase.loadInitialData();
         clearInteractions(mockTournamentRepository); // Clear initial load
       });
 
-      test('should update archive status and notify listeners on success',
-          () async {
-        final updatedTournament = tTournament.copyWith(isArchived: true);
-        when(() => mockTournamentRepository.getTournamentById(tTournament.id!))
-            .thenAnswer((_) async => Right(tTournament));
-        when(
-          () => mockTournamentRepository.updateTournament(
+      test(
+        'should update archive status and notify listeners on success',
+        () async {
+          final updatedTournament = tTournament.copyWith(isArchived: true);
+          when(
+            () => mockTournamentRepository.getTournamentById(tTournament.id!),
+          ).thenAnswer((_) async => Right(tTournament));
+          when(
+            () => mockTournamentRepository.updateTournament(
+              tTournament.id!,
+              updatedTournament,
+            ),
+          ).thenAnswer((_) async => const Right(unit));
+
+          final callOrder = <String>[];
+          tournamentUseCase.addListener(() {
+            callOrder.add('listener notified');
+          });
+
+          await tournamentUseCase.flipArchiveStatusOfTournament(
             tTournament.id!,
-            updatedTournament,
-          ),
-        ).thenAnswer((_) async => const Right(unit));
+          );
 
-        final callOrder = <String>[];
-        tournamentUseCase.addListener(() {
-          callOrder.add('listener notified');
-        });
-
-        await tournamentUseCase.flipArchiveStatusOfTournament(tTournament.id!);
-
-        verify(
-          () => mockTournamentRepository.getTournamentById(tTournament.id!),
-        ).called(1);
-        verify(
-          () => mockTournamentRepository.updateTournament(
-            tTournament.id!,
-            updatedTournament,
-          ),
-        ).called(1);
-        expect(tournamentUseCase.tournaments, IList([updatedTournament]));
-        expect(callOrder, ['listener notified']);
-      });
+          verify(
+            () => mockTournamentRepository.getTournamentById(tTournament.id!),
+          ).called(1);
+          verify(
+            () => mockTournamentRepository.updateTournament(
+              tTournament.id!,
+              updatedTournament,
+            ),
+          ).called(1);
+          expect(tournamentUseCase.tournaments, IList([updatedTournament]));
+          expect(callOrder, ['listener notified']);
+        },
+      );
 
       test('should not update if getTournamentById fails', () async {
-        when(() => mockTournamentRepository.getTournamentById(tTournament.id!))
-            .thenAnswer((_) async => const Left('Not found'));
+        when(
+          () => mockTournamentRepository.getTournamentById(tTournament.id!),
+        ).thenAnswer((_) async => const Left('Not found'));
 
         final callOrder = <String>[];
         tournamentUseCase.addListener(() {
@@ -284,8 +309,9 @@ void main() {
 
       test('should not update if updateTournament fails', () async {
         final updatedTournament = tTournament.copyWith(isArchived: true);
-        when(() => mockTournamentRepository.getTournamentById(tTournament.id!))
-            .thenAnswer((_) async => Right(tTournament));
+        when(
+          () => mockTournamentRepository.getTournamentById(tTournament.id!),
+        ).thenAnswer((_) async => Right(tTournament));
         when(
           () => mockTournamentRepository.updateTournament(
             tTournament.id!,

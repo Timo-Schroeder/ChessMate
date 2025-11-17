@@ -44,10 +44,7 @@ void main() {
       await tester.pumpWidget(
         YaruTheme(
           builder: (context, yaru, _) {
-            return MaterialApp.router(
-              theme: yaru.theme,
-              routerConfig: router,
-            );
+            return MaterialApp.router(theme: yaru.theme, routerConfig: router);
           },
         ),
       );
@@ -96,10 +93,7 @@ void main() {
       await tester.pumpWidget(
         YaruTheme(
           builder: (context, yaru, _) {
-            return MaterialApp.router(
-              theme: yaru.theme,
-              routerConfig: router,
-            );
+            return MaterialApp.router(theme: yaru.theme, routerConfig: router);
           },
         ),
       );
@@ -151,23 +145,24 @@ void main() {
       await tester.pumpWidget(
         YaruTheme(
           builder: (context, yaru, _) {
-            return MaterialApp.router(
-              theme: yaru.theme,
-              routerConfig: router,
-            );
+            return MaterialApp.router(theme: yaru.theme, routerConfig: router);
           },
         ),
       );
 
-      final playerManagementTile =
-          find.widgetWithText(YaruMasterTile, 'Players');
-      final yaruMasterTileWidget =
-          tester.widget<YaruMasterTile>(playerManagementTile);
+      final playerManagementTile = find.widgetWithText(
+        YaruMasterTile,
+        'Players',
+      );
+      final yaruMasterTileWidget = tester.widget<YaruMasterTile>(
+        playerManagementTile,
+      );
       expect(yaruMasterTileWidget.selected, isTrue);
 
       final dashboardTile = find.widgetWithText(YaruMasterTile, 'Dashboard');
-      final dashboardYaruMasterTileWidget =
-          tester.widget<YaruMasterTile>(dashboardTile);
+      final dashboardYaruMasterTileWidget = tester.widget<YaruMasterTile>(
+        dashboardTile,
+      );
       expect(dashboardYaruMasterTileWidget.selected, isFalse);
     });
   });

@@ -17,8 +17,9 @@ class TournamentCreationScreen extends StatelessWidget with WatchItMixin {
 
     return Scaffold(
       appBar: HeaderBar(
-        title:
-            Text('${context.l10n.tournamentCreationHeaderBar} $tournamentName'),
+        title: Text(
+          '${context.l10n.tournamentCreationHeaderBar} $tournamentName',
+        ),
       ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),

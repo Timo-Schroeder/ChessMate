@@ -57,9 +57,7 @@ class NavigationPanel extends StatelessWidget {
                     leading: Icon(item.icon),
                     title: Text(
                       item.label,
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
+                      style: const TextStyle(fontSize: 16),
                     ),
                     selected: isSelected,
                     // Cannot be extracted due to local variable: context

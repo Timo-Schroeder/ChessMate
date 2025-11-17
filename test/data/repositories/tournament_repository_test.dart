@@ -13,7 +13,7 @@ void main() {
   group('TournamentRepository', () {
     late TournamentRepository tournamentRepository;
     late FakeDatabaseService
-        fakeDatabaseService; // Changed to FakeDatabaseService
+    fakeDatabaseService; // Changed to FakeDatabaseService
 
     setUp(() {
       fakeDatabaseService =
@@ -45,133 +45,159 @@ void main() {
 
     group('getTournaments', () {
       test(
-          'should return IList<Tournament> when the call to database is successful',
-          () async {
-        fakeDatabaseService.getAllTournamentsStub =
-            () async => Right(IList([tTournament])); // Stubbing
+        'should return IList<Tournament> when the call to database is successful',
+        () async {
+          fakeDatabaseService.getAllTournamentsStub = () async =>
+              Right(IList([tTournament])); // Stubbing
 
-        final result = await tournamentRepository.getTournaments();
+          final result = await tournamentRepository.getTournaments();
 
-        expect(result, Right(IList([tTournament])));
-      });
+          expect(result, Right(IList([tTournament])));
+        },
+      );
 
-      test('should return a failure when the call to database is unsuccessful',
-          () async {
-        fakeDatabaseService.getAllTournamentsStub =
-            () async => const Left('Database failure'); // Stubbing
+      test(
+        'should return a failure when the call to database is unsuccessful',
+        () async {
+          fakeDatabaseService.getAllTournamentsStub = () async =>
+              const Left('Database failure'); // Stubbing
 
-        final result = await tournamentRepository.getTournaments();
+          final result = await tournamentRepository.getTournaments();
 
-        expect(result, const Left('Database failure'));
-      });
+          expect(result, const Left('Database failure'));
+        },
+      );
     });
 
     group('createTournament', () {
-      test('should return Tournament when the call to database is successful',
-          () async {
-        fakeDatabaseService.createTournamentStub =
-            (tournament) async => Right(tTournament); // Stubbing
+      test(
+        'should return Tournament when the call to database is successful',
+        () async {
+          fakeDatabaseService.createTournamentStub = (tournament) async =>
+              Right(tTournament); // Stubbing
 
-        final result = await tournamentRepository.createTournament(tTournament);
+          final result = await tournamentRepository.createTournament(
+            tTournament,
+          );
 
-        expect(result, Right(tTournament));
-      });
+          expect(result, Right(tTournament));
+        },
+      );
 
-      test('should return a failure when the call to database is unsuccessful',
-          () async {
-        fakeDatabaseService.createTournamentStub =
-            (tournament) async => const Left('Database failure'); // Stubbing
+      test(
+        'should return a failure when the call to database is unsuccessful',
+        () async {
+          fakeDatabaseService.createTournamentStub = (tournament) async =>
+              const Left('Database failure'); // Stubbing
 
-        final result = await tournamentRepository.createTournament(tTournament);
+          final result = await tournamentRepository.createTournament(
+            tTournament,
+          );
 
-        expect(result, const Left('Database failure'));
-      });
+          expect(result, const Left('Database failure'));
+        },
+      );
     });
 
     group('deleteTournament', () {
-      test('should return void when the call to database is successful',
-          () async {
-        // ignore: void_checks
-        fakeDatabaseService.deleteTournamentStub =
-            (id) async => const Right(unit); // Stubbing
+      test(
+        'should return void when the call to database is successful',
+        () async {
+          // ignore: void_checks
+          fakeDatabaseService.deleteTournamentStub = (id) async =>
+              const Right(unit); // Stubbing
 
-        await tournamentRepository.deleteTournament(tTournament.id!);
+          await tournamentRepository.deleteTournament(tTournament.id!);
 
-        expect(
-          await tournamentRepository.deleteTournament(tTournament.id!),
-          const Right(unit),
-        );
-      });
+          expect(
+            await tournamentRepository.deleteTournament(tTournament.id!),
+            const Right(unit),
+          );
+        },
+      );
 
-      test('should return a failure when the call to database is unsuccessful',
-          () async {
-        fakeDatabaseService.deleteTournamentStub =
-            (id) async => const Left('Database failure'); // Stubbing
+      test(
+        'should return a failure when the call to database is unsuccessful',
+        () async {
+          fakeDatabaseService.deleteTournamentStub = (id) async =>
+              const Left('Database failure'); // Stubbing
 
-        final result =
-            await tournamentRepository.deleteTournament(tTournament.id!);
+          final result = await tournamentRepository.deleteTournament(
+            tTournament.id!,
+          );
 
-        expect(result, const Left('Database failure'));
-      });
+          expect(result, const Left('Database failure'));
+        },
+      );
     });
 
     group('getTournamentById', () {
-      test('should return Tournament when the call to database is successful',
-          () async {
-        fakeDatabaseService.getTournamentByIdStub =
-            (id) async => Right(tTournament); // Stubbing
+      test(
+        'should return Tournament when the call to database is successful',
+        () async {
+          fakeDatabaseService.getTournamentByIdStub = (id) async =>
+              Right(tTournament); // Stubbing
 
-        final result =
-            await tournamentRepository.getTournamentById(tTournament.id!);
+          final result = await tournamentRepository.getTournamentById(
+            tTournament.id!,
+          );
 
-        expect(result, Right(tTournament));
-      });
+          expect(result, Right(tTournament));
+        },
+      );
 
-      test('should return a failure when the call to database is unsuccessful',
-          () async {
-        fakeDatabaseService.getTournamentByIdStub =
-            (id) async => const Left('Database failure'); // Stubbing
+      test(
+        'should return a failure when the call to database is unsuccessful',
+        () async {
+          fakeDatabaseService.getTournamentByIdStub = (id) async =>
+              const Left('Database failure'); // Stubbing
 
-        final result =
-            await tournamentRepository.getTournamentById(tTournament.id!);
+          final result = await tournamentRepository.getTournamentById(
+            tTournament.id!,
+          );
 
-        expect(result, const Left('Database failure'));
-      });
+          expect(result, const Left('Database failure'));
+        },
+      );
     });
 
     group('updateTournament', () {
-      test('should return void when the call to database is successful',
-          () async {
-        fakeDatabaseService.updateTournamentStub =
-            (id, tournament) async => const Right(unit); // Stubbing
+      test(
+        'should return void when the call to database is successful',
+        () async {
+          fakeDatabaseService.updateTournamentStub = (id, tournament) async =>
+              const Right(unit); // Stubbing
 
-        await tournamentRepository.updateTournament(
-          tTournament.id!,
-          tTournament,
-        );
-
-        expect(
           await tournamentRepository.updateTournament(
             tTournament.id!,
             tTournament,
-          ),
-          const Right(unit),
-        );
-      });
+          );
 
-      test('should return a failure when the call to database is unsuccessful',
-          () async {
-        // ignore: void_checks
-        fakeDatabaseService.updateTournamentStub = (id, tournament) async =>
-            const Left('Database failure'); // Stubbing
+          expect(
+            await tournamentRepository.updateTournament(
+              tTournament.id!,
+              tTournament,
+            ),
+            const Right(unit),
+          );
+        },
+      );
 
-        final result = await tournamentRepository.updateTournament(
-          tTournament.id!,
-          tTournament,
-        );
+      test(
+        'should return a failure when the call to database is unsuccessful',
+        () async {
+          // ignore: void_checks
+          fakeDatabaseService.updateTournamentStub = (id, tournament) async =>
+              const Left('Database failure'); // Stubbing
 
-        expect(result, const Left('Database failure'));
-      });
+          final result = await tournamentRepository.updateTournament(
+            tTournament.id!,
+            tTournament,
+          );
+
+          expect(result, const Left('Database failure'));
+        },
+      );
     });
   });
 }

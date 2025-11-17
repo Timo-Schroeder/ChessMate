@@ -20,12 +20,11 @@ class TournamentUseCase extends SafeChangeNotifier {
     notifyListeners();
 
     final result = await _tournamentRepository.getTournaments();
-    result.match(
-      (failure) => left('Tournaments could not be loaded'),
-      (success) {
-        _tournaments = success.unlock;
-      },
-    );
+    result.match((failure) => left('Tournaments could not be loaded'), (
+      success,
+    ) {
+      _tournaments = success.unlock;
+    });
     _isLoading = false;
     notifyListeners();
   }
@@ -53,8 +52,9 @@ class TournamentUseCase extends SafeChangeNotifier {
   }
 
   Future<void> flipArchiveStatusOfTournament(int id) async {
-    final getTournamentResult =
-        await _tournamentRepository.getTournamentById(id);
+    final getTournamentResult = await _tournamentRepository.getTournamentById(
+      id,
+    );
     if (getTournamentResult.isLeft()) {
       debugPrint('Failed to get tournament with id $id');
 
@@ -68,18 +68,20 @@ class TournamentUseCase extends SafeChangeNotifier {
       return;
     }
 
-    final updatedTournament =
-        tournament.copyWith(isArchived: !tournament.isArchived);
-
-    final result =
-        await _tournamentRepository.updateTournament(id, updatedTournament);
-    result.match(
-      (failure) => debugPrint('Failed to update tournament'),
-      (success) {
-        _tournaments.remove(tournament);
-        _tournaments.add(updatedTournament);
-        notifyListeners();
-      },
+    final updatedTournament = tournament.copyWith(
+      isArchived: !tournament.isArchived,
     );
+
+    final result = await _tournamentRepository.updateTournament(
+      id,
+      updatedTournament,
+    );
+    result.match((failure) => debugPrint('Failed to update tournament'), (
+      success,
+    ) {
+      _tournaments.remove(tournament);
+      _tournaments.add(updatedTournament);
+      notifyListeners();
+    });
   }
 }

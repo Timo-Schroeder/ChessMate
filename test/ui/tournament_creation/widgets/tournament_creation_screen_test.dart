@@ -23,8 +23,9 @@ void main() {
       mockRouter = MockGoRouter();
 
       when(() => mockViewModel.tournamentName).thenReturn('');
-      when(() => mockViewModel.tournamentFormat)
-          .thenReturn(TournamentFormat.swiss);
+      when(
+        () => mockViewModel.tournamentFormat,
+      ).thenReturn(TournamentFormat.swiss);
       when(() => mockViewModel.tournamentStartDate).thenReturn(null);
       when(() => mockViewModel.tournamentEndDate).thenReturn(null);
       when(() => mockViewModel.nameError).thenReturn('');
@@ -58,17 +59,19 @@ void main() {
     }
 
     testWidgets(
-        'should display HeaderBar with initial title and TournamentCreationForm',
-        (WidgetTester tester) async {
-      await pumpTournamentCreationScreen(tester);
+      'should display HeaderBar with initial title and TournamentCreationForm',
+      (WidgetTester tester) async {
+        await pumpTournamentCreationScreen(tester);
 
-      expect(find.byType(HeaderBar), findsOneWidget);
-      expect(find.text('New Tournament: '), findsOneWidget);
-      expect(find.byType(TournamentCreationForm), findsOneWidget);
-    });
+        expect(find.byType(HeaderBar), findsOneWidget);
+        expect(find.text('New Tournament: '), findsOneWidget);
+        expect(find.byType(TournamentCreationForm), findsOneWidget);
+      },
+    );
 
-    testWidgets('should update HeaderBar title when tournamentName changes',
-        (WidgetTester tester) async {
+    testWidgets('should update HeaderBar title when tournamentName changes', (
+      WidgetTester tester,
+    ) async {
       await pumpTournamentCreationScreen(tester);
 
       // Simulate a change in the view model's tournamentName
@@ -80,20 +83,23 @@ void main() {
     });
 
     testWidgets(
-        'should update tournamentName in ViewModel when text is entered',
-        (WidgetTester tester) async {
-      await pumpTournamentCreationScreen(tester);
+      'should update tournamentName in ViewModel when text is entered',
+      (WidgetTester tester) async {
+        await pumpTournamentCreationScreen(tester);
 
-      final nameField = find.widgetWithText(TextFormField, 'Name');
-      expect(nameField, findsOneWidget);
+        final nameField = find.widgetWithText(TextFormField, 'Name');
+        expect(nameField, findsOneWidget);
 
-      await tester.enterText(nameField, 'New Tournament Name');
-      verify(() => mockViewModel.tournamentName = 'New Tournament Name')
-          .called(1);
-    });
+        await tester.enterText(nameField, 'New Tournament Name');
+        verify(
+          () => mockViewModel.tournamentName = 'New Tournament Name',
+        ).called(1);
+      },
+    );
 
-    testWidgets('should display name validation error',
-        (WidgetTester tester) async {
+    testWidgets('should display name validation error', (
+      WidgetTester tester,
+    ) async {
       await pumpTournamentCreationScreen(tester);
 
       when(() => mockViewModel.nameError).thenReturn('Name cannot be empty');
@@ -103,8 +109,9 @@ void main() {
       expect(find.text('Name cannot be empty'), findsOneWidget);
     });
 
-    testWidgets('should call createTournament and navigate on success',
-        (WidgetTester tester) async {
+    testWidgets('should call createTournament and navigate on success', (
+      WidgetTester tester,
+    ) async {
       await pumpTournamentCreationScreen(tester);
 
       when(() => mockViewModel.createTournament()).thenReturn(true);
@@ -115,8 +122,9 @@ void main() {
       verify(() => mockRouter.go('/tournament-selection')).called(1);
     });
 
-    testWidgets('should call cancelTournamentCreation and navigate on cancel',
-        (WidgetTester tester) async {
+    testWidgets('should call cancelTournamentCreation and navigate on cancel', (
+      WidgetTester tester,
+    ) async {
       await pumpTournamentCreationScreen(tester);
 
       await tester.tap(find.widgetWithText(OutlinedButton, 'Cancel'));
@@ -126,8 +134,9 @@ void main() {
       verify(() => mockRouter.go('/tournament-selection')).called(1);
     });
 
-    testWidgets('should not navigate on createTournament failure',
-        (WidgetTester tester) async {
+    testWidgets('should not navigate on createTournament failure', (
+      WidgetTester tester,
+    ) async {
       await pumpTournamentCreationScreen(tester);
 
       when(() => mockViewModel.createTournament()).thenReturn(false);

@@ -1,5 +1,1 @@
-enum Gender {
-  male,
-  female,
-  divers,
-}
+enum Gender { male, female, divers }

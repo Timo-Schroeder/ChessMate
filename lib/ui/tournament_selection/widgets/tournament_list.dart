@@ -7,10 +7,7 @@ import 'package:watch_it/watch_it.dart';
 import 'package:yaru/yaru.dart';
 
 class TournamentList extends StatelessWidget with WatchItMixin {
-  const TournamentList({
-    required this.showArchived,
-    super.key,
-  });
+  const TournamentList({required this.showArchived, super.key});
 
   final bool showArchived;
 
@@ -22,8 +19,9 @@ class TournamentList extends StatelessWidget with WatchItMixin {
     }
     final tournamentList = viewModel.tournaments.reversed;
 
-    final filteredTournaments =
-        tournamentList.where((t) => t.isArchived == showArchived).toList();
+    final filteredTournaments = tournamentList
+        .where((t) => t.isArchived == showArchived)
+        .toList();
 
     return filteredTournaments.isEmpty
         ? Center(
@@ -48,9 +46,7 @@ class TournamentList extends StatelessWidget with WatchItMixin {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         YaruIconButton(
-                          icon: const Icon(
-                            Icons.play_arrow,
-                          ),
+                          icon: const Icon(Icons.play_arrow),
                           // Cannot be extracted due to local variable: context
                           // ignore: prefer-extracting-callbacks
                           onPressed: () {

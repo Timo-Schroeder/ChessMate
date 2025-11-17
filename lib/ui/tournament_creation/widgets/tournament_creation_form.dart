@@ -13,13 +13,15 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
 
   @override
   Widget build(BuildContext context) {
-    final nameError =
-        watchPropertyValue((TournamentCreationViewModel vm) => vm.nameError);
+    final nameError = watchPropertyValue(
+      (TournamentCreationViewModel vm) => vm.nameError,
+    );
     final startDateError = watchPropertyValue(
       (TournamentCreationViewModel vm) => vm.startDateError,
     );
-    final endDateError =
-        watchPropertyValue((TournamentCreationViewModel vm) => vm.endDateError);
+    final endDateError = watchPropertyValue(
+      (TournamentCreationViewModel vm) => vm.endDateError,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,10 +38,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
           onChanged: (value) =>
               di<TournamentCreationViewModel>().tournamentName = value,
         ),
-        Text(
-          nameError,
-          style: const TextStyle(color: Colors.red),
-        ),
+        Text(nameError, style: const TextStyle(color: Colors.red)),
         const SizedBox(height: 16),
         Text(
           context.l10n.tournamentCreationDateRangeSection,
@@ -54,10 +53,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
           initialDateTime: DateTime.now(),
           onChanged: onStartDateChange,
         ),
-        Text(
-          startDateError,
-          style: const TextStyle(color: Colors.red),
-        ),
+        Text(startDateError, style: const TextStyle(color: Colors.red)),
         const SizedBox(height: 16),
         YaruDateTimeEntry(
           includeTime: false,
@@ -66,10 +62,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
           initialDateTime: DateTime.now(),
           onChanged: onEndDateChange,
         ),
-        Text(
-          endDateError,
-          style: const TextStyle(color: Colors.red),
-        ),
+        Text(endDateError, style: const TextStyle(color: Colors.red)),
         const SizedBox(height: 16),
         Text(
           context.l10n.tournamentCreationFormatSection,
@@ -94,25 +87,21 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
                 di<TournamentCreationViewModel>().cancelTournamentCreation();
                 context.go('/tournament-selection');
               },
-              child: Text(
-                context.l10n.tournamentCreationCancelButton,
-              ),
+              child: Text(context.l10n.tournamentCreationCancelButton),
             ),
             const SizedBox(width: 16),
             ElevatedButton(
               // Cannot be extracted due to local variable: context
               // ignore: prefer-extracting-callbacks
               onPressed: () {
-                final success =
-                    di<TournamentCreationViewModel>().createTournament();
+                final success = di<TournamentCreationViewModel>()
+                    .createTournament();
 
                 if (success) {
                   context.go(Routes.tournamentSelection);
                 }
               },
-              child: Text(
-                context.l10n.tournamentCreationCreateButton,
-              ),
+              child: Text(context.l10n.tournamentCreationCreateButton),
             ),
           ],
         ),
@@ -125,12 +114,7 @@ class TournamentCreationForm extends StatelessWidget with WatchItMixin {
   ) {
     return [
       for (final value in TournamentFormat.values)
-        PopupMenuItem(
-          value: value,
-          child: Text(
-            value.name,
-          ),
-        ),
+        PopupMenuItem(value: value, child: Text(value.name)),
     ];
   }
 
