@@ -19,6 +19,9 @@ class PlayerCreationForm extends StatelessWidget with WatchItMixin {
     final lastNameError = watchPropertyValue(
       (PlayerManagementViewModel vm) => vm.playerCreationLastNameError,
     );
+    final yearOfBirthError = watchPropertyValue(
+      (PlayerManagementViewModel vm) => vm.playerCreationYearOfBirthError,
+    );
 
     return ListView(
       children: [
@@ -59,6 +62,7 @@ class PlayerCreationForm extends StatelessWidget with WatchItMixin {
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         ),
+        Text(yearOfBirthError, style: const TextStyle(color: Colors.red)),
 
         const SizedBox(height: 16),
         const Text('Gender', style: TextStyle(fontWeight: FontWeight.bold)),

@@ -19,14 +19,14 @@ class PlayerTable extends StatelessWidget {
       rows: [
         const DataRow(
           cells: [
-            DataCell(Text('Timo')),
-            DataCell(Text('Schröder')),
-            DataCell(Text('SC TS Ahrtal')),
-            DataCell(Text('2002')),
+            DataCell(Text('Vincent')),
+            DataCell(Text('Keymer')),
+            DataCell(Text('OSG Baden-Baden')),
+            DataCell(Text('2004')),
             DataCell(Text('Male')),
-            DataCell(Text('')),
-            DataCell(Text('1507')),
-            DataCell(Text('???')),
+            DataCell(Text('GM')),
+            DataCell(Text('2790')),
+            DataCell(Text('2773')),
           ],
         ),
       ],

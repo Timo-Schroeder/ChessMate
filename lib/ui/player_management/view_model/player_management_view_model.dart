@@ -10,7 +10,7 @@ class PlayerManagementViewModel extends SafeChangeNotifier {
 
   String _playerCreationFirstName = '';
   String _playerCreationLastName = '';
-  int _playerCreationYearOfBirth = 2000;
+  int _playerCreationYearOfBirth = -1;
   Gender _playerCreationGender = Gender.male;
   int? _playerCreationNationalRating;
   int? _playerCreationElo;
@@ -19,10 +19,11 @@ class PlayerManagementViewModel extends SafeChangeNotifier {
 
   String _playerCreationFirstNameError = '';
   String _playerCreationLastNameError = '';
+  String _playerCreationYearOfBirthError = '';
 
   String get playerCreationFirstName => _playerCreationFirstName;
   String get playerCreationLastName => _playerCreationLastName;
-  int get playerCreationYearOfBirth => _playerCreationYearOfBirth;
+  int? get playerCreationYearOfBirth => _playerCreationYearOfBirth;
   Gender get playerCreationGender => _playerCreationGender;
   int? get playerCreationNationalRating => _playerCreationNationalRating;
   int? get playerCreationElo => _playerCreationElo;
@@ -31,6 +32,7 @@ class PlayerManagementViewModel extends SafeChangeNotifier {
 
   String get playerCreationFirstNameError => _playerCreationFirstNameError;
   String get playerCreationLastNameError => _playerCreationFirstNameError;
+  String get playerCreationYearOfBirthError => _playerCreationYearOfBirthError;
 
   set playerCreationFirstName(String firstName) {
     _playerCreationFirstName = firstName;
@@ -50,6 +52,9 @@ class PlayerManagementViewModel extends SafeChangeNotifier {
 
   set playerCreationYearOfBirth(int yearOfBirth) {
     _playerCreationYearOfBirth = yearOfBirth;
+    if (_playerCreationYearOfBirth != -1) {
+      _playerCreationYearOfBirthError = '';
+    }
     notifyListeners();
   }
 
@@ -92,8 +97,13 @@ class PlayerManagementViewModel extends SafeChangeNotifier {
       _playerCreationLastNameError = 'Last name cannot be empty';
     }
 
+    if (_playerCreationYearOfBirth == -1) {
+      _playerCreationYearOfBirthError = 'Year of Birth cannot be empty';
+    }
+
     if (_playerCreationFirstNameError.isNotEmpty ||
-        _playerCreationLastNameError.isNotEmpty) {
+        _playerCreationLastNameError.isNotEmpty ||
+        _playerCreationYearOfBirthError.isNotEmpty) {
       notifyListeners();
 
       return false;
@@ -115,7 +125,7 @@ class PlayerManagementViewModel extends SafeChangeNotifier {
 
     _playerCreationFirstName = '';
     _playerCreationLastName = '';
-    _playerCreationYearOfBirth = 2000;
+    _playerCreationYearOfBirth = -1;
     _playerCreationGender = Gender.male;
     _playerCreationNationalRating = null;
     _playerCreationElo = null;
@@ -131,7 +141,7 @@ class PlayerManagementViewModel extends SafeChangeNotifier {
   void cancelPlayerAddition() {
     _playerCreationFirstName = '';
     _playerCreationLastName = '';
-    _playerCreationYearOfBirth = 2000;
+    _playerCreationYearOfBirth = -1;
     _playerCreationGender = Gender.male;
     _playerCreationNationalRating = null;
     _playerCreationElo = null;
