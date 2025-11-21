@@ -131,8 +131,11 @@ class PlayerCreationForm extends StatelessWidget with WatchItMixin {
             ),
             const SizedBox(width: 32),
             ElevatedButton(
-              onPressed: () {
-                if (sl<PlayerManagementViewModel>().addPlayer(tournamentId)) {
+              onPressed: () async {
+                final success = await sl<PlayerManagementViewModel>().addPlayer(
+                  tournamentId,
+                );
+                if (success && context.mounted) {
                   Navigator.maybePop(context);
                 }
               },

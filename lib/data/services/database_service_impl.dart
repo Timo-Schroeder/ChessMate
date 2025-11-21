@@ -222,11 +222,10 @@ class DatabaseServiceImpl implements DatabaseService {
     int tournamentId,
   ) async {
     try {
-      final playersInTournament = await _appDatabase
-          .select(_appDatabase.players)
-          .get();
+      final playersInTournament = await (_appDatabase.select(
+        _appDatabase.players,
+      )..where((tbl) => tbl.tournamentId.equals(tournamentId))).get();
       final list = playersInTournament
-          .where((playerData) => playerData.tournamentId == tournamentId)
           .map(
             (playerData) => Player(
               id: playerData.id,

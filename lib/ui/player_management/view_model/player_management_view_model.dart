@@ -1,12 +1,17 @@
+import 'dart:developer';
+
 import 'package:chessmate/data/repositories/player_repository.dart';
 import 'package:chessmate/domain/models/player/fide_title.dart';
 import 'package:chessmate/domain/models/player/gender.dart';
 import 'package:chessmate/domain/models/player/player.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:safe_change_notifier/safe_change_notifier.dart';
 import 'package:watch_it/watch_it.dart';
 
 class PlayerManagementViewModel extends SafeChangeNotifier {
   final _playerRepository = sl<PlayerRepository>();
+
+  List<Player> _players = [];
 
   String _playerCreationFirstName = '';
   String _playerCreationLastName = '';
@@ -20,6 +25,8 @@ class PlayerManagementViewModel extends SafeChangeNotifier {
   String _playerCreationFirstNameError = '';
   String _playerCreationLastNameError = '';
   String _playerCreationYearOfBirthError = '';
+
+  IList<Player> get players => _players.lock;
 
   String get playerCreationFirstName => _playerCreationFirstName;
   String get playerCreationLastName => _playerCreationLastName;
@@ -83,7 +90,23 @@ class PlayerManagementViewModel extends SafeChangeNotifier {
     notifyListeners();
   }
 
-  bool addPlayer(int tournamentId) {
+  Future<void> fetchPlayers(int tournamentId) async {
+    try {
+      final fetchedPlayers = await _playerRepository.getPlayersInTournament(
+        tournamentId,
+      );
+      fetchedPlayers.fold(
+        (error) => _players = [],
+        (list) => _players = list.toList(),
+      );
+    } catch (e) {
+      log('Could not load players in tournament');
+    }
+
+    notifyListeners();
+  }
+
+  Future<bool> addPlayer(int tournamentId) async {
     _playerCreationFirstNameError = '';
     _playerCreationLastNameError = '';
 
@@ -121,7 +144,7 @@ class PlayerManagementViewModel extends SafeChangeNotifier {
       active: true,
       tournamentId: tournamentId,
     );
-    _playerRepository.createPlayer(player);
+    await _playerRepository.createPlayer(player);
 
     _playerCreationFirstName = '';
     _playerCreationLastName = '';
@@ -134,6 +157,8 @@ class PlayerManagementViewModel extends SafeChangeNotifier {
 
     _playerCreationFirstNameError = '';
     _playerCreationLastNameError = '';
+
+    await fetchPlayers(tournamentId);
 
     return true;
   }

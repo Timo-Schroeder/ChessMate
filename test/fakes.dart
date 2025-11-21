@@ -1,9 +1,12 @@
 import 'package:chessmate/domain/models/player/player.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:mocktail/mocktail.dart';
 
 import 'package:chessmate/data/services/database_service.dart';
 import 'package:chessmate/domain/models/tournament/tournament.dart';
+
+class FakePlayer extends Fake implements Player {}
 
 class FakeDatabaseService implements DatabaseService {
   Future<Either<String, IList<Tournament>>> Function()? getAllTournamentsStub;

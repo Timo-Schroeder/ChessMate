@@ -12,6 +12,9 @@ class PlayerManagementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Trigger the fetch. The ViewModel is smart enough to not re-fetch on every build.
+    sl<PlayerManagementViewModel>().fetchPlayers(tournamentId);
+
     return Scaffold(
       body: const PlayerTable(),
 
