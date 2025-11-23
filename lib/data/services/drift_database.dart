@@ -14,10 +14,18 @@ part 'drift_database.g.dart';
 
 @DriftDatabase(tables: [Tournaments, Players])
 class AppDatabase extends _$AppDatabase {
+  AppDatabase(QueryExecutor e) : super(e);
+
+  factory AppDatabase.standard() {
+    return AppDatabase(_openConnection());
+  }
+
+  factory AppDatabase.inMemory() {
+    return AppDatabase(NativeDatabase.memory());
+  }
+
   @override
   int get schemaVersion => 1;
-
-  AppDatabase() : super(_openConnection());
 }
 
 LazyDatabase _openConnection() {

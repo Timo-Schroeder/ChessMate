@@ -10,7 +10,7 @@ import 'package:chessmate/ui/tournament_selection/view_model/tournament_selectio
 import 'package:watch_it/watch_it.dart';
 
 void setupLocator() {
-  sl.registerSingleton<AppDatabase>(AppDatabase());
+  sl.registerSingleton<AppDatabase>(AppDatabase.standard());
 
   sl.registerSingleton<DatabaseService>(
     DatabaseServiceImpl(sl<AppDatabase>())..init(),

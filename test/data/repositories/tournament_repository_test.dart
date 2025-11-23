@@ -1,3 +1,10 @@
+import 'package:chessmate/data/repositories/player_repository.dart';
+import 'package:chessmate/data/services/database_service_impl.dart';
+import 'package:chessmate/data/services/drift_database.dart'
+    hide Tournament, Player;
+import 'package:chessmate/domain/models/player/player.dart';
+import 'package:chessmate/domain/models/player/gender.dart';
+import 'package:chessmate/domain/models/player/fide_title.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -10,6 +17,7 @@ import 'package:chessmate/domain/models/tournament/tournament_format.dart';
 import '../../fakes.dart'; // New import for FakeDatabaseService
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   group('TournamentRepository', () {
     late TournamentRepository tournamentRepository;
     late FakeDatabaseService
@@ -199,5 +207,52 @@ void main() {
         },
       );
     });
+  });
+
+  group('PlayerRepository', () {
+    late PlayerRepository playerRepository;
+    late DatabaseServiceImpl databaseService;
+    late AppDatabase appDatabase;
+
+    setUp(() async {
+      appDatabase = AppDatabase.inMemory();
+      databaseService = DatabaseServiceImpl(appDatabase);
+      await databaseService.init();
+      playerRepository = PlayerRepository(databaseService);
+    });
+
+    tearDown(() async {
+      await appDatabase.close();
+    });
+
+    test(
+      'createPlayer should save a player and getPlayersInTournament should retrieve it',
+      () async {
+        // Arrange
+        final newPlayer = Player(
+          firstName: 'Test',
+          lastName: 'Player',
+          yearOfBirth: 2000,
+          gender: Gender.male,
+          nationalRating: 1200,
+          elo: 1300,
+          club: 'Test Club',
+          title: FideTitle.none,
+          active: true,
+          tournamentId: 1,
+        );
+
+        // Act
+        final createResult = await playerRepository.createPlayer(newPlayer);
+        final getResult = await playerRepository.getPlayersInTournament(1);
+
+        // Assert
+        expect(createResult.isRight(), isTrue);
+        expect(getResult.isRight(), isTrue);
+        final players = getResult.getRight().toNullable()!;
+        expect(players.length, 1);
+        expect(players.first.firstName, 'Test');
+      },
+    );
   });
 }

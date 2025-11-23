@@ -139,12 +139,18 @@ class PlayerManagementViewModel extends SafeChangeNotifier {
       gender: _playerCreationGender,
       nationalRating: _playerCreationNationalRating,
       elo: _playerCreationElo,
-      club: _playerCreationClub,
+      club: _playerCreationClub.isNotEmpty ? _playerCreationClub : null,
       title: _playerCreationFideTitle,
       active: true,
       tournamentId: tournamentId,
     );
-    await _playerRepository.createPlayer(player);
+
+    final result = await _playerRepository.createPlayer(player);
+    result.match(
+      (error) =>
+          log('Something went wrong when adding the player $player: $error'),
+      (success) => log('Added player $player'),
+    );
 
     _playerCreationFirstName = '';
     _playerCreationLastName = '';

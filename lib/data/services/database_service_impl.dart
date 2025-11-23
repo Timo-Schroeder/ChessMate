@@ -159,6 +159,7 @@ class DatabaseServiceImpl implements DatabaseService {
               elo: Value(player.elo),
               club: Value(player.club),
               fideTitle: player.title,
+              active: d.Value(player.active),
               tournamentId: player.tournamentId,
             ),
           );
