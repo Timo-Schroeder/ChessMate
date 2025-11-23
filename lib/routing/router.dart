@@ -20,59 +20,83 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: Routes.tournamentSelection,
-      builder: (context, state) => const TournamentSelectionScreen(),
+      pageBuilder: (context, state) => NoTransitionPage(
+        key: state.pageKey,
+        child: const TournamentSelectionScreen(),
+      ),
     ),
     GoRoute(
       path: Routes.tournamentCreation,
-      builder: (context, state) => TournamentCreationScreen(),
+      pageBuilder: (context, state) => NoTransitionPage(
+        key: state.pageKey,
+        child: TournamentCreationScreen(),
+      ),
     ),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
-      builder: (context, state, child) => NavigationPanelScaffold(child),
+      pageBuilder: (context, state, child) => NoTransitionPage(
+        key: state.pageKey,
+        child: NavigationPanelScaffold(child),
+      ),
       routes: [
         GoRoute(
           path: '${Routes.dashboard}/:id',
           parentNavigatorKey: _shellNavigatorKey,
-          builder: (context, state) {
+          pageBuilder: (context, state) {
             final id = int.tryParse(state.pathParameters['id']!) ?? -1;
 
-            return DashboardScreen(id);
+            return NoTransitionPage(
+              key: state.pageKey,
+              child: DashboardScreen(id),
+            );
           },
         ),
         GoRoute(
           path: '${Routes.playerManagement}/:id',
           parentNavigatorKey: _shellNavigatorKey,
-          builder: (context, state) {
+          pageBuilder: (context, state) {
             final id = int.tryParse(state.pathParameters['id']!) ?? -1;
 
-            return PlayerManagementScreen(tournamentId: id);
+            return NoTransitionPage(
+              key: state.pageKey,
+              child: PlayerManagementScreen(tournamentId: id),
+            );
           },
         ),
         GoRoute(
           path: '${Routes.roundManagement}/:id',
           parentNavigatorKey: _shellNavigatorKey,
-          builder: (context, state) {
+          pageBuilder: (context, state) {
             final id = int.tryParse(state.pathParameters['id']!) ?? -1;
 
-            return RoundManagementScreen(tournamentId: id);
+            return NoTransitionPage(
+              key: state.pageKey,
+              child: RoundManagementScreen(tournamentId: id),
+            );
           },
         ),
         GoRoute(
           path: '${Routes.standings}/:id',
           parentNavigatorKey: _shellNavigatorKey,
-          builder: (context, state) {
+          pageBuilder: (context, state) {
             final id = int.tryParse(state.pathParameters['id']!) ?? -1;
 
-            return StandingsScreen(tournamentId: id);
+            return NoTransitionPage(
+              key: state.pageKey,
+              child: StandingsScreen(tournamentId: id),
+            );
           },
         ),
         GoRoute(
           path: '${Routes.settings}/:id',
           parentNavigatorKey: _shellNavigatorKey,
-          builder: (context, state) {
+          pageBuilder: (context, state) {
             final id = int.tryParse(state.pathParameters['id']!) ?? -1;
 
-            return SettingsScreen(tournamentId: id);
+            return NoTransitionPage(
+              key: state.pageKey,
+              child: SettingsScreen(tournamentId: id),
+            );
           },
         ),
       ],
