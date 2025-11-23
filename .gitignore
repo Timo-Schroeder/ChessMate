@@ -32,3 +32,8 @@ doc/api/
 
 # FVM Version Cache
 .fvm/
+
+# Gemini
+GEMINI.md
+MODIFICATION_DESIGN.md
+MODIFICATION_IMPLEMENTATION.md
