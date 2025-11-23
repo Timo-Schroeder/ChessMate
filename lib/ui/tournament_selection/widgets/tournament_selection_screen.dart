@@ -34,7 +34,8 @@ class TournamentSelectionScreen extends StatelessWidget {
                         headers: [
                           Text(
                             context
-                                .l10n.tournamentSelectionTournamentListHeading,
+                                .l10n
+                                .tournamentSelectionTournamentListHeading,
                             // Do not extract this to variable
                             // ignore: prefer-moving-to-variable
                             style: Theme.of(context).textTheme.headlineSmall,

@@ -1,21 +1,31 @@
 import 'dart:io';
 
+import 'package:chessmate/data/tables/players.dart';
 import 'package:chessmate/data/tables/tournaments.dart';
+import 'package:chessmate/domain/models/tournament/tournament_format.dart';
+import 'package:chessmate/domain/models/player/gender.dart';
+import 'package:chessmate/domain/models/player/fide_title.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
-import 'package:chessmate/domain/models/tournament/tournament_format.dart';
-
 part 'drift_database.g.dart';
 
-@DriftDatabase(tables: [Tournaments])
+@DriftDatabase(tables: [Tournaments, Players])
 class AppDatabase extends _$AppDatabase {
+  AppDatabase(QueryExecutor e) : super(e);
+
+  factory AppDatabase.standard() {
+    return AppDatabase(_openConnection());
+  }
+
+  factory AppDatabase.inMemory() {
+    return AppDatabase(NativeDatabase.memory());
+  }
+
   @override
   int get schemaVersion => 1;
-
-  AppDatabase() : super(_openConnection());
 }
 
 LazyDatabase _openConnection() {

@@ -46,8 +46,9 @@ void main() {
       );
     }
 
-    testWidgets('should display HeaderBar and New Tournament button',
-        (WidgetTester tester) async {
+    testWidgets('should display HeaderBar and New Tournament button', (
+      WidgetTester tester,
+    ) async {
       await pumpTournamentSelectionScreen(tester);
 
       expect(find.byType(HeaderBar), findsOneWidget);
@@ -58,15 +59,16 @@ void main() {
     });
 
     testWidgets(
-        'should navigate to tournament creation screen when button is pressed',
-        (WidgetTester tester) async {
-      await pumpTournamentSelectionScreen(tester);
+      'should navigate to tournament creation screen when button is pressed',
+      (WidgetTester tester) async {
+        await pumpTournamentSelectionScreen(tester);
 
-      await tester.tap(find.byType(ElevatedButton));
-      await tester.pumpAndSettle();
+        await tester.tap(find.byType(ElevatedButton));
+        await tester.pumpAndSettle();
 
-      verify(() => mockRouter.go('/tournament-creation')).called(1);
-    });
+        verify(() => mockRouter.go('/tournament-creation')).called(1);
+      },
+    );
 
     // Add more tests for TournamentList and YaruExpansionPanel if needed
   });

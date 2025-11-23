@@ -7,8 +7,6 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('$_id'),
-    );
+    return Center(child: Text('$_id'));
   }
 }

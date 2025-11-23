@@ -32,9 +32,9 @@ class MockDatabaseService extends Mock implements DatabaseService {
   Future<Either<String, void>> updateTournament(
     int id,
     Tournament tournament,
-  ) =>
-      super
-          .noSuchMethod(Invocation.method(#updateTournament, [id, tournament]));
+  ) => super.noSuchMethod(
+    Invocation.method(#updateTournament, [id, tournament]),
+  );
 
   @override
   Future<Either<String, void>> deleteTournament(int id) =>
