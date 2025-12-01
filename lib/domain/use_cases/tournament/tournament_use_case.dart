@@ -5,7 +5,7 @@ import 'package:safe_change_notifier/safe_change_notifier.dart';
 
 import 'package:chessmate/data/repositories/tournament_repository.dart';
 import 'package:chessmate/domain/models/tournament/tournament.dart';
-import 'package:watch_it/watch_it.dart';
+import 'package:flutter_it/flutter_it.dart';
 
 class TournamentUseCase extends SafeChangeNotifier {
   final _tournamentRepository = sl<TournamentRepository>();

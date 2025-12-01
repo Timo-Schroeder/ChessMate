@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:watch_it/watch_it.dart';
+import 'package:flutter_it/flutter_it.dart';
 import 'package:chessmate/ui/player_management/view_model/player_management_view_model.dart';
 
 class PlayerTable extends WatchingWidget {

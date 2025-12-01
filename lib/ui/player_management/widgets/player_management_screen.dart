@@ -2,7 +2,7 @@ import 'package:chessmate/ui/player_management/view_model/player_management_view
 import 'package:chessmate/ui/player_management/widgets/player_creation_form.dart';
 import 'package:chessmate/ui/player_management/widgets/player_table.dart';
 import 'package:flutter/material.dart';
-import 'package:watch_it/watch_it.dart';
+import 'package:flutter_it/flutter_it.dart';
 import 'package:yaru/yaru.dart';
 
 class PlayerManagementScreen extends StatelessWidget {

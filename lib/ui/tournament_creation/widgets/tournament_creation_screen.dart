@@ -1,6 +1,6 @@
 import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:flutter/material.dart';
-import 'package:watch_it/watch_it.dart';
+import 'package:flutter_it/flutter_it.dart';
 
 import 'package:chessmate/ui/core/ui/header_bar.dart';
 import 'package:chessmate/ui/tournament_creation/view_model/tournament_creation_view_model.dart';

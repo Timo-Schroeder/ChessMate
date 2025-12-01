@@ -3,7 +3,7 @@ import 'package:chessmate/ui/tournament_selection/view_model/tournament_selectio
 import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:watch_it/watch_it.dart';
+import 'package:flutter_it/flutter_it.dart';
 import 'package:yaru/yaru.dart';
 
 class TournamentList extends StatelessWidget with WatchItMixin {

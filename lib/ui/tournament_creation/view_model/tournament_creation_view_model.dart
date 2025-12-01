@@ -4,7 +4,7 @@ import 'package:chessmate/domain/models/tournament/tournament.dart'
     show Tournament;
 import 'package:chessmate/domain/models/tournament/tournament_format.dart';
 import 'package:chessmate/domain/use_cases/tournament/tournament_use_case.dart';
-import 'package:watch_it/watch_it.dart';
+import 'package:flutter_it/flutter_it.dart';
 
 class TournamentCreationViewModel extends SafeChangeNotifier {
   final _tournamentUseCase = sl<TournamentUseCase>();

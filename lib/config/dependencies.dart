@@ -7,7 +7,7 @@ import 'package:chessmate/domain/use_cases/tournament/tournament_use_case.dart';
 import 'package:chessmate/ui/player_management/view_model/player_management_view_model.dart';
 import 'package:chessmate/ui/tournament_creation/view_model/tournament_creation_view_model.dart';
 import 'package:chessmate/ui/tournament_selection/view_model/tournament_selection_view_model.dart';
-import 'package:watch_it/watch_it.dart';
+import 'package:flutter_it/flutter_it.dart';
 
 void setupLocator() {
   sl.registerSingleton<AppDatabase>(AppDatabase.standard());

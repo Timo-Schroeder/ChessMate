@@ -2,7 +2,7 @@ import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:chessmate/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:watch_it/watch_it.dart';
+import 'package:flutter_it/flutter_it.dart';
 import 'package:yaru/yaru.dart';
 
 import 'package:chessmate/domain/models/tournament/tournament_format.dart';

@@ -3,7 +3,7 @@ import 'package:chessmate/domain/models/player/gender.dart';
 import 'package:chessmate/ui/player_management/view_model/player_management_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:watch_it/watch_it.dart';
+import 'package:flutter_it/flutter_it.dart';
 import 'package:yaru/yaru.dart';
 
 class PlayerCreationForm extends StatelessWidget with WatchItMixin {
