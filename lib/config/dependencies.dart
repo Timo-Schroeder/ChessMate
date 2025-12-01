@@ -25,16 +25,18 @@ void setupLocator() {
   );
 
   sl.registerSingleton<TournamentUseCase>(
-    TournamentUseCase()..loadInitialData(),
+    TournamentUseCase(sl<TournamentRepository>())..loadInitialData(),
   );
 
-  sl.registerSingleton<PlayerManagementViewModel>(PlayerManagementViewModel());
+  sl.registerSingleton<PlayerManagementViewModel>(
+    PlayerManagementViewModel(sl<PlayerRepository>()),
+  );
 
   sl.registerSingleton<TournamentCreationViewModel>(
-    TournamentCreationViewModel(),
+    TournamentCreationViewModel(sl<TournamentUseCase>()),
   );
 
   sl.registerSingleton<TournamentSelectionViewModel>(
-    TournamentSelectionViewModel(),
+    TournamentSelectionViewModel(sl<TournamentUseCase>()),
   );
 }

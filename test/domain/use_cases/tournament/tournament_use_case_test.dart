@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:watch_it/watch_it.dart';
+import 'package:flutter_it/flutter_it.dart';
 
 import 'package:chessmate/domain/models/tournament/tournament.dart';
 import 'package:chessmate/domain/use_cases/tournament/tournament_use_case.dart';
@@ -36,7 +36,7 @@ void main() {
         sl.unregister<TournamentRepository>();
       }
       sl.registerSingleton<TournamentRepository>(mockTournamentRepository);
-      tournamentUseCase = TournamentUseCase();
+      tournamentUseCase = TournamentUseCase(sl<TournamentRepository>());
     });
 
     tearDown(() {

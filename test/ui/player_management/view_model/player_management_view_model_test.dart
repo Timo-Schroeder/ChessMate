@@ -26,14 +26,8 @@ void main() {
 
   setUp(() {
     mockPlayerRepository = MockPlayerRepository();
-    // Register the mock repository with get_it (sl)
-    // Ensure sl is cleared and re-registered for each test
-    if (sl.isRegistered<PlayerRepository>()) {
-      sl.unregister<PlayerRepository>();
-    }
-    sl.registerSingleton<PlayerRepository>(mockPlayerRepository);
 
-    viewModel = PlayerManagementViewModel();
+    viewModel = PlayerManagementViewModel(mockPlayerRepository);
   });
 
   tearDown(() {

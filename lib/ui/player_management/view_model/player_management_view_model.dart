@@ -6,10 +6,11 @@ import 'package:chessmate/domain/models/player/gender.dart';
 import 'package:chessmate/domain/models/player/player.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:safe_change_notifier/safe_change_notifier.dart';
-import 'package:flutter_it/flutter_it.dart';
 
 class PlayerManagementViewModel extends SafeChangeNotifier {
-  final _playerRepository = sl<PlayerRepository>();
+  PlayerManagementViewModel(this._playerRepository);
+
+  final PlayerRepository _playerRepository;
 
   List<Player> _players = [];
 

@@ -4,10 +4,11 @@ import 'package:chessmate/domain/models/tournament/tournament.dart'
     show Tournament;
 import 'package:chessmate/domain/models/tournament/tournament_format.dart';
 import 'package:chessmate/domain/use_cases/tournament/tournament_use_case.dart';
-import 'package:flutter_it/flutter_it.dart';
 
 class TournamentCreationViewModel extends SafeChangeNotifier {
-  final _tournamentUseCase = sl<TournamentUseCase>();
+  TournamentCreationViewModel(this._tournamentUseCase);
+
+  final TournamentUseCase _tournamentUseCase;
 
   String _name = '';
   TournamentFormat _format = TournamentFormat.swiss;
