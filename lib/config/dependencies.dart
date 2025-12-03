@@ -1,11 +1,9 @@
-import 'package:chessmate/data/repositories/player_repository.dart';
-import 'package:chessmate/data/repositories/tournament_repository.dart';
-import 'package:chessmate/data/services/database_service.dart';
-import 'package:chessmate/data/services/database_service_impl.dart';
-import 'package:chessmate/data/services/drift_database.dart';
-import 'package:chessmate/domain/use_cases/tournament/tournament_manager.dart';
-import 'package:chessmate/ui/player_management/view_model/player_management_view_model.dart';
-import 'package:chessmate/ui/tournament_creation/view_model/tournament_creation_view_model.dart';
+import 'package:chessmate/_features/players/_managers/player_manager.dart';
+import 'package:chessmate/_features/tournaments/_managers/tournament_creation_form_manager.dart';
+import 'package:chessmate/_features/tournaments/_managers/tournament_manager.dart';
+import 'package:chessmate/_shared/services/local/database_service.dart';
+import 'package:chessmate/_shared/services/local/database_service_impl.dart';
+import 'package:chessmate/_shared/services/local/drift_database.dart';
 import 'package:flutter_it/flutter_it.dart';
 
 void setupLocator() {
@@ -15,24 +13,14 @@ void setupLocator() {
     DatabaseServiceImpl(sl<AppDatabase>())..init(),
   );
 
-  sl.registerSingleton<TournamentRepository>(
-    TournamentRepository(sl<DatabaseService>()),
-  );
-
-  sl.registerSingleton<PlayerRepository>(
-    PlayerRepository(sl<DatabaseService>()),
-  );
-
   sl.registerSingleton<TournamentManager>(
-    TournamentManager(sl<TournamentRepository>()),
+    TournamentManager(sl<DatabaseService>()),
     dispose: (manager) => manager.dispose(),
   );
 
-  sl.registerSingleton<PlayerManagementViewModel>(
-    PlayerManagementViewModel(sl<PlayerRepository>()),
-  );
+  sl.registerSingleton<PlayerManager>(PlayerManager(sl<DatabaseService>()));
 
-  sl.registerSingleton<TournamentCreationViewModel>(
-    TournamentCreationViewModel(sl<TournamentManager>()),
+  sl.registerSingleton<TournamentCreationFormManager>(
+    TournamentCreationFormManager(sl<TournamentManager>()),
   );
 }

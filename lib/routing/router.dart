@@ -1,15 +1,14 @@
+import 'package:chessmate/_features/dashboard/widgets/dashboard_screen.dart';
+import 'package:chessmate/_features/players/widgets/player_management_screen.dart';
+import 'package:chessmate/_features/rounds/widgets/round_management_screen.dart';
+import 'package:chessmate/_features/settings/widgets/settings_screen.dart';
+import 'package:chessmate/_features/standings/widgets/standings_screen.dart';
+import 'package:chessmate/_features/tournaments/widgets/tournament_creation_screen.dart';
+import 'package:chessmate/_features/tournaments/widgets/tournament_selection_screen.dart';
+import 'package:chessmate/_shared/ui/widgets/navigation_panel_scaffold.dart';
 import 'package:chessmate/routing/routes.dart';
-import 'package:chessmate/ui/core/ui/navigation_panel_scaffold.dart';
-import 'package:chessmate/ui/dashboard/widgets/dashboard_screen.dart';
-import 'package:chessmate/ui/player_management/widgets/player_management_screen.dart';
-import 'package:chessmate/ui/round_management/widgets/round_management_screen.dart';
-import 'package:chessmate/ui/standings/widgets/standings_screen.dart';
-import 'package:chessmate/ui/settings/widgets/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:chessmate/ui/tournament_creation/widgets/tournament_creation_screen.dart';
-import 'package:chessmate/ui/tournament_selection/widgets/tournament_selection_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();

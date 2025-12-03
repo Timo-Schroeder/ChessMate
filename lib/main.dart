@@ -1,4 +1,4 @@
-import 'package:chessmate/l10n/app_localizations.dart';
+import 'package:chessmate/_shared/ui/localization/app_localizations.dart';
 import 'package:chessmate/config/dependencies.dart';
 import 'package:chessmate/routing/router.dart';
 import 'package:flutter/foundation.dart';
