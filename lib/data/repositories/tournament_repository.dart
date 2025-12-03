@@ -9,11 +9,11 @@ class TournamentRepository {
 
   TournamentRepository(this._database);
 
-  Future<Either<String, IList<Tournament>>> getTournaments() {
+  Future<IList<Tournament>> getTournaments() {
     return _database.getAllTournaments();
   }
 
-  Future<Either<String, Tournament>> getTournamentById(int id) {
+  Future<Tournament> getTournamentById(int id) {
     return _database.getTournamentById(id);
   }
 

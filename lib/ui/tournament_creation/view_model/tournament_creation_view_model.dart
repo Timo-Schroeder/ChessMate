@@ -1,52 +1,29 @@
-import 'package:safe_change_notifier/safe_change_notifier.dart';
-
 import 'package:chessmate/domain/models/tournament/tournament.dart'
     show Tournament;
 import 'package:chessmate/domain/models/tournament/tournament_format.dart';
-import 'package:chessmate/domain/use_cases/tournament/tournament_use_case.dart';
+import 'package:chessmate/domain/use_cases/tournament/tournament_manager.dart';
+import 'package:safe_change_notifier/safe_change_notifier.dart';
 
 class TournamentCreationViewModel extends SafeChangeNotifier {
-  TournamentCreationViewModel(this._tournamentUseCase);
-
-  final TournamentUseCase _tournamentUseCase;
+  final TournamentManager _tournamentManager;
 
   String _name = '';
+
   TournamentFormat _format = TournamentFormat.swiss;
   DateTime? _startDate;
   DateTime? _endDate;
   String _nameError = '';
   String _startDateError = '';
   String _endDateError = '';
+  TournamentCreationViewModel(this._tournamentManager);
 
-  TournamentFormat get tournamentFormat => _format;
-
-  DateTime? get tournamentStartDate => _startDate;
-
-  DateTime? get tournamentEndDate => _endDate;
-
-  String get tournamentName => _name;
+  String get endDateError => _endDateError;
 
   String get nameError => _nameError;
 
   String get startDateError => _startDateError;
 
-  String get endDateError => _endDateError;
-
-  set tournamentName(String name) {
-    _name = name;
-    if (_name.isNotEmpty) {
-      _nameError = '';
-    }
-    notifyListeners();
-  }
-
-  set tournamentStartDate(DateTime? startDate) {
-    _startDate = startDate;
-    if (startDate != null) {
-      _startDateError = '';
-    }
-    notifyListeners();
-  }
+  DateTime? get tournamentEndDate => _endDate;
 
   set tournamentEndDate(DateTime? endDate) {
     _endDate = endDate;
@@ -56,8 +33,40 @@ class TournamentCreationViewModel extends SafeChangeNotifier {
     notifyListeners();
   }
 
+  TournamentFormat get tournamentFormat => _format;
+
   set tournamentFormat(TournamentFormat tournamentFormat) {
     _format = tournamentFormat;
+    notifyListeners();
+  }
+
+  String get tournamentName => _name;
+
+  set tournamentName(String name) {
+    _name = name;
+    if (_name.isNotEmpty) {
+      _nameError = '';
+    }
+    notifyListeners();
+  }
+
+  DateTime? get tournamentStartDate => _startDate;
+
+  set tournamentStartDate(DateTime? startDate) {
+    _startDate = startDate;
+    if (startDate != null) {
+      _startDateError = '';
+    }
+    notifyListeners();
+  }
+
+  void cancelTournamentCreation() {
+    _nameError = '';
+    _startDateError = '';
+    _endDateError = '';
+    _name = '';
+    _startDate = null;
+    _endDate = null;
     notifyListeners();
   }
 
@@ -105,22 +114,12 @@ class TournamentCreationViewModel extends SafeChangeNotifier {
       hasFinished: false,
       isArchived: false,
     );
-    _tournamentUseCase.createTournament(tournament);
+    _tournamentManager.addTournamentCommand.run(tournament);
 
     tournamentName = '';
     tournamentStartDate = null;
     tournamentEndDate = null;
 
     return true;
-  }
-
-  void cancelTournamentCreation() {
-    _nameError = '';
-    _startDateError = '';
-    _endDateError = '';
-    _name = '';
-    _startDate = null;
-    _endDate = null;
-    notifyListeners();
   }
 }

@@ -21,58 +21,47 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   @override
-  Future<Either<String, IList<Tournament>>> getAllTournaments() async {
-    try {
-      final allTournaments = await _appDatabase
-          .select(_appDatabase.tournaments)
-          .get();
-      final list = allTournaments
-          .map(
-            (tournamentData) => Tournament(
-              id: tournamentData.id,
-              name: tournamentData.name,
-              startDate: tournamentData.startDate,
-              endDate: tournamentData.endDate,
-              format: tournamentData.format,
-              hasStarted: false,
-              hasFinished: false,
-              isArchived: tournamentData.isArchived,
-            ),
-          )
-          .toList();
-
-      return right(list.lock);
-    } catch (e) {
-      return left(e.toString());
-    }
+  Future<IList<Tournament>> getAllTournaments() async {
+    final allTournaments = await _appDatabase
+        .select(_appDatabase.tournaments)
+        .get();
+    return allTournaments
+        .map(
+          (tournamentData) => Tournament(
+            id: tournamentData.id,
+            name: tournamentData.name,
+            startDate: tournamentData.startDate,
+            endDate: tournamentData.endDate,
+            format: tournamentData.format,
+            hasStarted: false,
+            hasFinished: false,
+            isArchived: tournamentData.isArchived,
+          ),
+        )
+        .toList()
+        .lock;
   }
 
   @override
-  Future<Either<String, Tournament>> getTournamentById(int id) async {
-    try {
-      final tournamentData = await (_appDatabase.select(
-        _appDatabase.tournaments,
-      )..where((tbl) => tbl.id.equals(id))).getSingleOrNull();
+  Future<Tournament> getTournamentById(int id) async {
+    final tournamentData = await (_appDatabase.select(
+      _appDatabase.tournaments,
+    )..where((tbl) => tbl.id.equals(id))).getSingleOrNull();
 
-      if (tournamentData == null) {
-        return left('No tournament found with id $id');
-      }
-
-      return right(
-        Tournament(
-          id: tournamentData.id,
-          name: tournamentData.name,
-          startDate: tournamentData.startDate,
-          endDate: tournamentData.endDate,
-          format: tournamentData.format,
-          hasStarted: false,
-          hasFinished: false,
-          isArchived: tournamentData.isArchived,
-        ),
-      );
-    } catch (e) {
-      return left(e.toString());
+    if (tournamentData == null) {
+      throw Error();
     }
+
+    return Tournament(
+      id: tournamentData.id,
+      name: tournamentData.name,
+      startDate: tournamentData.startDate,
+      endDate: tournamentData.endDate,
+      format: tournamentData.format,
+      hasStarted: false,
+      hasFinished: false,
+      isArchived: tournamentData.isArchived,
+    );
   }
 
   @override

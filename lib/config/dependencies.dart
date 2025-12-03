@@ -3,10 +3,9 @@ import 'package:chessmate/data/repositories/tournament_repository.dart';
 import 'package:chessmate/data/services/database_service.dart';
 import 'package:chessmate/data/services/database_service_impl.dart';
 import 'package:chessmate/data/services/drift_database.dart';
-import 'package:chessmate/domain/use_cases/tournament/tournament_use_case.dart';
+import 'package:chessmate/domain/use_cases/tournament/tournament_manager.dart';
 import 'package:chessmate/ui/player_management/view_model/player_management_view_model.dart';
 import 'package:chessmate/ui/tournament_creation/view_model/tournament_creation_view_model.dart';
-import 'package:chessmate/ui/tournament_selection/view_model/tournament_selection_view_model.dart';
 import 'package:flutter_it/flutter_it.dart';
 
 void setupLocator() {
@@ -24,8 +23,9 @@ void setupLocator() {
     PlayerRepository(sl<DatabaseService>()),
   );
 
-  sl.registerSingleton<TournamentUseCase>(
-    TournamentUseCase(sl<TournamentRepository>())..loadInitialData(),
+  sl.registerSingleton<TournamentManager>(
+    TournamentManager(sl<TournamentRepository>()),
+    dispose: (manager) => manager.dispose(),
   );
 
   sl.registerSingleton<PlayerManagementViewModel>(
@@ -33,10 +33,6 @@ void setupLocator() {
   );
 
   sl.registerSingleton<TournamentCreationViewModel>(
-    TournamentCreationViewModel(sl<TournamentUseCase>()),
-  );
-
-  sl.registerSingleton<TournamentSelectionViewModel>(
-    TournamentSelectionViewModel(sl<TournamentUseCase>()),
+    TournamentCreationViewModel(sl<TournamentManager>()),
   );
 }

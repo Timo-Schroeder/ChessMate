@@ -1,5 +1,5 @@
+import 'package:chessmate/domain/use_cases/tournament/tournament_manager.dart';
 import 'package:chessmate/routing/routes.dart';
-import 'package:chessmate/ui/tournament_selection/view_model/tournament_selection_view_model.dart';
 import 'package:chessmate/l10n/localizations_context.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,17 +13,21 @@ class TournamentList extends StatelessWidget with WatchItMixin {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = watchIt<TournamentSelectionViewModel>();
-    if (viewModel.isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    final tournamentList = viewModel.tournaments.reversed;
+    final tournaments = watchValue(
+      (TournamentManager m) => m.loadTournamentsCommand,
+    );
+    final isRunning = watchValue(
+      (TournamentManager m) => m.loadTournamentsCommand.isRunning,
+    );
 
-    final filteredTournaments = tournamentList
+    final filteredTournaments = tournaments
         .where((t) => t.isArchived == showArchived)
-        .toList();
+        .toList()
+        .reversed;
 
-    return filteredTournaments.isEmpty
+    return isRunning
+        ? const YaruCircularProgressIndicator()
+        : filteredTournaments.isEmpty
         ? Center(
             child: Text(
               showArchived
@@ -47,8 +51,6 @@ class TournamentList extends StatelessWidget with WatchItMixin {
                       children: [
                         YaruIconButton(
                           icon: const Icon(Icons.play_arrow),
-                          // Cannot be extracted due to local variable: context
-                          // ignore: prefer-extracting-callbacks
                           onPressed: () {
                             final id = tournament.id;
                             if (id != null) {
@@ -60,25 +62,22 @@ class TournamentList extends StatelessWidget with WatchItMixin {
                           icon: Icon(
                             showArchived ? Icons.file_open : Icons.archive,
                           ),
-                          // Cannot be extracted due to local variable: tournament
-                          // ignore: prefer-extracting-callbacks
                           onPressed: () {
                             final id = tournament.id;
                             if (id != null) {
-                              sl<TournamentSelectionViewModel>()
-                                  .flipArchiveStatus(id);
+                              sl<TournamentManager>()
+                                  .flipArchivedStatusOfTournamentCommand(id);
                             }
                           },
                         ),
                         YaruIconButton(
                           icon: const Icon(Icons.delete),
-                          // Cannot be extracted due to local variable: tournament
-                          // ignore: prefer-extracting-callbacks
                           onPressed: () {
                             final id = tournament.id;
                             if (id != null) {
-                              sl<TournamentSelectionViewModel>()
-                                  .deleteTournament(id);
+                              sl<TournamentManager>().deleteTournamentCommand(
+                                id,
+                              );
                             }
                           },
                         ),
